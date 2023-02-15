@@ -45,12 +45,14 @@ class Piece:
 
     def remove(self):
         '''
-        Removes the piece from the game. Returns the
-        value of the piece.
+        Removes the piece from the game. Returns a
+        2-tuple containing the value and the colour
+        of the piece.
         '''
-        output = self.value
+        value = self.value
+        colour = self.is_black
         del self
-        return output
+        return (value,colour)
 
 
 class Pawn(Piece):
