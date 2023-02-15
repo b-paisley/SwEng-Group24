@@ -18,3 +18,11 @@ class ChessBoard:
                 print(f"{self.board[i-1][j]} |", end=" ")
             print("\n  +---+---+---+---+---+---+---+---+")
         print("    a   b   c   d   e   f   g   h")
+
+
+def get_chess_notation(coords):
+    columns = "abcdefgh"
+    row = str(coords[1])
+    column = columns[coords[0]-1]
+    return column + row
+
