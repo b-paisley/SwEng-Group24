@@ -5,6 +5,7 @@
 from chessBoard import ChessBoard
 from Points import *
 from Pieces import *
+from moveChecker import *
 
 board = ChessBoard()
 board.draw_board()

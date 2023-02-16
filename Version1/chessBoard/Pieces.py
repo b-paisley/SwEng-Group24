@@ -70,6 +70,7 @@ class Pawn(Piece):
     
     def __init__(self, is_black, pos,points):
         super().__init__(1, is_black, pos,points)
+        self.has_moved = False
         
 
     def promote(self, new_piece_notation):
