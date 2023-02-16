@@ -1,4 +1,5 @@
 from chessBoard import *
+from Points import *
 
 notation_pieces_dict = {
     '':'Pawn',
@@ -14,10 +15,15 @@ class Piece:
     Abstract "piece" class. All of the pieces in
     the game will extend from this class.
     '''
-    def __init__(self, value, is_black, pos):
+    def __init__(self, value, is_black, pos,points):
         self.value = value
         self.is_black = is_black
         self.pos = pos
+        if(self.is_black):
+            points.change_b_points(self.value)
+        else:
+            points.change_w_points(self.value)
+
 
     def pos_to_tuple(self):
         '''
@@ -36,19 +42,24 @@ class Piece:
     def __repr__(self, notation):
         return notation
 
-    def capture(self, other):
+    def capture(self, other,points):
         '''
         Captures the opposing piece. Returns True if
         a piece is captured.
         '''
-        other.remove()
+        
+        other.remove(points)
 
-    def remove(self):
+    def remove(self,points):
         '''
         Removes the piece from the game. Returns a
         2-tuple containing the value and the colour
         of the piece.
         '''
+        if(self.is_black):
+            points.change_b_points(-self.value)
+        else:
+            points.change_w_points(-self.value)
         value = self.value
         colour = self.is_black
         del self
@@ -57,8 +68,9 @@ class Piece:
 
 class Pawn(Piece):
     
-    def __init__(self, is_black, pos):
-        super().__init__(1, is_black, pos)
+    def __init__(self, is_black, pos,points):
+        super().__init__(1, is_black, pos,points)
+        
 
     def promote(self, new_piece_notation):
         '''
@@ -77,40 +89,40 @@ class Pawn(Piece):
 
 
 class Rook(Piece):
-    def __init__(self, is_black, pos):
-        super().__init__(5, is_black, pos)
+    def __init__(self, is_black, pos,points):
+        super().__init__(5, is_black, pos,points)
         
     def __repr__(self):
         return super().__repr__('R')
     
 
 class Knight(Piece):
-    def __init__(self, is_black, pos):
-        super().__init__(3, is_black, pos)
+    def __init__(self, is_black, pos,points):
+        super().__init__(3, is_black, pos,points)
     
     def __repr__(self) -> str:
         return super().__repr__('N')
 
 
 class Bishop(Piece):
-    def __init__(self, is_black, pos):
-        super().__init__(3, is_black, pos)
+    def __init__(self, is_black, pos,points):
+        super().__init__(3, is_black, pos,points)
 
     def __repr__(self):
         return super().__repr__('B')
 
 
 class King(Piece):
-    def __init__(self, is_black, pos):
-        super().__init__(200, is_black, pos)
+    def __init__(self, is_black, pos,points):
+        super().__init__(0, is_black, pos,points)
 
     def __repr__(self):
         return super().__repr__('K')
 
 
 class Queen(Piece):
-    def __init__(self, is_black, pos):
-        super().__init__(9, is_black, pos)
+    def __init__(self, is_black, pos,points):
+        super().__init__(9, is_black, pos,points)
 
     def __repr__(self):
         return super().__repr__('Q')
