@@ -11,9 +11,9 @@ def moveChecker(chessBoard, piece, dest):
     # Converts chess notation to position in the array board (e.g. d2 -> board[1][3]) and gets that piece (e.g. d2 -> P)
     # Co-ords are preserved for future checks involving piece moving. Taking is relevant for pawn moves.
     taking = False
-    destX = int(dest[1])-1
-    destY = ord(dest[0])-97
-    destPos = chessBoard.board[destX][destY]
+    destY = int(dest[1])-1
+    destX = ord(dest[0])-97
+    destPos = chessBoard.board[destY][destX]
     if ((destX or destY) > 7 or (destX or destY) < 0): return False # Moving off the board
     
     # Logic to check if square is occupied by friendly piece
@@ -48,8 +48,8 @@ def moveChecker(chessBoard, piece, dest):
     
         
     if(isinstance(piece, Knight)):  
-        if (abs(pieceX - destX) == 2 and abs(pieceY - destY == 1)): return True
-        if (abs(pieceX - destX) == 1 and abs(pieceY - destY == 2)): return True
+        if (abs(pieceX - destX) == 2 and abs(pieceY - destY) == 1): return True
+        if (abs(pieceX - destX) == 1 and abs(pieceY - destY) == 2): return True
         return False
                   
     if(isinstance(piece, Queen)):

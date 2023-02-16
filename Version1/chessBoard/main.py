@@ -14,9 +14,24 @@ point=points()
 
 #testing out points calculation 
 #has to put points object in piece class
-p=Knight(True,'e4',point)
-q=Rook(False,'e6',point)
-q.capture(p,point)
+knight=Knight(False,'g1',point)
+wPawn=Pawn(False,'d2',point)
+bPawn=Pawn(True,'a7',point)
+#q=Rook(False,'e6',point)
+#q.capture(p,point)
+
+
+print(moveChecker(board, knight, "e2")) # False
+print(moveChecker(board, knight, "f3")) # True
+print(moveChecker(board, knight, "g3")) # False
+print(moveChecker(board, wPawn, "d3")) # True
+print(moveChecker(board, wPawn, "d4")) # True
+print(moveChecker(board, wPawn, "c3")) # False
+print(moveChecker(board, bPawn, "b7")) # False
+print(moveChecker(board, bPawn, "a6")) # True
+print(moveChecker(board, bPawn, "a5")) # True
+print(moveChecker(board, bPawn, "a4")) # False
+
 
 
 
