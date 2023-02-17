@@ -64,8 +64,8 @@ def move_checker(chess_board, piece, dest):
             black=1
         if (not piece.is_black):
             black=0
-        if (movingIntoCheck(pieceX, pieceY, destX, destY, chessBoard,black)): #if it moves into check, its illegal  
-            if (abs(pieceY - destY)<=1 and abs(pieceX-destX)<=1):  #if it moves by 1 or less in both directions its legal
+        if (movingIntoCheck(piece_X, piece_Y, dest_X, dest_Y, chess_board,black)): #if it moves into check, its illegal  
+            if (abs(piece_Y - dest_Y)<=1 and abs(piece_X-dest_X)<=1):  #if it moves by 1 or less in both directions its legal
                 return True
             #here is where castling should be implemented, but we need to wait until pieces can be implemented first 
     return False
@@ -136,7 +136,7 @@ def check_diagonals(piece_X, piece_Y, dest_X, dest_Y, chess_board):
     return True
 
 
-def movingIntoCheck(pieceX, pieceY, destX, destY, chessBoard,black):    #check if destination is in check.
+def movingIntoCheck(pieceX, pieceY, destX, destY, chess_board,black):    #check if destination is in check.
 # check for Rooks putting check on King
     squareToCheckX= destX +1
     squareToCheckY= destY - 2
