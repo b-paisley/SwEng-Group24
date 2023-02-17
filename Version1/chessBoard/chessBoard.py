@@ -22,29 +22,29 @@ class ChessBoard:
                 if self.board[i][j] == " ":
                     continue
                 elif self.board[i][j] == "P":
-                    self.pieces.append(Piece(False, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Pawn(False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "p":
-                    self.pieces.append(Piece(True, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Pawn(True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "R":
-                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Rook( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "r":
-                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Rook( True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "N":
-                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Knight( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "n":
-                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Knight( True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "B":
-                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Bishop( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "b":
-                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Bishop( True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "Q":
-                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Queen( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "q":
-                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(Queen( True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "K":
-                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(King( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "k":
-                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
+                    self.pieces.append(King( True, get_chess_notation((i, j)),points,self))
 
     # return current state of board.
     def get_board(self):
