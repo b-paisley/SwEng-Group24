@@ -62,8 +62,9 @@ class ChessBoard:
         print("    a   b   c   d   e   f   g   h")
 
     def update(self):
-        for i, j in self.board:
-            self.board[i][j] = ' '
+        for i in range(8):
+            for j in range(8):
+                self.board[i][j] = ' '
         for p in self.pieces:
             pos = p.pos_to_tuple()
             self.board[pos[0]][pos[1]] = repr(p)
