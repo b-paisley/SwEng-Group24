@@ -1,6 +1,4 @@
 from Pieces import *
-
-
 class ChessBoard:
     def __init__(self,points):
         # creates 2D 8X8 Array of pieces in their starting positions
@@ -18,34 +16,35 @@ class ChessBoard:
         # gets added to the self.pieces list. likewise when a piece is removed from the board, it is removed from the
         # self.pieces list.
         self.pieces = []
+        
         for i in range(8):
             for j in range(8):
                 if self.board[i][j] == " ":
                     continue
                 elif self.board[i][j] == "P":
-                    self.pieces.append(Piece(1, False, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece(False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "p":
-                    self.pieces.append(Piece(1, True, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece(True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "R":
-                    self.pieces.append(Piece(5, False, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "r":
-                    self.pieces.append(Piece(5, True, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "N":
-                    self.pieces.append(Piece(3, False, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "n":
-                    self.pieces.append(Piece(3, True, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "B":
-                    self.pieces.append(Piece(3, False, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "b":
-                    self.pieces.append(Piece(3, True, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "Q":
-                    self.pieces.append(Piece(9, False, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "q":
-                    self.pieces.append(Piece(9, True, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "K":
-                    self.pieces.append(Piece(200, False, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( False, get_chess_notation((i, j)),points,self))
                 elif self.board[i][j] == "k":
-                    self.pieces.append(Piece(200, True, get_chess_notation((i, j))),points,self)
+                    self.pieces.append(Piece( True, get_chess_notation((i, j)),points,self))
 
     # return current state of board.
     def get_board(self):
