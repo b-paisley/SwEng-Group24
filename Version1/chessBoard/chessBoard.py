@@ -47,7 +47,7 @@ class ChessBoard:
                 elif self.board[i][j] == "k":
                     self.pieces.append(Piece(200, True, (i, j)))
 
-    # return current state of board
+    # return current state of board.
     def get_board(self):
         return self.board
 
