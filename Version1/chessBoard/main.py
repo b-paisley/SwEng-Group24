@@ -13,7 +13,6 @@ game_over = filter(lambda p: p.is_black == False, board.pieces) == board.pieces 
     filter(lambda p: p.is_black == True, board.pieces) == board.pieces
 
 turn_num = 0
-print(get_chess_notation((0,0)))
 board.update()
 board.draw_board()
 

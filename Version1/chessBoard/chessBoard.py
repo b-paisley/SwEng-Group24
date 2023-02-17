@@ -76,5 +76,4 @@ def get_chess_notation(coords):
     columns = "abcdefgh"
     row = str(coords[1]+1)
     column = columns[8 - coords[0] - 1]
-    print(coords[0])
     return column + row
