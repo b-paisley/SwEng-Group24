@@ -30,13 +30,13 @@ def moveChecker(chessBoard, piece, dest):
     
     # For pawns, it's easier to search for a valid move, while Rooks / Bishops etc. will search for an invalid move
     if(isinstance(piece, Pawn)):
-        if (pieceX == destX or (taking and pieceX == (destX+1 or destX-1))):
+        if ((taking == False and pieceX == destX) or (taking and pieceX == (destX+1 or destX-1))):
             if (piece.is_black and pieceY-1 == destY or (piece.has_moved == False and pieceY-2 == destY)):  
                 return True
             if (not piece.is_black and pieceY+1 == destY or (piece.has_moved == False and pieceY+2 == destY)): 
                 return True
         return False
-    
+        
     if(isinstance(piece, Rook)):
         if(pieceX != destX and pieceY != destY): return False # Checking if move is straight
         return checkStraights(pieceX, pieceY, destX, destY, chessBoard)
