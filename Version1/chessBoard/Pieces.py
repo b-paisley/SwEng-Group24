@@ -142,8 +142,8 @@ class Pawn(Piece):
 
 
 class Rook(Piece):
-    def __init__(self, is_black, pos,points):
-        super().__init__(5, is_black, pos,points)
+    def __init__(self, is_black, pos,points, board):
+        super().__init__(5, is_black, pos,points, board)
         
     def __repr__(self):
         return super().__repr__('R')
@@ -155,8 +155,8 @@ class Rook(Piece):
     
 
 class Knight(Piece):
-    def __init__(self, is_black, pos,points):
-        super().__init__(3, is_black, pos,points)
+    def __init__(self, is_black, pos,points, board):
+        super().__init__(3, is_black, pos,points, board)
     
     def __repr__(self) -> str:
         return super().__repr__('N')
@@ -171,8 +171,8 @@ class Knight(Piece):
 
 
 class Bishop(Piece):
-    def __init__(self, is_black, pos,points):
-        super().__init__(3, is_black, pos,points)
+    def __init__(self, is_black, pos,points, board):
+        super().__init__(3, is_black, pos,points, board)
 
     def __repr__(self):
         return super().__repr__('B')
@@ -185,8 +185,8 @@ class Bishop(Piece):
 
 
 class King(Piece):
-    def __init__(self, is_black, pos,points):
-        super().__init__(0, is_black, pos,points)
+    def __init__(self, is_black, pos,points, board):
+        super().__init__(0, is_black, pos,points, board)
 
     def __repr__(self):
         return super().__repr__('K')
@@ -199,8 +199,8 @@ class King(Piece):
 
 
 class Queen(Piece):
-    def __init__(self, is_black, pos,points):
-        super().__init__(9, is_black, pos,points)
+    def __init__(self, is_black, pos,points, board):
+        super().__init__(9, is_black, pos,points, board)
 
     def __repr__(self):
         return super().__repr__('Q')
