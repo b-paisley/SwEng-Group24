@@ -59,6 +59,17 @@ def move_checker(chess_board, piece, dest):
             return check_diagonals(piece_X, piece_Y, dest_X, dest_Y, chess_board)
         return False
     
+    if(isinstance(piece, King)):
+        if (piece.is_black):
+            black=1
+        if (not piece.is_black):
+            black=0
+        if (movingIntoCheck(pieceX, pieceY, destX, destY, chessBoard,black)): #if it moves into check, its illegal  
+            if (abs(pieceY - destY)<=1 and abs(pieceX-destX)<=1):  #if it moves by 1 or less in both directions its legal
+                return True
+            #here is where castling should be implemented, but we need to wait until pieces can be implemented first 
+    return False
+    
 def check_straights(piece_X, piece_Y, dest_X, dest_Y, chess_board):
     if (piece_X > dest_X):
         check_square = piece_X-1
@@ -122,4 +133,116 @@ def check_diagonals(piece_X, piece_Y, dest_X, dest_Y, chess_board):
                 return False
             check_X += 1
             check_Y -= 1
+    return True
+
+
+def movingIntoCheck(pieceX, pieceY, destX, destY, chessBoard,black):    #check if destination is in check.
+# check for Rooks putting check on King
+    squareToCheckX= destX +1
+    squareToCheckY= destY - 2
+    if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "N") or (black==0 and chess_board.board[squareToCheckX][squareToCheckY] == "n")):
+        return False  
+    squareToCheckX= destX -1
+    if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "N") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "n")):
+        return False  
+    squareToCheckX= destX +1
+    squareToCheckY= destY + 2
+    if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "N") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "n")):
+        return False  
+    squareToCheckX= destX -1
+    if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "N") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "n")):
+        return False      
+    squareToCheckY= destY +1
+    squareToCheckX= destX - 2
+    if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "N") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "n")):
+        return False  
+    squareToCheckY= destY -1
+    if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "N") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "n")):
+        return False  
+    squareToCheckY= destY +1
+    squareToCheckX= destX + 2
+    if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "N") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "n")):
+        return False  
+    squareToCheckY= destY -1
+    if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "N") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "n")):
+        return False
+#check for castles and queen straights
+#check to its right
+    squareToCheckX=destX
+    squareToCheckY= destY 
+    while(squareToCheckX < 7):
+        squareToCheckX+1
+        if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "R" or "Q") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "r" or "q")):
+            return False
+    #check to its left
+    squareToCheckX=destX
+    squareToCheckY= destY    
+    while(squareToCheckX > 0):
+        squareToCheckX-1
+        if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "R" or "Q") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "r" or "q")):
+            return False
+    #check above it
+    squareToCheckY=destY
+    squareToCheckX= destX
+    while(squareToCheckY < 7):
+        squareToCheckY+1
+        if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "R" or "Q") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "r" or "q")):
+            return False
+    #check below it
+    squareToCheckY=destY 
+    squareToCheckX= destX    
+    while(squareToCheckY > 0):
+        squareToCheckY-1
+        if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "R" or "Q") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "r" or "q")):
+            return False
+#check diagonally for bishops and queens
+#check diagonally up right
+    squareToCheckX=destX
+    squareToCheckY= destY
+    while(squareToCheckX < 7 and squareToCheckY < 7):
+        squareToCheckX+1
+        squareToCheckY+1
+        if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "R" or "Q") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "r" or "q")):
+            return False
+    #check diagonally up left
+    squareToCheckX=destX 
+    squareToCheckY= destY 
+    while(squareToCheckX > 0 and squareToCheckY < 7):
+        squareToCheckX-1
+        squareToCheckY+1
+        if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "R" or "Q") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "r" or "q")):
+            return False
+    #check diagonally to right below
+    squareToCheckY=destY 
+    squareToCheckX= destX 
+    while(squareToCheckY > 0 and squareToCheckX < 7):
+        squareToCheckX+1
+        squareToCheckY-1
+        if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "R" or "Q") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "r" or "q")):
+            return False
+    #check below it diagonally left
+    squareToCheckY=destY 
+    squareToCheckX= destX  
+    while(squareToCheckY > 0 and squareToCheckX > 0):
+        squareToCheckX+1
+        squareToCheckY-1
+        if ((black==1 and chess_board.board[squareToCheckX][squareToCheckY] == "R" or "Q") or black==0 and (chess_board.board[squareToCheckX][squareToCheckY] == "r" or "q")):
+            return False
+#check for pawn checks
+    if (black==1):
+        squareToCheckY=destY - 1
+        squareToCheckX= destX - 1
+        if (chess_board.board[squareToCheckX][squareToCheckY] == "P"):
+            return False
+        squareToCheckX= destX + 1
+        if (chess_board.board[squareToCheckX][squareToCheckY] == "P"):
+            return False
+    if (black==0):
+        squareToCheckY= destY + 1
+        squareToCheckX= destX - 1
+        if (chess_board.board[squareToCheckX][squareToCheckY] == "p"):
+            return False
+        squareToCheckX= destX + 1
+        if (chess_board.board[squareToCheckX][squareToCheckY] == "p"):
+            return False
     return True
