@@ -7,119 +7,119 @@ However, that means testing is difficult until moving pieces on the board is ful
 I've missed.
 '''
 
-def moveChecker(chessBoard, piece, dest):
+def move_checker(chess_board, piece, dest):
     # Converts chess notation to position in the array board (e.g. d2 -> board[1][3]) and gets that piece (e.g. d2 -> P)
     # Co-ords are preserved for future checks involving piece moving. Taking is relevant for pawn moves.
     taking = False
-    destY = int(dest[1])-1
-    destX = ord(dest[0])-97
-    destPos = chessBoard.board[destY][destX]
-    if ((destX or destY) > 7 or (destX or destY) < 0): return False # Moving off the board
+    dest_Y = int(dest[1])-1
+    dest_X = ord(dest[0])-97
+    dest_pos = chess_board.board[dest_Y][dest_X]
+    if ((dest_X > 7 or dest_Y > 7) or (dest_X < 0 or dest_Y < 0)): return False # Moving off the board
     
     # Logic to check if square is occupied by friendly piece
-    if (destPos != " "):
-        if(destPos.isupper() and not piece.is_black):
+    if (dest_pos != " "):
+        if(dest_pos.isupper() and not piece.is_black):
             return False
-        elif(destPos.islower() and piece.is_black):
+        elif(dest_pos.islower() and piece.is_black):
             return False
         taking = True
     
     # Getting piece X and Y for comparison to target X and Y
-    pieceX = piece.pos_to_tuple()[0]-1
-    pieceY = piece.pos_to_tuple()[1]-1
+    piece_X = piece.pos_to_tuple()[0]-1
+    piece_Y = piece.pos_to_tuple()[1]-1
     
     # For pawns, it's easier to search for a valid move, while Rooks / Bishops etc. will search for an invalid move
     if(isinstance(piece, Pawn)):
-        if ((taking == False and pieceX == destX) or (taking and pieceX == (destX+1 or destX-1))):
-            if (piece.is_black and pieceY-1 == destY or (piece.has_moved == False and pieceY-2 == destY)):  
+        if (piece_X == dest_X or (taking and (piece_X == dest_X+1 or piece_X == dest_X-1))):
+            if (piece.is_black and piece_Y-1 == dest_Y or (piece.has_moved == False and piece_Y-2 == dest_Y)):  
                 return True
-            if (not piece.is_black and pieceY+1 == destY or (piece.has_moved == False and pieceY+2 == destY)): 
+            if (not piece.is_black and piece_Y+1 == dest_Y or (piece.has_moved == False and piece_Y+2 == dest_Y)): 
                 return True
         return False
         
     if(isinstance(piece, Rook)):
-        if(pieceX != destX and pieceY != destY): return False # Checking if move is straight
-        return checkStraights(pieceX, pieceY, destX, destY, chessBoard)
+        if(piece_X != dest_X and piece_Y != dest_Y): return False # Checking if move is straight
+        return check_straights(piece_X, piece_Y, dest_X, dest_Y, chess_board)
         
     
     if(isinstance(piece, Bishop)):
-        if (abs(destX - pieceX) != abs(destY - pieceY)): return False # Checking if moving diagonally
-        return checkDiagonals(pieceX, pieceY, destX, destY, chessBoard)
+        if (abs(dest_X - piece_X) != abs(dest_Y - piece_Y)): return False # Checking if moving diagonally
+        return check_diagonals(piece_X, piece_Y, dest_X, dest_Y, chess_board)
     
         
     if(isinstance(piece, Knight)):  
-        if (abs(pieceX - destX) == 2 and abs(pieceY - destY) == 1): return True
-        if (abs(pieceX - destX) == 1 and abs(pieceY - destY) == 2): return True
+        if (abs(piece_X - dest_X) == 2 and abs(piece_Y - dest_Y) == 1): return True
+        if (abs(piece_X - dest_X) == 1 and abs(piece_Y - dest_Y) == 2): return True
         return False
                   
     if(isinstance(piece, Queen)):
-        if(pieceX == destX or pieceY == destY):
-            return checkStraights(pieceX, pieceY, destX, destY, chessBoard)
-        if (abs(destX - pieceX) == abs(destY - pieceY)):
-            return checkDiagonals(pieceX, pieceY, destX, destY, chessBoard)
+        if(piece_X == dest_X or piece_Y == dest_Y):
+            return check_straights(piece_X, piece_Y, dest_X, dest_Y, chess_board)
+        if (abs(dest_X - piece_X) == abs(dest_Y - piece_Y)):
+            return check_diagonals(piece_X, piece_Y, dest_X, dest_Y, chess_board)
         return False
     
-def checkStraights(pieceX, pieceY, destX, destY, chessBoard):
-    if (pieceX > destX):
-        checkSquare = pieceX-1
-        while(checkSquare > destX):
-            if (chessBoard.board[checkSquare][pieceY] != " "):
+def check_straights(piece_X, piece_Y, dest_X, dest_Y, chess_board):
+    if (piece_X > dest_X):
+        check_square = piece_X-1
+        while(check_square > dest_X):
+            if (chess_board.board[check_square][piece_Y] != " "):
                 return False
-            checkSquare -= 1
+            check_square -= 1
             
-    if (pieceX < destX):
-        checkSquare = pieceX+1
-        while(checkSquare < destX):
-            if (chessBoard.board[checkSquare][pieceY] != " "):
+    if (piece_X < dest_X):
+        check_square = piece_X+1
+        while(check_square < dest_X):
+            if (chess_board.board[check_square][piece_Y] != " "):
                 return False
-            checkSquare += 1
+            check_square += 1
         
-    if (pieceY > destY):
-        checkSquare = pieceY-1
-        while(checkSquare > destY):
-            if (chessBoard.board[pieceX][checkSquare] != " "):
+    if (piece_Y > dest_Y):
+        check_square = piece_Y-1
+        while(check_square > dest_Y):
+            if (chess_board.board[piece_X][check_square] != " "):
                 return False
-            checkSquare -= 1
+            check_square -= 1
             
-    if (pieceY < destY):
-        checkSquare = pieceY+1
-        while(checkSquare < destY):
-            if (chessBoard.board[pieceX][checkSquare] != " "):
+    if (piece_Y < dest_Y):
+        check_square = piece_Y+1
+        while(check_square < dest_Y):
+            if (chess_board.board[piece_X][check_square] != " "):
                 return False
-            checkSquare += 1
+            check_square += 1
     return True
     
-def checkDiagonals(pieceX, pieceY, destX, destY, chessBoard):
-    if (destX > pieceX and destY > pieceY):
-        checkX = pieceX-1
-        checkY = pieceY-1
-        while (checkX > destX):
-            if(chessBoard.board[checkX][checkY] != " "):
+def check_diagonals(piece_X, piece_Y, dest_X, dest_Y, chess_board):
+    if (dest_X > piece_X and dest_Y > piece_Y):
+        check_X = piece_X-1
+        check_Y = piece_Y-1
+        while (check_X > dest_X):
+            if(chess_board.board[check_X][check_Y] != " "):
                 return False
-            checkX -= 1
-            checkY -= 1
-    if (destX > pieceX and destY < pieceY):
-        checkX = pieceX-1
-        checkY = pieceY+1
-        while (checkX > destX):
-            if(chessBoard.board[checkX][checkY] != " "):
+            check_X -= 1
+            check_Y -= 1
+    if (dest_X > piece_X and dest_Y < piece_Y):
+        check_X = piece_X-1
+        check_Y = piece_Y+1
+        while (check_X > dest_X):
+            if(chess_board.board[check_X][check_Y] != " "):
                 return False
-            checkX -= 1
-            checkY += 1
-    if (destX < pieceX and destY < pieceY):
-        checkX = pieceX+1
-        checkY = pieceY+1
-        while (checkX < destX):
-            if(chessBoard.board[checkX][checkY] != " "):
+            check_X -= 1
+            check_Y += 1
+    if (dest_X < piece_X and dest_Y < piece_Y):
+        check_X = piece_X+1
+        check_Y = piece_Y+1
+        while (check_X < dest_X):
+            if(chess_board.board[check_X][check_Y] != " "):
                 return False
-            checkX += 1
-            checkY += 1
-    if (destX < pieceX and destY > pieceY):
-        checkX = pieceX+1
-        checkY = pieceY-1
-        while (checkX < destX):
-            if(chessBoard.board[checkX][checkY] != " "):
+            check_X += 1
+            check_Y += 1
+    if (dest_X < piece_X and dest_Y > piece_Y):
+        check_X = piece_X+1
+        check_Y = piece_Y-1
+        while (check_X < dest_X):
+            if(chess_board.board[check_X][check_Y] != " "):
                 return False
-            checkX += 1
-            checkY -= 1
+            check_X += 1
+            check_Y -= 1
     return True
