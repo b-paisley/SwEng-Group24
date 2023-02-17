@@ -1,8 +1,8 @@
-from Pieces import Piece
+from Pieces import *
 
 
 class ChessBoard:
-    def __init__(self):
+    def __init__(self,points):
         # creates 2D 8X8 Array of pieces in their starting positions
         self.board = [
             ["R", "N", "B", "Q", "K", "B", "N", "R"],
@@ -23,29 +23,29 @@ class ChessBoard:
                 if self.board[i][j] == " ":
                     continue
                 elif self.board[i][j] == "P":
-                    self.pieces.append(Piece(1, False, (i, j)))
+                    self.pieces.append(Piece(1, False, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "p":
-                    self.pieces.append(Piece(1, True, (i, j)))
+                    self.pieces.append(Piece(1, True, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "R":
-                    self.pieces.append(Piece(5, False, (i, j)))
+                    self.pieces.append(Piece(5, False, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "r":
-                    self.pieces.append(Piece(5, True, (i, j)))
+                    self.pieces.append(Piece(5, True, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "N":
-                    self.pieces.append(Piece(3, False, (i, j)))
+                    self.pieces.append(Piece(3, False, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "n":
-                    self.pieces.append(Piece(3, True, (i, j)))
+                    self.pieces.append(Piece(3, True, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "B":
-                    self.pieces.append(Piece(3, False, (i, j)))
+                    self.pieces.append(Piece(3, False, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "b":
-                    self.pieces.append(Piece(3, True, (i, j)))
+                    self.pieces.append(Piece(3, True, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "Q":
-                    self.pieces.append(Piece(9, False, (i, j)))
+                    self.pieces.append(Piece(9, False, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "q":
-                    self.pieces.append(Piece(9, True, (i, j)))
+                    self.pieces.append(Piece(9, True, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "K":
-                    self.pieces.append(Piece(200, False, (i, j)))
+                    self.pieces.append(Piece(200, False, get_chess_notation((i, j))),points,self)
                 elif self.board[i][j] == "k":
-                    self.pieces.append(Piece(200, True, (i, j)))
+                    self.pieces.append(Piece(200, True, get_chess_notation((i, j))),points,self)
 
     # return current state of board.
     def get_board(self):
@@ -59,6 +59,14 @@ class ChessBoard:
                 print(f"{self.board[i - 1][j]} |", end=" ")
             print("\n  +---+---+---+---+---+---+---+---+")
         print("    a   b   c   d   e   f   g   h")
+
+    def update(self):
+        for i,j in self.board:
+            self.board[i][j] = ' '
+        for p in self.pieces:
+            pos = p.pos_to_tuple()
+            self.board[pos[0]][pos[1]] = repr(p)
+            
 
 
 # take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : d4

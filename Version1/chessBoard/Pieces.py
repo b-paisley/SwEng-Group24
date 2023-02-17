@@ -21,7 +21,7 @@ class Piece:
     The "pos" parameter will take in a named square,
     like "e2".
     '''
-    def __init__(self, value, is_black, pos, points):
+    def __init__(self, value, is_black, pos, points, board):
         self.value = value
         self.is_black = is_black
         self.pos = pos
@@ -47,6 +47,8 @@ class Piece:
         return (col, row)
 
     def __repr__(self, notation):
+        if not self.is_black:
+            return notation.lower()
         return notation
 
     def capture(self, other,points):
@@ -80,6 +82,7 @@ class Piece:
         '''
         if self.pos == new_pos or not valid_square:
             return False
+        
         self.pos = new_pos
         has_moved = True
         return True
@@ -87,8 +90,8 @@ class Piece:
 
 class Pawn(Piece):
     
-    def __init__(self, is_black, pos,points):
-        super().__init__(1, is_black, pos,points)
+    def __init__(self, is_black, pos,points, board):
+        super().__init__(1, is_black, pos,points, board)
         self.has_moved_two_spaces_last = False
         
 
@@ -99,7 +102,7 @@ class Pawn(Piece):
         is successful.
         '''
         if new_piece_notation not in notation_pieces_dict.keys() or new_piece_notation == '' \
-            or new_piece_notation == 'K':
+            or new_piece_notation == 'K' or new_piece_notation == 'k':
             return False
         self.__class__ = eval(notation_pieces_dict[new_piece_notation])
         return True
