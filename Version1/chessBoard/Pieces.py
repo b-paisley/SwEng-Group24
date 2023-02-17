@@ -21,11 +21,12 @@ class Piece:
     The "pos" parameter will take in a named square,
     like "e2".
     '''
-    def __init__(self, value, is_black, pos,points):
+    def __init__(self, value, is_black, pos, points):
         self.value = value
         self.is_black = is_black
         self.pos = pos
-        if(self.is_black):
+        self.has_moved = False
+        if self.is_black:
             points.change_b_points(self.value)
         else:
             points.change_w_points(self.value)
@@ -80,6 +81,7 @@ class Piece:
         if self.pos == new_pos or not valid_square:
             return False
         self.pos = new_pos
+        has_moved = True
         return True
 
 
@@ -87,7 +89,7 @@ class Pawn(Piece):
     
     def __init__(self, is_black, pos,points):
         super().__init__(1, is_black, pos,points)
-        self.has_moved = False
+        self.has_moved_two_spaces_last = False
         
 
     def promote(self, new_piece_notation):
@@ -110,12 +112,14 @@ class Pawn(Piece):
             self.pos = self.pos[0] + str(int(self.pos[1])+1)
         else:
             self.pos = self.pos[0] + str(int(self.pos[1])-1)
+        self.has_moved_two_spaces_last = False
 
     def move_forwards_two(self):
         if not self.is_black:
             self.pos = self.pos[0] + str(int(self.pos[1])+2)
         else:
             self.pos = self.pos[0] + str(int(self.pos[1])-2)
+        self.has_moved_two_spaces_last = True
 
     def move_diagonally_left(self):
         if not self.is_black:
@@ -123,6 +127,7 @@ class Pawn(Piece):
         else:
             self.pos = self.pos[0] + str(int(self.pos[1])-1)
         self.pos = files[files.index(self.pos[0])-1] + self.pos[1]
+        self.has_moved_two_spaces_last = False
 
     def move_diagonally_right(self):
         if not self.is_black:
@@ -130,6 +135,7 @@ class Pawn(Piece):
         else:
             self.pos = self.pos[0] + str(int(self.pos[1])-1)
         self.pos = files[files.index(self.pos[0])+1] + self.pos[1]
+        self.has_moved_two_spaces_last = False
 
 
 class Rook(Piece):
