@@ -4,6 +4,8 @@
     <list default="true" id="b14ab95a-3f21-40bc-8d57-fbdfed1adf18" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Version1/chessBoard/Pieces.py" beforeDir="false" afterPath="$PROJECT_DIR$/Version1/chessBoard/Pieces.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Version1/chessBoard/chessBoard.py" beforeDir="false" afterPath="$PROJECT_DIR$/Version1/chessBoard/chessBoard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Version1/chessBoard/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Version1/chessBoard/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +19,8 @@
     <servers />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/SwEng_Group24$chessBoard.coverage" NAME="chessBoard Coverage Results" MODIFIED="1676672751154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Version1/chessBoard" />
-    <SUITE FILE_PATH="coverage/SwEng_Group24$main.coverage" NAME="main Coverage Results" MODIFIED="1676673425737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Version1/chessBoard" />
+    <SUITE FILE_PATH="coverage/SwEng_Group24$Pieces.coverage" NAME="Pieces Coverage Results" MODIFIED="1676676104555" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Version1/chessBoard" />
+    <SUITE FILE_PATH="coverage/SwEng_Group24$chessBoard.coverage" NAME="chessBoard Coverage Results" MODIFIED="1676674166681" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Version1/chessBoard" />
+    <SUITE FILE_PATH="coverage/SwEng_Group24$main.coverage" NAME="main Coverage Results" MODIFIED="1676676569212" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Version1/chessBoard" />
   </component>
 </project>

@@ -54,6 +54,7 @@ class ChessBoard:
 
     # print to console a visual representation of the chess board
     def draw_board(self):
+        print("\n  +---+---+---+---+---+---+---+---+")
         for i in range(8, 0, -1):
             print(f"{i} |", end=" ")
             for j in range(0, 8):
@@ -67,12 +68,13 @@ class ChessBoard:
                 self.board[i][j] = ' '
         for p in self.pieces:
             pos = p.pos_to_tuple()
-            self.board[pos[0]][pos[1]] = repr(p)
+            self.board[pos[0]][pos[1]] = p
 
 
 # take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : d4
 def get_chess_notation(coords):
     columns = "abcdefgh"
-    row = str(coords[1])
-    column = columns[coords[0] - 1]
+    row = str(coords[1]+1)
+    column = columns[8 - coords[0] - 1]
+    print(coords[0])
     return column + row

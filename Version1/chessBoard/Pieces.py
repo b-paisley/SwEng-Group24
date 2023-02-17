@@ -2,7 +2,7 @@ from chessBoard import *
 from Points import *
 
 notation_pieces_dict = {
-    '': 'Pawn',
+    'P': 'Pawn',
     'R': 'Rook',
     'N': 'Knight',
     'B': 'Bishop',
@@ -41,11 +41,11 @@ class Piece:
         column numbers are one-indexed.
 
         Example: 'c2' -> (3,2)
+        a8 -> (0,0)
         '''
-
-        col = files.index(self.pos[0])
-        row = int(self.pos[1])
-        return col, row
+        row = files.index(self.pos[0])
+        col = 8-(int(self.pos[1]))
+        return row, col
 
     def __repr__(self, notation):
         if not self.is_black:
@@ -108,7 +108,7 @@ class Pawn(Piece):
         return True
 
     def __repr__(self):
-        return super().__repr__('')
+        return super().__repr__('P')
 
     def move_forwards_one(self):
         if not self.is_black:
