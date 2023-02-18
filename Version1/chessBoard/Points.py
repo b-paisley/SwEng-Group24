@@ -1,10 +1,13 @@
-class points:
-    def __init__(self):
-        self.player_w_points=-39
-        self.player_b_points=-39
+from Pieces import *
 
-    def change_w_points(self,val:int):
-        self.player_w_points+=val
-        
-    def change_b_points(self,val:int):
-        self.player_b_points+=val
+white_points = 0
+black_points = 0
+
+def update_points(board):
+    for row in board:
+        for square in row:
+            piece = square.placed_in_square
+            if piece.is_black:
+                black_points += piece.value
+            else:
+                white_points += piece.value
