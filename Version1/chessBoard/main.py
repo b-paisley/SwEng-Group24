@@ -4,8 +4,10 @@ from Pieces import *
 from moveChecker import *
 from aiMoveGenerator import *
 
-points = points()
-board = ChessBoard(points)
+
+board = ChessBoard()
+board.draw()
+
 
 # In this prototype chess game, the game ends when black or white lose all of their
 # pieces.
