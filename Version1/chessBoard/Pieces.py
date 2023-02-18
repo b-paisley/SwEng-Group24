@@ -10,7 +10,7 @@ notation_pieces_dict = {
     'K': 'King'
 }
 
-files = 'abcdefgh'
+files = 'ABCDEFGH'
 rows = [i for i in range(1, 9)]
 
 
@@ -20,32 +20,14 @@ class Piece:
     the game will extend from this class.
 
     The "pos" parameter will take in a named square,
-    like "e2".
+    like "E2".
     '''
 
-    def __init__(self, value, is_black, pos, points, board):
+    def __init__(self, value, is_black, pos, board):
         self.value = value
         self.is_black = is_black
         self.pos = pos
         self.has_moved = False
-        if self.is_black:
-            points.change_b_points(self.value)
-        else:
-            points.change_w_points(self.value)
-
-    def pos_to_tuple(self):
-        '''
-        Returns the position of the piece as a
-        2-tuple containing the row and the
-        column of the position. The row and
-        column numbers are one-indexed.
-
-        Example: 'c2' -> (3,2)
-        a8 -> (0,0)
-        '''
-        row = files.index(self.pos[0])
-        col = 8-(int(self.pos[1]))
-        return row, col
 
     def __repr__(self, notation):
         if not self.is_black:
@@ -66,14 +48,10 @@ class Piece:
         2-tuple containing the value and the colour
         of the piece.
         '''
-        if (self.is_black):
-            points.change_b_points(-self.value)
-        else:
-            points.change_w_points(-self.value)
         value = self.value
         colour = self.is_black
         del self
-        return (value, colour)
+        return value
 
     def move(self, new_pos, valid_square) -> bool:
         '''
@@ -91,8 +69,8 @@ class Piece:
 
 class Pawn(Piece):
 
-    def __init__(self, is_black, pos, points, board):
-        super().__init__(1, is_black, pos, points, board)
+    def __init__(self, is_black, pos, board):
+        super().__init__(1, is_black, pos, board)
         self.has_moved_two_spaces_last = False
 
     def promote(self, new_piece_notation):
@@ -102,7 +80,7 @@ class Pawn(Piece):
         is successful.
         '''
         if new_piece_notation not in notation_pieces_dict.keys() or new_piece_notation == '' \
-                or new_piece_notation == 'K' or new_piece_notation == 'k':
+                or new_piece_notation == 'K':
             return False
         self.__class__ = eval(notation_pieces_dict[new_piece_notation])
         return True
@@ -142,8 +120,8 @@ class Pawn(Piece):
 
 
 class Rook(Piece):
-    def __init__(self, is_black, pos, points, board):
-        super().__init__(5, is_black, pos, points, board)
+    def __init__(self, is_black, pos, board):
+        super().__init__(5, is_black, pos, board)
 
     def __repr__(self):
         return super().__repr__('R')
@@ -155,8 +133,8 @@ class Rook(Piece):
 
 
 class Knight(Piece):
-    def __init__(self, is_black, pos, points, board):
-        super().__init__(3, is_black, pos, points, board)
+    def __init__(self, is_black, pos, board):
+        super().__init__(3, is_black, pos, board)
 
     def __repr__(self) -> str:
         return super().__repr__('N')
@@ -172,7 +150,7 @@ class Knight(Piece):
 
 class Bishop(Piece):
     def __init__(self, is_black, pos, points, board):
-        super().__init__(3, is_black, pos, points, board)
+        super().__init__(3, is_black, pos, board)
 
     def __repr__(self):
         return super().__repr__('B')
@@ -185,8 +163,8 @@ class Bishop(Piece):
 
 
 class King(Piece):
-    def __init__(self, is_black, pos, points, board):
-        super().__init__(0, is_black, pos, points, board)
+    def __init__(self, is_black, pos, board):
+        super().__init__(0, is_black, pos, board)
 
     def __repr__(self):
         return super().__repr__('K')
@@ -199,8 +177,8 @@ class King(Piece):
 
 
 class Queen(Piece):
-    def __init__(self, is_black, pos, points, board):
-        super().__init__(9, is_black, pos, points, board)
+    def __init__(self, is_black, pos, board):
+        super().__init__(9, is_black, pos, board)
 
     def __repr__(self):
         return super().__repr__('Q')
