@@ -14,7 +14,7 @@ class ChessBoard:
     
     #add all the orginal piece when completed the call draw
     def orginal_draw(self,piece,square):
-        letter_file = 65-ord(square[0])  #doing unicode calculations, easiest way to get the first index
+        letter_file = ord(square[0])-65  #doing unicode calculations, easiest way to get the first index
         number_row = square[1] -1 
         square_obj=self.board[letter_file][number_row]
         self.board[letter_file][number_row]=square_obj.place_piece(piece)
@@ -36,11 +36,11 @@ class ChessBoard:
 
 
     def update_board(self,prev_square, new_square): #C1_C2
-        letter_file = 65-ord(prev_square[0])
+        letter_file = ord(prev_square[0])-65
         number_row = prev_square[1] -1
         piece=self.board[letter_file][number_row].move_off_square()
 
-        letter_file = 65-ord(new_square[0])
+        letter_file = ord(new_square[0])-65
         number_row = new_square[1] -1
         self.board[letter_file][number_row].place_piece(piece)
         self.draw()
