@@ -23,23 +23,9 @@ class Piece:
     like "E2".
     '''
 
-    def pos_to_tuple(self):
-        '''
-        Returns the position of the piece as a
-        2-tuple containing the row and the
-        column of the position. The row and
-        column numbers are zero-indexed.
-        Example: 'c2' -> (2,1)
-        a1 -> (0,0)
-        '''
-        row = files.index(self.pos[0])
-        col = (int(self.pos[1]))-1
-        return row, col
-
     def __init__(self, value, is_black):
         self.value = value
         self.is_black = is_black
-        self.pos = pos
         self.has_moved = False
 
     def __repr__(self, notation):
@@ -90,7 +76,7 @@ class Pawn(Piece):
 
 
 class Rook(Piece):
-    def __init__(self, is_black, pos):
+    def __init__(self, is_black):
         super().__init__(5, is_black)
 
     def __repr__(self):
