@@ -23,7 +23,20 @@ class Piece:
     like "E2".
     '''
 
-    def __init__(self, value, is_black, pos, board):
+    def pos_to_tuple(self):
+        '''
+        Returns the position of the piece as a
+        2-tuple containing the row and the
+        column of the position. The row and
+        column numbers are zero-indexed.
+        Example: 'c2' -> (2,1)
+        a1 -> (0,0)
+        '''
+        row = files.index(self.pos[0])
+        col = (int(self.pos[1]))-1
+        return row, col
+
+    def __init__(self, value, is_black):
         self.value = value
         self.is_black = is_black
         self.pos = pos
@@ -34,15 +47,15 @@ class Piece:
             return notation.lower()
         return notation
 
-    def capture(self, other, points):
+    def capture(self, other):
         '''
         Captures the opposing piece. Returns True if
         a piece is captured.
         '''
 
-        other.remove(points)
+        other.remove()
 
-    def remove(self, points):
+    def remove(self):
         '''
         Removes the piece from the game. Returns a
         2-tuple containing the value and the colour
@@ -53,24 +66,11 @@ class Piece:
         del self
         return value
 
-    def move(self, new_pos, valid_square) -> bool:
-        '''
-        Moves the piece to a desired square.
-        Returns True if the move is valid. Else it
-        returns False.
-        '''
-        if self.pos == new_pos or not valid_square:
-            return False
-
-        self.pos = new_pos
-        has_moved = True
-        return True
-
 
 class Pawn(Piece):
 
-    def __init__(self, is_black, pos, board):
-        super().__init__(1, is_black, pos, board)
+    def __init__(self, is_black):
+        super().__init__(1, is_black)
         self.has_moved_two_spaces_last = False
 
     def promote(self, new_piece_notation):
@@ -88,105 +88,42 @@ class Pawn(Piece):
     def __repr__(self):
         return super().__repr__('P')
 
-    def move_forwards_one(self):
-        if not self.is_black:
-            self.pos = self.pos[0] + str(int(self.pos[1]) + 1)
-        else:
-            self.pos = self.pos[0] + str(int(self.pos[1]) - 1)
-        self.has_moved_two_spaces_last = False
-
-    def move_forwards_two(self):
-        if not self.is_black:
-            self.pos = self.pos[0] + str(int(self.pos[1]) + 2)
-        else:
-            self.pos = self.pos[0] + str(int(self.pos[1]) - 2)
-        self.has_moved_two_spaces_last = True
-
-    def move_diagonally_left(self):
-        if not self.is_black:
-            self.pos = self.pos[0] + str(int(self.pos[1]) + 1)
-        else:
-            self.pos = self.pos[0] + str(int(self.pos[1]) - 1)
-        self.pos = files[files.index(self.pos[0]) - 1] + self.pos[1]
-        self.has_moved_two_spaces_last = False
-
-    def move_diagonally_right(self):
-        if not self.is_black:
-            self.pos = self.pos[0] + str(int(self.pos[1]) + 1)
-        else:
-            self.pos = self.pos[0] + str(int(self.pos[1]) - 1)
-        self.pos = files[files.index(self.pos[0]) + 1] + self.pos[1]
-        self.has_moved_two_spaces_last = False
-
 
 class Rook(Piece):
-    def __init__(self, is_black, pos, board):
-        super().__init__(5, is_black, pos, board)
+    def __init__(self, is_black, pos):
+        super().__init__(5, is_black)
 
     def __repr__(self):
         return super().__repr__('R')
 
-    def move(self, new_pos):
-        is_valid = (new_pos[0] == self.pos[0]) ^ (new_pos[1] == self.pos[1])
-
-        super().move(new_pos, is_valid)
-
 
 class Knight(Piece):
-    def __init__(self, is_black, pos, board):
-        super().__init__(3, is_black, pos, board)
+    def __init__(self, is_black):
+        super().__init__(3, is_black)
 
     def __repr__(self) -> str:
         return super().__repr__('N')
 
-    def move(self, new_pos: str):
-        is_valid = (abs(rows.index(self.pos[1]) - rows.index(new_pos[1])) == 1 and \
-                    abs(files.index(self.pos[0]) - files.index(new_pos[0])) == 2) or \
-                   (abs(rows.index(self.pos[1]) - rows.index(new_pos[1])) == 2 and \
-                    abs(files.index(self.pos[0]) - files.index(new_pos[0])) == 1)
-
-        super().move(new_pos, is_valid)
-
 
 class Bishop(Piece):
-    def __init__(self, is_black, pos, points, board):
-        super().__init__(3, is_black, pos, board)
+    def __init__(self, is_black):
+        super().__init__(3, is_black)
 
     def __repr__(self):
         return super().__repr__('B')
 
-    def move(self, new_pos):
-        is_valid = abs(rows.index[self.pos[1]] - rows.index(new_pos[1])) == \
-                   abs(files.index(self.pos[0]) - files.index(new_pos[0]))
-
-        super().move(new_pos, is_valid)
-
 
 class King(Piece):
-    def __init__(self, is_black, pos, board):
-        super().__init__(0, is_black, pos, board)
+    def __init__(self, is_black):
+        super().__init__(0, is_black)
 
     def __repr__(self):
         return super().__repr__('K')
 
-    def move(self, new_pos):
-        is_valid = abs(rows.index(self.pos[1]) - rows.index(new_pos[1])) <= 1 and \
-                   abs(files.index(self.pos[0]) - files.index(new_pos[0])) <= 1
-
-        super().move(new_pos, is_valid)
-
 
 class Queen(Piece):
-    def __init__(self, is_black, pos, board):
-        super().__init__(9, is_black, pos, board)
+    def __init__(self, is_black):
+        super().__init__(9, is_black)
 
     def __repr__(self):
         return super().__repr__('Q')
-
-    def move(self, new_pos):
-        is_valid = (abs(rows.index[self.pos[1]] - rows.index(new_pos[1])) == \
-                    abs(files.index(self.pos[0]) - files.index(new_pos[0]))) or (
-                           (new_pos[0] == self.pos[0]) ^ (new_pos[1] == self.pos[1])
-                   )
-
-        super().move(new_pos, is_valid)
