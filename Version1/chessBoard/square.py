@@ -20,3 +20,7 @@ class square:
         piece=self.placed_in_square
         self.placed_in_square=None
         return piece
+
+    def get_piece(self):
+        thing=self.placed_in_square
+        return thing
