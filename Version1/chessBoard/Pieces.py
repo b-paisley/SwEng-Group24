@@ -10,17 +10,10 @@ notation_pieces_dict = {
     'K': 'King'
 }
 
-files = 'ABCDEFGH'
-rows = [i for i in range(1, 9)]
-
-
 class Piece:
     '''
     Abstract "piece" class. All of the pieces in
     the game will extend from this class.
-
-    The "pos" parameter will take in a named square,
-    like "E2".
     '''
 
     def __init__(self, value, is_black):
@@ -47,10 +40,7 @@ class Piece:
         2-tuple containing the value and the colour
         of the piece.
         '''
-        value = self.value
-        colour = self.is_black
         del self
-        return value
 
 
 class Pawn(Piece):
