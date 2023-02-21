@@ -29,7 +29,7 @@ class ChessBoard:
                 if (piece == None):
                     print("  ",end="")
                 else:
-                    print(+repr(piece)+" ",end="")
+                    print(repr(piece)+" ",end="")
             print("|")
             print("   +---+---+---+---+---+---+---+---+")
         print("     A   B   C   D   E   F   G   H\n")
