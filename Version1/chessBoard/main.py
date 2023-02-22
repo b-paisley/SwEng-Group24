@@ -88,6 +88,14 @@ print(move_checker(board, "C5", "D6")) # True
 print(move_checker(board, "C5", "D7")) # False
 print(move_checker(board, "C5", "F8")) # False
 print(move_checker(board, "C5", "F2")) # True
+
+#Testing AI Move Generator Function - black pieces
+black_pieces_array = [Knight(True,'f2',point), Pawn(True,'f2',point), Pawn(True,'d7',point)]
+print(ai_move_generator(board, black_pieces_array))
+
+#Testing AI Move Generator Function - white pieces
+white_pieces_array = [Knight(False,'f2',point), Pawn(False,'d2',point), Pawn(False,'b7',point)]
+print(ai_move_generator(board, white_pieces_array))
 '''
 
 # In this prototype chess game, the game ends when black or white lose all of their

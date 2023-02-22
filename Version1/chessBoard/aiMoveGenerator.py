@@ -90,6 +90,13 @@ def ai_move_generator(current_board, pieces_array):
             elif(isinstance(piece, King)):
                 return 'K' + piece.pos + dest_location
 
+# take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : d4
+def get_chess_notation(coords):
+    columns = "abcdefgh"
+    row = str(coords[1])
+    column = columns[coords[0] - 1]
+    return column + row
+
     
     
     
