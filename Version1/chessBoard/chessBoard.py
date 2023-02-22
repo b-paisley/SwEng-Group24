@@ -13,6 +13,11 @@ class ChessBoard:
                 self.board[i].append(square(letters[j]+str(i+1)))
                 # print((self.board[i][j]).square)
 
+    def access_square(self, square):
+        letter_file = ord(square[0])-65
+        number_row = int(square[1]) - 1
+        return self.board[number_row][letter_file].get_piece()
+
     # add all the orginal piece when completed the call draw
     def orginal_draw(self, piece, square):
         # doing unicode calculations, easiest way to get the first index
@@ -43,12 +48,15 @@ class ChessBoard:
 
         letter_file = ord(new_square[0])-65
         number_row = int(new_square[1]) - 1
-        self.board[number_row][letter_file].place_piece(piece)
+        
+        piece_in_dest = self.board[number_row][letter_file].get_piece()
+        if piece_in_dest != None:
+            if (piece.is_black ^ piece_in_dest.is_black):
+                self.board[number_row][letter_file].take_piece(piece, piece_in_dest)
+        else:
+            self.board[number_row][letter_file].place_piece(piece)
         piece.has_moved = True
         
         self.draw()
 
-    def access_square(self, square):
-        letter_file = ord(square[0])-65
-        number_row = int(square[1]) - 1
-        return self.board[number_row][letter_file].get_piece()
+    
