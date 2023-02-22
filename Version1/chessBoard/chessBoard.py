@@ -44,6 +44,8 @@ class ChessBoard:
         letter_file = ord(new_square[0])-65
         number_row = int(new_square[1]) - 1
         self.board[number_row][letter_file].place_piece(piece)
+        piece.has_moved = True
+        
         self.draw()
 
     def access_square(self, square):
