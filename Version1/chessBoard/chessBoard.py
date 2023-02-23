@@ -50,11 +50,9 @@ class ChessBoard:
         number_row = int(new_square[1]) - 1
         
         piece_in_dest = self.board[number_row][letter_file].get_piece()
-        if piece_in_dest != None:
-            if (piece.is_black ^ piece_in_dest.is_black):
-                self.board[number_row][letter_file].take_piece(piece, piece_in_dest)
-        else:
-            self.board[number_row][letter_file].place_piece(piece)
+        
+        self.board[number_row][letter_file].place_piece(piece)
+        
         piece.has_moved = True
         
         self.draw()
