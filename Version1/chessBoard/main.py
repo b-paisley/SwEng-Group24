@@ -15,7 +15,10 @@ for i in range(32):
     board.orginal_draw(piece_to_draw, square_to_fill)
 
 board.draw()
-# board.update_board("A7", "A6")
+board.update_board("A7", "A6")
+
+# Test Ai which interacts with square class
+print(ai_move_generator(board, True))
 
 '''
 # Big block of tests. Run these to get a better feel for how the move_checker handles certain things.
