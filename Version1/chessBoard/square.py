@@ -1,3 +1,4 @@
+
 class square:
 
     # this is for creating the square and will be used only when creating the board
@@ -14,7 +15,8 @@ class square:
 
     def take_piece(self, piece_take, piece_taken):
         self.placed_in_square=piece_take
-        #kill in piece class
+        #pieces_pos_dict.pop(piece_taken)      <- TODO: Make this method work
+        piece_take.capture(piece_taken)
 
     def move_off_square(self):
         piece=self.placed_in_square
