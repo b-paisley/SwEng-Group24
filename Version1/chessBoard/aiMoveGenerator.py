@@ -142,8 +142,6 @@ def get_coords(current_board, notation):
 # This gets all the pieces of the color of the ai player
 def get_piece_array(chess_board, player_color):
     piece_array = []
-    index = 0
-    pair = [4,7]
     if player_color == True:
         black = True
     else:
@@ -154,12 +152,10 @@ def get_piece_array(chess_board, player_color):
             if piece != None:
                 # Black Piece Array
                 if piece.is_black == True and black == True:
-                    # piece_array.append(chess_board.board[i][j].get_piece)
                     piece_array.append([i,j])
 
                 # White Piece Array
                 elif piece.is_black == False and black == False:
-                   # piece_array.append(piece)
                    piece_array.append([i,j])
 
     return piece_array
