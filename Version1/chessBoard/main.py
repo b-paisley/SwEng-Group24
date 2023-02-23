@@ -15,6 +15,44 @@ for i in range(32):
     board.orginal_draw(piece_to_draw, square_to_fill)
 
 board.draw()
+'''
+# Quick Example Game - Player V Person 
+next_turn = False
+color = True
+while color:
+    player_color = input("Pick your color [white or blank]: \n")
+    if player_color.lower() == 'black':
+        ai_color = 'white'
+        color = False
+    elif player_color.lower() == 'white':
+        ai_color = 'black'
+        color = False
+    elif player_color.lower() != 'white' or player_color.lower() != 'black':
+        print("Enter the color White or Black \n")
+        
+# When 0 -> Player Turn/When 1 -> AI Turn
+turn_tracker = 0
+game_over = False
+
+while not game_over:
+    if turn_tracker == 0:
+        while not next_turn:
+            piece = input("Enter the chess notation of the piece you want to move: \n")
+            move = input("Enter your move in chess notation: \n")
+            if move_checker(board, piece, move):
+                next_turn = True
+            else:
+                print("Invalid Move! Try Again \n")
+        board.update_board(piece, move)
+        print("The Player played " + piece + move)
+        turn_tracker = 1
+    elif turn_tracker == 1:
+        print("The AI Player played " + ai_move_generator(board, ai_color))
+        turn_tracker = 0
+'''
+
+
+
 # board.update_board("A7", "A6")
 
 '''

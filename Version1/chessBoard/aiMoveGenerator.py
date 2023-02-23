@@ -65,65 +65,67 @@ def ai_move_generator(current_board, player_color):
     dest_coords = get_coords(current_board, dest_location)
     dest_pos = current_board.board[dest_coords[0][0]][dest_coords[0][1]]
     
-    # Update the current board
-    current_board.update_board(piece_location, dest_location)
-
     # check colour of piece 
     if piece_name.is_black:
         # check if the move captured a piece
         if dest_pos.placed_in_square != None:
             if(isinstance(piece_name, Pawn)):
-                return piece_location + 'x' + dest_location
+                notation = piece_location + 'x' + dest_location
             elif(isinstance(piece_name, Rook)):
-                return 'r' + piece_location + 'x' + dest_location
+                notation = 'r' + piece_location + 'x' + dest_location
             elif(isinstance(piece_name, Knight)):
-                return 'n' + piece_location + 'x' + dest_location
+                notation = 'n' + piece_location + 'x' + dest_location
             elif(isinstance(piece_name, Bishop)):
-                return 'b' + piece_location + 'x' + dest_location
+                notation = 'b' + piece_location + 'x' + dest_location
             elif(isinstance(piece_name, Queen)):
-                return 'q' + piece_location + 'x' + dest_location
+                notation = 'q' + piece_location + 'x' + dest_location
             elif(isinstance(piece_name, King)):
-                return 'k' + piece_location + 'x' + dest_location    
+                notation = 'k' + piece_location + 'x' + dest_location    
         else:
             if(isinstance(piece_name, Pawn)):
-                return piece_location + dest_location
+                notation = piece_location + dest_location
             elif(isinstance(piece_name, Rook)):
-                return 'r' + piece_location + dest_location
+                notation = 'r' + piece_location + dest_location
             elif(isinstance(piece_name, Knight)):
-                return 'n' + piece_location + dest_location
+                notation = 'n' + piece_location + dest_location
             elif(isinstance(piece_name, Bishop)):
-                return 'b' + piece_location + dest_location
+                notation = 'b' + piece_location + dest_location
             elif(isinstance(piece_name, Queen)):
-                return 'q' + piece_location + dest_location
+                notation = 'q' + piece_location + dest_location
             elif(isinstance(piece_name, King)):
-                return 'k' + piece_location + dest_location
+                notation = 'k' + piece_location + dest_location
     else:
         if dest_pos.placed_in_square != None:
             if(isinstance(piece_name, Pawn)):
-                return piece_location + 'x' + dest_location
+                notation = piece_location + 'x' + dest_location
             elif(isinstance(piece_name, Rook)):
-                return 'R' + piece_location + 'x' + dest_location
+                notation = 'R' + piece_location + 'x' + dest_location
             elif(isinstance(piece_name, Knight)):
-                return 'N' + piece_location + 'x' + dest_location
+                notation = 'N' + piece_location + 'x' + dest_location
             elif(isinstance(piece_name, Bishop)):
-                return 'B' + piece_location + 'x' + dest_location
+                notation = 'B' + piece_location + 'x' + dest_location
             elif(isinstance(piece_name, Queen)):
-                return 'Q' + piece_location + 'x' + dest_location
+                notation = 'Q' + piece_location + 'x' + dest_location
             elif(isinstance(piece_name, King)):
-                return 'K' + piece_location + 'x' + dest_location    
+                notation = 'K' + piece_location + 'x' + dest_location    
         else:
             if(isinstance(piece_name, Pawn)):
-                return piece_location + dest_location
+                notation = piece_location + dest_location
             elif(isinstance(piece_name, Rook)):
-                return 'R' + piece_location + dest_location
+                notation = 'R' + piece_location + dest_location
             elif(isinstance(piece_name, Knight)):
-                return 'N' + piece_location + dest_location
+                notation = 'N' + piece_location + dest_location
             elif(isinstance(piece_name, Bishop)):
-                return 'B' + piece_location + dest_location
+                notation = 'B' + piece_location + dest_location
             elif(isinstance(piece_name, Queen)):
-                return 'Q' + piece_location + dest_location
+                notation = 'Q' + piece_location + dest_location
             elif(isinstance(piece_name, King)):
-                return 'K' + piece_location + dest_location
+                notation = 'K' + piece_location + dest_location
+    
+     # Update the current board
+    current_board.update_board(piece_location, dest_location)
+    return notation
+    
 
 # take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : d4
 def get_chess_notation(coords):
@@ -142,20 +144,20 @@ def get_coords(current_board, notation):
 # This gets all the pieces of the color of the ai player
 def get_piece_array(chess_board, player_color):
     piece_array = []
-    if player_color == True:
-        black = True
+    if player_color.lower() == 'black':
+        is_black = True
     else:
-        black = False
+        is_black = False
     for i in range(8):
         for j in range(8):
             piece = chess_board.board[i][j].placed_in_square
             if piece != None:
                 # Black Piece Array
-                if piece.is_black == True and black == True:
+                if piece.is_black == True and is_black == True:
                     piece_array.append([i,j])
 
                 # White Piece Array
-                elif piece.is_black == False and black == False:
+                elif piece.is_black == False and is_black == False:
                    piece_array.append([i,j])
 
     return piece_array
