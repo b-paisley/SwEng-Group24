@@ -68,6 +68,7 @@ def ai_move_generator(current_board, player_color):
     # check colour of piece 
     if piece_name.is_black:
         # check if the move captured a piece
+        ''' 
         if dest_pos.placed_in_square != None:
             if(isinstance(piece_name, Pawn)):
                 notation = piece_location + 'x' + dest_location
@@ -82,32 +83,34 @@ def ai_move_generator(current_board, player_color):
             elif(isinstance(piece_name, King)):
                 notation = 'k' + piece_location + 'x' + dest_location    
         else:
-            if(isinstance(piece_name, Pawn)):
-                notation = piece_location + dest_location
-            elif(isinstance(piece_name, Rook)):
-                notation = 'r' + piece_location + dest_location
-            elif(isinstance(piece_name, Knight)):
-                notation = 'n' + piece_location + dest_location
-            elif(isinstance(piece_name, Bishop)):
-                notation = 'b' + piece_location + dest_location
-            elif(isinstance(piece_name, Queen)):
-                notation = 'q' + piece_location + dest_location
-            elif(isinstance(piece_name, King)):
-                notation = 'k' + piece_location + dest_location
+        '''
+        if(isinstance(piece_name, Pawn)):
+            notation = piece_location + '_' + dest_location
+        elif(isinstance(piece_name, Rook)):
+            notation = 'r' + piece_location +  '_' + dest_location
+        elif(isinstance(piece_name, Knight)):
+            notation = 'n' + piece_location + '_' + dest_location
+        elif(isinstance(piece_name, Bishop)):
+            notation = 'b' + piece_location + '_' + dest_location
+        elif(isinstance(piece_name, Queen)):
+            notation = 'q' + piece_location + '_' + dest_location
+        elif(isinstance(piece_name, King)):
+            notation = 'k' + piece_location + '_' + dest_location
     else:
-        if dest_pos.placed_in_square != None:
-            if(isinstance(piece_name, Pawn)):
-                notation = piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, Rook)):
-                notation = 'R' + piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, Knight)):
-                notation = 'N' + piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, Bishop)):
-                notation = 'B' + piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, Queen)):
-                notation = 'Q' + piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, King)):
-                notation = 'K' + piece_location + 'x' + dest_location    
+        # if dest_pos.placed_in_square != None:
+        if(isinstance(piece_name, Pawn)):
+            notation = piece_location + '_' + dest_location
+        elif(isinstance(piece_name, Rook)):
+            notation = 'R' + piece_location + '_' + dest_location
+        elif(isinstance(piece_name, Knight)):
+            notation = 'N' + piece_location + '_' + dest_location
+        elif(isinstance(piece_name, Bishop)):
+            notation = 'B' + piece_location + '_' + dest_location
+        elif(isinstance(piece_name, Queen)):
+            notation = 'Q' + piece_location + '_' + dest_location
+        elif(isinstance(piece_name, King)):
+            notation = 'K' + piece_location + '_' + dest_location    
+        '''
         else:
             if(isinstance(piece_name, Pawn)):
                 notation = piece_location + dest_location
@@ -121,6 +124,7 @@ def ai_move_generator(current_board, player_color):
                 notation = 'Q' + piece_location + dest_location
             elif(isinstance(piece_name, King)):
                 notation = 'K' + piece_location + dest_location
+        '''
     
      # Update the current board
     current_board.update_board(piece_location, dest_location)
