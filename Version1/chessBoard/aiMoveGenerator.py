@@ -15,9 +15,9 @@ It is used to generate random moves for the AI player anf returns in the forms:
 '''
 
 #def ai_move_generator(current_board, pieces_array):
-def ai_move_generator(current_board, player_color):
+def ai_move_generator(current_board, player_colour):
     not_valid_move = True
-    pieces_array = get_piece_array(current_board, player_color)
+    pieces_array = get_piece_array(current_board, player_colour)
     # Continue looping until find a valid move
     while not_valid_move:
         rand_index = random.randint(0, len(pieces_array)-1)
@@ -145,10 +145,10 @@ def get_coords(current_board, notation):
     coords.append([dest_Y, dest_X])
     return coords
 
-# This gets all the pieces of the color of the ai player
-def get_piece_array(chess_board, player_color):
+# This gets all the pieces of the colour of the ai player
+def get_piece_array(chess_board, player_colour):
     piece_array = []
-    if player_color.lower() == 'black':
+    if player_colour.lower() == 'black':
         is_black = True
     else:
         is_black = False

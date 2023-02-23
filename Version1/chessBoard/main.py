@@ -16,20 +16,19 @@ for i in range(32):
 
 board.draw()
 # print("The AI Player played " + ai_move_generator(board, 'black'))
-'''
 # Quick Example Game - Player V Person
 next_turn = False
-color = True
-while color:
-    player_color = input("Pick your color [white or blank]: \n")
-    if player_color.lower() == 'black':
-        ai_color = 'white'
-        color = False
-    elif player_color.lower() == 'white':
+colour = True
+while colour:
+    player_colour = input("Pick your colour [white or blank]: \n")
+    if player_colour.lower() == 'black':
+        ai_colour = 'white'
+        colour = False
+    elif player_colour.lower() == 'white':
         ai_color = 'black'
-        color = False
-    elif player_color.lower() != 'white' or player_color.lower() != 'black':
-        print("Enter the color White or Black \n")
+        colour = False
+    elif player_colour.lower() != 'white' or player_colour.lower() != 'black':
+        print("Enter the colour White or Black \n")
         
 # When 0 -> Player Turn/When 1 -> AI Turn
 turn_tracker = 0
@@ -48,9 +47,9 @@ while not game_over:
         print("The Player played " + piece + move)
         turn_tracker = 1
     elif turn_tracker == 1:
-        print("The AI Player played " + ai_move_generator(board, ai_color))
+        print("The AI Player played " + ai_move_generator(board, ai_colour))
         turn_tracker = 0
-'''
+
 
 
 
