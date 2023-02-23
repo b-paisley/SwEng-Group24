@@ -15,8 +15,9 @@ for i in range(32):
     board.orginal_draw(piece_to_draw, square_to_fill)
 
 board.draw()
+print("The AI Player played " + ai_move_generator(board, 'white'))
 '''
-# Quick Example Game - Player V Person 
+# Quick Example Game - Player V Person
 next_turn = False
 color = True
 while color:
