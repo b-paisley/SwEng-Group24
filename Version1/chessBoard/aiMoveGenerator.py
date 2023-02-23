@@ -130,7 +130,8 @@ def get_chess_notation(coords):
     row = int(coords[0]) + 1
     column = chr(coords[1]+65)
     return column + str(row)
-    
+
+# Takes in chess notation and retruns coords  
 def get_coords(current_board, notation):
     coords = []
     dest_Y = int(notation[1])-1
@@ -138,6 +139,7 @@ def get_coords(current_board, notation):
     coords.append([dest_Y, dest_X])
     return coords
 
+# This gets all the pieces of the color of the ai player
 def get_piece_array(chess_board, player_color):
     piece_array = []
     index = 0
