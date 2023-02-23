@@ -21,8 +21,10 @@ def move_checker(chess_board, prev_square, new_square):
     if (isinstance(moving_square_piece, Pawn)):
         if (not taking):
             if (not moving_square_piece.has_moved):
-                if (moving_square_piece.is_black and prev_row-2 == new_row and prev_file == new_file): return True
-                if (not moving_square_piece.is_black and prev_row+2 == new_row and prev_file == new_file): return True
+                if (moving_square_piece.is_black and prev_row-2 == new_row and prev_file == new_file and
+                    chess_board.board[prev_row-1][prev_file].placed_in_square == None): return True
+                if (not moving_square_piece.is_black and prev_row+2 == new_row and prev_file == new_file and
+                    chess_board.board[prev_row+1][prev_file].placed_in_square == None): return True
             if (moving_square_piece.is_black and prev_row-1 == new_row and prev_file == new_file): return True
             if (not moving_square_piece.is_black and prev_row+1 == new_row and prev_file == new_file): return True
         else:
@@ -48,7 +50,7 @@ def move_checker(chess_board, prev_square, new_square):
     
 # this is only used by moveChecker, so I'm just passing the files and rows directly
 # we don't need to check the target square itself, as that's handled in moveChecker
-# returns True if the required straight is clear
+# returns True if the straight move is clear
 def check_straights(chess_board, prev_row, prev_file, new_row, new_file):
     if (prev_row == new_row):
         if (new_file > prev_file):
@@ -78,6 +80,7 @@ def check_straights(chess_board, prev_row, prev_file, new_row, new_file):
             return True       
     else: return False
     
+# Returns True if diagonal move is clear
 def check_diagonals(chess_board, prev_row, prev_file, new_row, new_file):
     if (abs(new_row - prev_row) == abs(new_file - prev_file)):
         if (new_row > prev_row and new_file > prev_file):
