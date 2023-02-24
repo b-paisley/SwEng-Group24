@@ -19,7 +19,7 @@ play=True
 black=False
 print("white goes first")
 while(play):
-    move=input("Input move (example='C1_C2') ") #get's input 
+    move=input("Input move (example='C1_C2') ").upper() #get's input 
     if(move=="QUIT"):  #checks if quit is used
         play=False #stops game
     else:
@@ -30,7 +30,7 @@ while(play):
             if(board.access_square(move[0:2]).is_black==black): #check that not moving other player piece
                 proper_colour=True
             if (not valid_move or not proper_colour):
-                move=input("error not a valid move please try again: ")
+                move=input("error not a valid move please try again: ").upper()
         board.update_board(move[0:2],move[3:5]) #updates board
         black = not black #changes to other turn
 # print("The AI Player played " + ai_move_generator(board, 'black'))
