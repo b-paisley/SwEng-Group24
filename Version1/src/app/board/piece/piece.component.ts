@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class PieceComponent {
     @Input()
-    char!: boolean;
+    char!: string;
 }

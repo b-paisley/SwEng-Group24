@@ -29,7 +29,7 @@ export class BoardComponent {
         return (x + y) % 2 === 1;
     }
     destroy$: Subject<boolean> = new Subject<boolean>();
-    pieceArr: any[] = [];
+    pieceArr: string[] = [];
 
     ngOnDestroy() {
         this.destroy$.next(true);
@@ -38,8 +38,18 @@ export class BoardComponent {
 
     constructor(private pieces: PiecesService) {
         this.pieces.getData().subscribe(data => {
-            this.pieceArr = Object.values(data)[0]
-            console.log(this.pieceArr)
+            this.pieceArr = Object.values(data).toString().split('/')
+            for (let i = 0; i < 8; i++) {
+                for(let j = 0; j < 8; j++) {
+                    if (parseInt(this.pieceArr[i][j]) <= 8 && parseInt(this.pieceArr[i][j]) > 0) {
+                        let blankSpace = ""
+                        for (let blank = parseInt(this.pieceArr[i][j]); blank > 0; blank--) {
+                            blankSpace +=  " "
+                        }
+                        this.pieceArr[i] = this.pieceArr[i].slice(0,j) + blankSpace;
+                    }
+                }
+            }
         })
     }
 
