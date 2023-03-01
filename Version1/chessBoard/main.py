@@ -17,6 +17,7 @@ for i in range(32):
 board.draw()
 play=True
 black=False
+thing=board.GiveFEN()
 print("white goes first")
 while(play):
     move=input("Input move (example='C1_C2') ").upper() #get's input 
@@ -32,13 +33,14 @@ while(play):
             if (not valid_move or not proper_colour):
                 move=input("error not a valid move please try again: ").upper()
         board.update_board(move[0:2],move[3:5]) #updates board
+        thing=board.GiveFEN()
         black = not black #changes to other turn
 # print("The AI Player played " + ai_move_generator(board, 'black'))
 # Quick Example Game - Player V Person
 '''
 next_turn = False
 colour = True
-while colour:
+while colour: t
     player_colour = input("Pick your colour [white or blank]: \n")
     if player_colour.lower() == 'black':
         ai_colour = 'white'
