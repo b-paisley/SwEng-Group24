@@ -74,7 +74,7 @@ def ai_move_generator(current_board, player_colour):
     return notation
     
 
-# take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : d4
+# take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : C4
 def get_chess_notation(coords):
     row = int(coords[0]) + 1
     column = chr(coords[1]+65)
@@ -85,7 +85,7 @@ def get_coords(notation):
     coords = []
     dest_Y = int(notation[1])-1
     dest_X = ord(notation[0])-65
-    coords.append([dest_Y, dest_X])
+    coords.append((dest_Y, dest_X))
     return coords
 
 # This gets all the pieces of the colour of the ai player
