@@ -14,7 +14,6 @@ It is used to generate random moves for the AI player anf returns in the forms:
  ->
 '''
 
-#def ai_move_generator(current_board, pieces_array):
 def ai_move_generator(current_board, player_colour):
     not_valid_move = True
     pieces_array = get_piece_array(current_board, player_colour)
@@ -27,30 +26,7 @@ def ai_move_generator(current_board, player_colour):
         
         # Check for valid pawn moves
         if (isinstance(piece_name, Pawn)):
-            coords = get_coords(current_board, piece_location)
-            pawn_moves = []
-            if piece_name.is_black == True:
-                if piece_name.has_moved == False:
-                    move = get_chess_notation((coords[0][0]-2, coords[0][1]))
-                move = get_chess_notation((coords[0][0]-1, coords[0][1]))
-                pawn_moves.append(move)
-                move = get_chess_notation((coords[0][0]-1, coords[0][1]-1))
-                pawn_moves.append(move)
-                move = get_chess_notation((coords[0][0]-1, coords[0][1]+1))
-                pawn_moves.append(move)
-                rand_index = random.randint(0, len(pawn_moves)-1)
-                dest_location = pawn_moves[rand_index]
-            else:
-                if piece_name.has_moved == True:
-                    move = get_chess_notation((coords[0][0]+2, coords[0][1]))
-                move = get_chess_notation((coords[0][0]+1, coords[0][1]))
-                pawn_moves.append(move)
-                move = get_chess_notation((coords[0][0]+1, coords[0][1]-1))
-                pawn_moves.append(move)
-                move = get_chess_notation((coords[0][0]+1, coords[0][1]+1))
-                pawn_moves.append(move)
-                rand_index = random.randint(0, len(pawn_moves)-1)
-                dest_location = pawn_moves[rand_index]
+            dest_location = valid_pawn_move(piece_name, current_board, piece_location)
         else:
             rand_row = random.randint(0, 8)
             rand_col = random.randint(0, 8)
@@ -62,28 +38,11 @@ def ai_move_generator(current_board, player_colour):
     # Use to see if a piece is located at the destination location of the piece
     # If there is a piece it will always be a piece of the other colour, 
     # therefore a capture will take place in this situataion
-    dest_coords = get_coords(current_board, dest_location)
+    dest_coords = get_coords(dest_location)
     dest_pos = current_board.board[dest_coords[0][0]][dest_coords[0][1]]
     
     # check colour of piece 
     if piece_name.is_black:
-        # check if the move captured a piece
-        ''' 
-        if dest_pos.placed_in_square != None:
-            if(isinstance(piece_name, Pawn)):
-                notation = piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, Rook)):
-                notation = 'r' + piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, Knight)):
-                notation = 'n' + piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, Bishop)):
-                notation = 'b' + piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, Queen)):
-                notation = 'q' + piece_location + 'x' + dest_location
-            elif(isinstance(piece_name, King)):
-                notation = 'k' + piece_location + 'x' + dest_location    
-        else:
-        '''
         if(isinstance(piece_name, Pawn)):
             notation = piece_location + '_' + dest_location
         elif(isinstance(piece_name, Rook)):
@@ -97,7 +56,6 @@ def ai_move_generator(current_board, player_colour):
         elif(isinstance(piece_name, King)):
             notation = 'k' + piece_location + '_' + dest_location
     else:
-        # if dest_pos.placed_in_square != None:
         if(isinstance(piece_name, Pawn)):
             notation = piece_location + '_' + dest_location
         elif(isinstance(piece_name, Rook)):
@@ -110,39 +68,24 @@ def ai_move_generator(current_board, player_colour):
             notation = 'Q' + piece_location + '_' + dest_location
         elif(isinstance(piece_name, King)):
             notation = 'K' + piece_location + '_' + dest_location    
-        '''
-        else:
-            if(isinstance(piece_name, Pawn)):
-                notation = piece_location + dest_location
-            elif(isinstance(piece_name, Rook)):
-                notation = 'R' + piece_location + dest_location
-            elif(isinstance(piece_name, Knight)):
-                notation = 'N' + piece_location + dest_location
-            elif(isinstance(piece_name, Bishop)):
-                notation = 'B' + piece_location + dest_location
-            elif(isinstance(piece_name, Queen)):
-                notation = 'Q' + piece_location + dest_location
-            elif(isinstance(piece_name, King)):
-                notation = 'K' + piece_location + dest_location
-        '''
     
      # Update the current board
     current_board.update_board(piece_location, dest_location)
     return notation
     
 
-# take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : d4
+# take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : C4
 def get_chess_notation(coords):
     row = int(coords[0]) + 1
     column = chr(coords[1]+65)
     return column + str(row)
 
 # Takes in chess notation and retruns coords  
-def get_coords(current_board, notation):
+def get_coords(notation):
     coords = []
     dest_Y = int(notation[1])-1
     dest_X = ord(notation[0])-65
-    coords.append([dest_Y, dest_X])
+    coords.append((dest_Y, dest_X))
     return coords
 
 # This gets all the pieces of the colour of the ai player
@@ -166,7 +109,53 @@ def get_piece_array(chess_board, player_colour):
 
     return piece_array
     
-
+def valid_pawn_move(piece_name, current_board, piece_location):
+     # Check for valid pawn moves
+    coords = get_coords(piece_location)
+    pawn_moves = []
+    if not piece_name.has_moved:
+        if piece_name.is_black == True:
+            if piece_name.has_moved == False:
+                move = get_chess_notation((coords[0][0]-2, coords[0][1]))
+                pawn_moves.append(move)
+            move = get_chess_notation((coords[0][0]-1, coords[0][1]))
+            pawn_moves.append(move)
+            rand_index = random.randint(0, len(pawn_moves)-1)
+            dest_location = pawn_moves[rand_index]
+        else:
+            if piece_name.has_moved == True:
+                move = get_chess_notation((coords[0][0]+2, coords[0][1]))
+                pawn_moves.append(move)
+            move = get_chess_notation((coords[0][0]+1, coords[0][1]))
+            pawn_moves.append(move)
+            rand_index = random.randint(0, len(pawn_moves)-1)
+            dest_location = pawn_moves[rand_index]
+    else:
+        if piece_name.is_black == True:
+            if piece_name.has_moved == False:
+                move = get_chess_notation((coords[0][0]-2, coords[0][1]))
+                pawn_moves.append(move)
+            move = get_chess_notation((coords[0][0]-1, coords[0][1]))
+            pawn_moves.append(move)
+            move = get_chess_notation((coords[0][0]-1, coords[0][1]-1))
+            pawn_moves.append(move)
+            move = get_chess_notation((coords[0][0]-1, coords[0][1]+1))
+            pawn_moves.append(move)
+            rand_index = random.randint(0, len(pawn_moves)-1)
+            dest_location = pawn_moves[rand_index]
+        else:
+            if piece_name.has_moved == True:
+                move = get_chess_notation((coords[0][0]+2, coords[0][1]))
+                pawn_moves.append(move)
+            move = get_chess_notation((coords[0][0]+1, coords[0][1]))
+            pawn_moves.append(move)
+            move = get_chess_notation((coords[0][0]+1, coords[0][1]-1))
+            pawn_moves.append(move)
+            move = get_chess_notation((coords[0][0]+1, coords[0][1]+1))
+            pawn_moves.append(move)
+            rand_index = random.randint(0, len(pawn_moves)-1)
+            dest_location = pawn_moves[rand_index]
+    return dest_location
 
     
     
