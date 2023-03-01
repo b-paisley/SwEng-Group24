@@ -1,15 +1,6 @@
 from chessBoard import *
 from Points import *
 
-notation_pieces_dict = {
-    'P': 'Pawn',
-    'R': 'Rook',
-    'N': 'Knight',
-    'B': 'Bishop',
-    'Q': 'Queen',
-    'K': 'King'
-}
-
 class Piece:
     '''
     Abstract "piece" class. All of the pieces in
@@ -20,6 +11,7 @@ class Piece:
         self.value = value
         self.is_black = is_black
         self.has_moved = False
+        self.is_captured = False
 
     def __repr__(self, notation):
         if not self.is_black:
@@ -28,20 +20,16 @@ class Piece:
 
     def capture(self, other):
         '''
-        Captures the opposing piece. Returns True if
-        a piece is captured.
+        Captures the opposing piece.
         '''
-
         other.remove()
 
     def remove(self):
         '''
-        Removes the piece from the game. Returns a
-        2-tuple containing the value and the colour
-        of the piece.
+        Removes the piece from the game.
         '''
-        del self
-
+        self.is_captured = True
+        
 
 class Pawn(Piece):
 
@@ -55,10 +43,19 @@ class Pawn(Piece):
         boolean variable determining if the promotion
         is successful.
         '''
-        if new_piece_notation not in notation_pieces_dict.keys() or new_piece_notation == '' \
-                or new_piece_notation == 'K':
+
+        notation_pieces_dict = {
+        'R': Rook,
+        'N': Knight,
+        'B': Bishop,
+        'Q': Queen,
+        'K': King
+        }
+        
+        if new_piece_notation not in notation_pieces_dict.keys() or new_piece_notation == 'K':
             return False
-        self.__class__ = eval(notation_pieces_dict[new_piece_notation])
+        
+        self.__class__ = (notation_pieces_dict[new_piece_notation])
         return True
 
     def __repr__(self):
