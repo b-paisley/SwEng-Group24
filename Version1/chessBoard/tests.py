@@ -5,6 +5,7 @@ from Pieces import Rook
 from Pieces import Pawn
 from Pieces import Knight
 from square import square
+from PiecesPosDict import *
 
 
 # check for correct creation of board
@@ -151,7 +152,15 @@ def test_get_piece():
     s.place_piece(piece)  # place the pawn on the square
     assert s.get_piece() == piece  # check that the pawn is on the square
 
-
+def test_Get_fen():
+    board=ChessBoard()
+    for i in range(32):
+        piece_to_draw = list(pieces_pos_dict.keys())[i]
+        square_to_fill = pieces_pos_dict[piece_to_draw]
+        board.orginal_draw(piece_to_draw, square_to_fill)
+    assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr")
+    board.update_board("E2","E4")
+    assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/4p3/8/pppp1ppp/rnbqkbnr") 
 
 
 
