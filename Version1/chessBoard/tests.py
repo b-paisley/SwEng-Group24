@@ -1,4 +1,3 @@
-import unittest
 from moveChecker import *
 from chessBoard import *
 from PiecesPosDict import *
