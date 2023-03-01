@@ -15,6 +15,7 @@ for i in range(32):
     board.orginal_draw(piece_to_draw, square_to_fill)
 
 board.draw()
+print("The AI Player played " + ai_move_generator(board, 'black'))
 play=True
 black=False
 print("white goes first")
