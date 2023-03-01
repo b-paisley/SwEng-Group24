@@ -57,4 +57,22 @@ class ChessBoard:
         
         self.draw()
 
+    #will return FEN(Forsyth–Edwards Notation) this is return string
+    def GiveFEN(self):
+        count=0
+        strFen=""
+        for i in range(8):
+            for j in range(8):
+                piece = self.board[abs(i-7)][j].placed_in_square
+                if(piece==None):
+                    count+=1
+                else:
+                    strFen+=(str(count) if count!=0 else "")+repr(piece)
+                    count=0
+            if(count!=0):
+                strFen+=str(count)
+                count=0
+            if(i!=7):
+                strFen+="/"
+        return strFen
     
