@@ -4,6 +4,7 @@ from chessBoard import ChessBoard
 from Pieces import Rook
 from Pieces import Pawn
 from Pieces import Knight
+from square import square
 
 
 # check for correct creation of board
@@ -102,5 +103,56 @@ def test_update_board_capture_opponent():
     print(captured_piece.is_black)
     assert captured_piece.is_black is False  # Checks to see if the is_black attribute of the captured_piece
     # object is false, which confrims that the captured piece was the black pawn
+
+
+# test creation of a square
+def test_square_init():
+    s = square("A1")
+    assert s.square == "A1"
+    assert s.placed_in_square is None
+
+
+def test_place_piece():
+    # Create a square object and put a piece on it
+    s = square("A1")
+    piece1 = Pawn(True)
+    s.place_piece(piece1)
+    # check that the piece is placed in the square
+    assert s.placed_in_square == piece1
+    # make another piece and place it on the square, which already has a piece
+    piece2 = Rook(False)
+    s.place_piece(piece2)
+    # check to see if the second piece takes the place of the first piece
+    assert s.placed_in_square == piece2
+
+
+def test_move_off_square():
+    # Test case 1: No piece on square
+    s = square("A1")
+    piece = s.move_off_square()
+    assert piece is None
+
+    # Test case 2: Piece on square
+    s = square("A1")  # create a new square and place a piece on it
+    piece = Pawn(True)
+    s.place_piece(piece)
+    s.move_off_square()  # move the piece off the square
+    assert s.placed_in_square is None  # check that the piece was removed from the square
+
+
+def test_get_piece():
+    # Test case 1: No piece on square
+    s = square("A1")
+    assert s.get_piece() is None  # check that no piece is on the square
+
+    # Test case 2: Piece on square
+    s = square("A1")
+    piece = Pawn(True)
+    s.place_piece(piece)  # place the pawn on the square
+    assert s.get_piece() == piece  # check that the pawn is on the square
+
+
+
+
 
 
