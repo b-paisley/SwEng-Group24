@@ -425,7 +425,7 @@ def test_piece_captures():
     
     assert piece_two.is_captured
 
-def test_pawn():
+def test_pawn_class():
     pawns = [Pawn(False) for i in range(4)]
 
     # Test string representation
@@ -451,27 +451,27 @@ def test_pawn():
     pawns[3].promote('Q')
     assert isinstance(pawns[3],Queen)
 
-def test_rook():
+def test_rook_class():
     rook = Rook(False)
     # Test string representation
     assert repr(rook) == 'r'
 
-def test_knight():
+def test_knight_class():
     knight = Knight(False)
     # Test string representation
     assert repr(knight) == 'n'
 
-def test_bishop():
+def test_bishop_class():
     bishop = Bishop(False)
     # Test string representation
     assert repr(bishop) == 'b'
 
-def test_queen():
+def test_queen_class():
     queen = Queen(False)
     # Test string representation
     assert repr(queen) == 'q'
 
-def test_king():
+def test_king_class():
     king = King(False)
     # Test string representation
     assert repr(king) == 'k'
