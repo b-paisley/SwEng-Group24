@@ -25,40 +25,21 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   return response
 
-# for i in range(32):
-#     piece_to_draw = list(pieces_pos_dict.keys())[i]
-#     square_to_fill = pieces_pos_dict[piece_to_draw]
-#     board.orginal_draw(piece_to_draw, square_to_fill)
-# board.draw()
-# app.run()
-# play=True
-# black=False
-# print("white goes first")
-# while(play):
-#     move=input("Input move (example='C1_C2') ").upper() #get's input 
-#     if(move=="QUIT"):  #checks if quit is used
-#         play=False #stops game
-#     else:
-#         valid_move=False #both bools have to be set false to check error handling
-#         proper_colour = False
-#         while(not valid_move or not proper_colour):
-#             valid_move=move_checker(board,move[0:2],move[3:5]) #if valid
-#             if(board.access_square(move[0:2]).is_black==black): #check that not moving other player piece
-#                 proper_colour=True
-#             if (not valid_move or not proper_colour):
-#                 move=input("error not a valid move please try again: ").upper()
-#         board.update_board(move[0:2],move[3:5]) #updates board
-#         black = not black #changes to other turn
 @app.route('/', methods=['GET'])
 def giveFEN():
     fenVal = game.getBoard().giveFEN()
     return {'data':fenVal}
 
-# api.add_resource(giveFEN(), '/fen')  # add endpoints
+@app.route('/move/<move>', methods=['GET'])
+def makeMove(move):
+    game.playMove(move)
+    move = ''
+    fenVal = game.getBoard().giveFEN()
+    return {'data':fenVal}
 
 if __name__ == '__main__':
     app.run()  # run our Flask app
-# print("The AI Player played " + ai_move_generator(board, 'black'))
+
 # Quick Example Game - Player V Person
 '''
 next_turn = False

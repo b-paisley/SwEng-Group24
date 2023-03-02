@@ -10,4 +10,8 @@ export class PiecesService {
     let url = "http://127.0.0.1:5000/"
     return this.http.get(url)
   }
+  makeMove(move: any) {
+    let url = "http://127.0.0.1:5000/move/"
+    return this.http.get(url+move)
+  }
 }

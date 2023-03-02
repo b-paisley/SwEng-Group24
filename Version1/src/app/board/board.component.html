@@ -5,3 +5,9 @@
         </app-square>
     </div>
 </div>
+<form [formGroup]="movePiece" (ngSubmit)="onSubmit()">
+    <div class="form-group col-md-6">
+        <input type="text" class="form-control" formControlName="positionMove" id="positionMove" placeholder="Move">
+    </div>
+    <button type="submit" name="button">Submit</button>
+</form>

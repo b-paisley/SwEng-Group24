@@ -45,7 +45,7 @@
 
 # if __name__ == '__main__':
 #     app.run()  # run our Flask app
-from flask import Flask
+from flask import Flask, request
 from chessBoard import *
 from PiecesPosDict import *
 from Game import *
@@ -68,7 +68,12 @@ def getFen():
 
 @app.route('/')
 def runGame():
-    game.play()
+    # game.play()
     fenVal = ChessBoard.giveFEN(game.getBoard())
-    print(fenVal)
     return {'data':fenVal}, 200
+
+@app.route('/move/<move>')
+def movePiece(move):
+    game.playMove(move)
+    fenVal = ChessBoard.giveFEN(game.getBoard())
+    return {'data': fenVal}, 200
