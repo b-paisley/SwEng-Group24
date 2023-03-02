@@ -38,7 +38,10 @@ export class BoardComponent {
 
     constructor(private pieces: PiecesService) {
         this.pieces.getData().subscribe(data => {
+            console.log(data)
             this.pieceArr = Object.values(data).toString().split('/')
+            console.log(this.pieceArr[6].slice(0,1))
+            console.log(this.pieceArr[6].slice(2))
             for (let i = 0; i < 8; i++) {
                 for(let j = 0; j < 8; j++) {
                     if (parseInt(this.pieceArr[i][j]) <= 8 && parseInt(this.pieceArr[i][j]) > 0) {
@@ -46,10 +49,18 @@ export class BoardComponent {
                         for (let blank = parseInt(this.pieceArr[i][j]); blank > 0; blank--) {
                             blankSpace +=  " "
                         }
-                        this.pieceArr[i] = this.pieceArr[i].slice(0,j) + blankSpace;
+                        let pre = 1;
+                        let post = this.pieceArr.length-1;
+                        if (j-1 > 0) pre = j-1
+                        if (j+1 < this.pieceArr.length) post = j+1
+                        console.log(this.pieceArr[i][j] + ' ' + pre + ' ' + post + ' ' + j)
+                        if (j != 0 && j != this.pieceArr.length) this.pieceArr[i] = this.pieceArr[i].slice(0, post-1) + blankSpace + this.pieceArr[i].slice(post);
+                        else if (j == 0) this.pieceArr[i] = blankSpace + this.pieceArr[i].slice(1);
+                        else if (j == this.pieceArr.length) this.pieceArr[i] = this.pieceArr[i].slice(0, pre) + blankSpace;
                     }
                 }
             }
+            console.log(this.pieceArr)
         })
     }
 

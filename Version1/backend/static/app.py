@@ -48,6 +48,8 @@
 from flask import Flask
 from chessBoard import *
 from PiecesPosDict import *
+from Game import *
+from main import game
 
 
 app = Flask(__name__)
@@ -58,13 +60,15 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   return response
 
-board = ChessBoard()
-for i in range(32):
-    piece_to_draw = list(pieces_pos_dict.keys())[i]
-    square_to_fill = pieces_pos_dict[piece_to_draw]
-    board.orginal_draw(piece_to_draw, square_to_fill)
+@app.route('/fen')
+def getFen():
+    fenVal = ChessBoard.giveFEN(game.getBoard())
+    return {'data':fenVal}, 200
+
 
 @app.route('/')
-def getFen():
-    fenVal = ChessBoard.giveFEN(board)
+def runGame():
+    game.play()
+    fenVal = ChessBoard.giveFEN(game.getBoard())
+    print(fenVal)
     return {'data':fenVal}, 200

@@ -4,6 +4,7 @@ from Pieces import *
 from moveChecker import *
 from aiMoveGenerator import *
 from PiecesPosDict import *
+from Game import *
 from flask import Flask
 from flask_restful import Resource, Api
 from flask_cors import CORS
@@ -13,8 +14,9 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
-board = ChessBoard()
-board.draw()
+# board = ChessBoard()
+# board.draw()
+game = Game()
 
 @app.after_request
 def after_request(response):
@@ -23,12 +25,12 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   return response
 
-for i in range(32):
-    piece_to_draw = list(pieces_pos_dict.keys())[i]
-    square_to_fill = pieces_pos_dict[piece_to_draw]
-    board.orginal_draw(piece_to_draw, square_to_fill)
-board.draw()
-app.run()
+# for i in range(32):
+#     piece_to_draw = list(pieces_pos_dict.keys())[i]
+#     square_to_fill = pieces_pos_dict[piece_to_draw]
+#     board.orginal_draw(piece_to_draw, square_to_fill)
+# board.draw()
+# app.run()
 # play=True
 # black=False
 # print("white goes first")
@@ -49,8 +51,7 @@ app.run()
 #         black = not black #changes to other turn
 @app.route('/', methods=['GET'])
 def giveFEN():
-    fenVal = board.giveFEN()
-    print(fenVal)
+    fenVal = game.getBoard().giveFEN()
     return {'data':fenVal}
 
 # api.add_resource(giveFEN(), '/fen')  # add endpoints
