@@ -1,4 +1,3 @@
-#! /bin/bash
 before_install:
     export NG_CLI_ANALYTICS=ci
 
