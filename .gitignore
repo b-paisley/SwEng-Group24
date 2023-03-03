@@ -17,3 +17,4 @@ Version1/backend/static/__pycache__/PiecesPosDict.cpython-310.pyc
 Version1/backend/static/__pycache__/Points.cpython-310.pyc
 Version1/backend/static/__pycache__/square.cpython-310.pyc
 *.pyc
+*.pyc

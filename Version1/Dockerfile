@@ -24,8 +24,8 @@ RUN npm install -g @angular/cli
 
 #RUN ng serve
 #RUN n
+CMD ["/bin/bash", "-c", "./shellscript.sh"]
 
-CMD ["/bin/bash"]
 #CMD ["ng", "serve", "&"]
 #CMD ["cd", "backend/static"]
 #CMD ["flask", "run"]
