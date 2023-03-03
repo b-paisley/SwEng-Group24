@@ -99,7 +99,7 @@ def appendValidDiagonals(chess_board, square, file, row, valid_moves):
             while (checked_file < file):
                 if(checkIfTaking(chess_board, positionsToNotation(checked_file, checked_row))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, row))
+                valid_moves.append(taking + positionsToNotation(checked_file, checked_row))
                 checked_file += 1
                 checked_row -= 1
         checked_file += 1
@@ -115,7 +115,7 @@ def appendValidDiagonals(chess_board, square, file, row, valid_moves):
             while (checked_file > file):
                 if(checkIfTaking(chess_board, positionsToNotation(checked_file, checked_row))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, row))
+                valid_moves.append(taking + positionsToNotation(checked_file, checked_row))
                 checked_file -= 1
                 checked_row -= 1
         checked_file -= 1
@@ -129,7 +129,7 @@ def appendValidDiagonals(chess_board, square, file, row, valid_moves):
             while (checked_file < file):
                 if(checkIfTaking(chess_board, positionsToNotation(checked_file, checked_row))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, row))
+                valid_moves.append(taking + positionsToNotation(checked_file, checked_row))
                 checked_file += 1
                 checked_row += 1
         checked_file += 1
@@ -145,7 +145,7 @@ def appendValidDiagonals(chess_board, square, file, row, valid_moves):
             while (checked_file > file):
                 if(checkIfTaking(chess_board, positionsToNotation(checked_file, checked_row))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, row))
+                valid_moves.append(taking + positionsToNotation(checked_file, checked_row))
                 checked_file -= 1
                 checked_row += 1
         checked_file -= 1

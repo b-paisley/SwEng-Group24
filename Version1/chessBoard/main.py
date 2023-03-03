@@ -4,12 +4,7 @@ from Pieces import *
 from moveChecker import *
 from aiMoveGenerator import *
 from PiecesPosDict import *
-'''
 from allMovesFinder import *
-from tests import *
-
-test_all_moves_finder_pawn()
-'''
 
 board = ChessBoard()
 board.draw()
@@ -20,6 +15,11 @@ for i in range(32):
     board.orginal_draw(piece_to_draw, square_to_fill)
 
 board.draw()
+
+board.update_board("D2", "D3")
+print(allMovesFinder(board, "C1"))
+
+
 play=True
 black=False
 thing=board.GiveFEN()

@@ -416,6 +416,7 @@ def create_test_board():
 
     for i in range(32):
         piece_to_draw = list(pieces_pos_dict.keys())[i]
+        piece_to_draw.has_moved = False
         square_to_fill = pieces_pos_dict[piece_to_draw]
         test_board.orginal_draw(piece_to_draw, square_to_fill)
         
@@ -480,7 +481,7 @@ def test_king():
     king = King(False)
     # Test string representation
     assert repr(king) == 'k'
-'''
+
 def test_all_moves_finder_pawn():
     test_board = create_test_board()
     assert(allMovesFinder(test_board, "B2") == ["B3", "B4"])    # All valid White B-Pawn moves
@@ -501,6 +502,48 @@ def test_all_moves_finder_pawn():
     assert(allMovesFinder(test_board, "A2") == ["A3", "A4", "xB3"])  # All White A-Pawn moves, including +file take
     assert(allMovesFinder(test_board, "C2") == ["C3", "C4", "xB3"])  # All White C-Pawn moves, including -file take
     assert(allMovesFinder(test_board, "C7") == ["C5", "C6", "xD6"])  # All Black C-Pawn moves, including +file take
-    print(allMovesFinder(test_board, "E7"))
     assert(allMovesFinder(test_board, "E7") == ["E5", "E6", "xD6"])  # All Black E-Pawn moves, including -file take
-'''
+    
+def test_all_moves_finder_knight():
+    test_board = create_test_board()
+    assert(allMovesFinder(test_board, "B1") == ["A3", "C3"])         # All White B-Knight moves
+    assert(allMovesFinder(test_board, "G1") == ["F3", "H3"])         # All White B-Knight moves
+    assert(allMovesFinder(test_board, "B8") == ["A6", "C6"])         # All White B-Knight moves
+    assert(allMovesFinder(test_board, "G8") == ["F6", "H6"])         # All White B-Knight moves
+    test_board.update_board("B1", "C3")
+    assert(allMovesFinder(test_board, "C3") == ["A4", "B1", "B5", "D5", "E4"])   # All White C-Knight moves
+    test_board.update_board("C3", "D5")
+    # All White D-Knight moves, inc takes
+    assert(allMovesFinder(test_board, "D5") == ["B4", "B6", "C3", "E3", "F4", "F6", "xC7", "xE7"]) 
+    
+def test_all_moves_finder_rook():
+    test_board = create_test_board()
+    assert(allMovesFinder(test_board, "A1") == [])    # No moves available for White Rook
+    test_board.update_board("A2", "A4")
+    assert(allMovesFinder(test_board, "A1") == ["A2", "A3"])                         # Vertical Moves + Collision
+    test_board.update_board("A1", "A3")
+    assert(allMovesFinder(test_board, "A3") == ["A1", "A2", "B3", "C3", "D3", 
+                                                "E3", "F3", "G3", "H3"])             # Horizontal Moves
+    test_board.update_board("A3", "D3")
+    assert(allMovesFinder(test_board, "D3") == ["A3", "B3", "C3", "D4", "D5", "D6",
+                                                "E3", "F3", "G3", "H3", "xD7"])      # All Moves + Taking
+    
+def test_all_moves_finder_bishop():
+    test_board = create_test_board()
+    assert(allMovesFinder(test_board, "C1") == [])    # No moves available for White Rook
+    test_board.update_board("D2", "D3")
+    assert(allMovesFinder(test_board, "C1") == ["D2", "E3", "F4", "G5", "H6"]) # Diagonal opened
+    test_board.update_board("C1", "F4")
+    assert(allMovesFinder(test_board, "F4") == ["C1", "D2", "D6", "E3", "E5", 
+                                                "G3", "G5", "H6", "xC7"])             # Both Diagonals + Taking
+    
+def test_all_moves_finder_queen():
+    test_board = create_test_board()
+    assert(allMovesFinder(test_board, "D1") == [])    # No moves available for White Queen
+    test_board.update_board("E2", "E3")
+    assert(allMovesFinder(test_board, "D1") == ["E2", "F3", "G4", "H5"])        # Diagonal Opened
+    test_board.update_board("D1", "G4")
+    assert(allMovesFinder(test_board, "G4") == ["A4", "B4", "C4", "D1", "D4", "E2",
+                                                "E4", "E6", "F3", "F4", "F5", "G3", 
+                                                "G5", "G6", "H3", "H4", "H5", "xD7",
+                                                "xG7"])        # All directions + Taking
