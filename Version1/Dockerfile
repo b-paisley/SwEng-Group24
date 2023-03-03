@@ -18,8 +18,8 @@ RUN apt-get update && apt install -y python3-pip
 RUN pip install Flask
 RUN pip install flask-restful 
 RUN pip install flask-cors
-RUN npm install
-RUN npm install -g @angular/cli
+RUN npm -f install
+RUN npm -f install -g @angular/cli
 
 
 #RUN ng serve
