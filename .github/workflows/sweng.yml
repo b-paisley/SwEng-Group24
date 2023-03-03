@@ -30,7 +30,7 @@ jobs:
           context: ./
           file: ./Version1/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/Project17_ChessEngine:v${{ env.RELEASE_VERSION }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/project17_chessengine:v${{ env.RELEASE_VERSION }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
