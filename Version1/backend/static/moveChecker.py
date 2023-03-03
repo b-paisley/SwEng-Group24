@@ -34,14 +34,14 @@ def move_checker(chess_board, prev_square, new_square):
         return False
     
     if (isinstance(moving_square_piece, Rook)):
-        return check_straights(chess_board, prev_row, prev_file, new_row, new_file)
+        return checkStraights(chess_board, prev_row, prev_file, new_row, new_file)
     
     if (isinstance(moving_square_piece, Bishop)):
-        return check_diagonals(chess_board, prev_row, prev_file, new_row, new_file)
+        return checkDiagonals(chess_board, prev_row, prev_file, new_row, new_file)
     
     if (isinstance(moving_square_piece, Queen)):
-        if (check_straights(chess_board, prev_row, prev_file, new_row, new_file) 
-            or check_diagonals(chess_board, prev_row, prev_file, new_row, new_file)): return True
+        if (checkStraights(chess_board, prev_row, prev_file, new_row, new_file) 
+            or checkDiagonals(chess_board, prev_row, prev_file, new_row, new_file)): return True
         else: return False
         
     if (isinstance(moving_square_piece, Knight)):
@@ -63,7 +63,7 @@ def move_checker(chess_board, prev_square, new_square):
 # this is only used by moveChecker, so I'm just passing the files and rows directly
 # we don't need to check the target square itself, as that's handled in moveChecker
 # returns True if the straight move is clear
-def check_straights(chess_board, prev_row, prev_file, new_row, new_file):
+def checkStraights(chess_board, prev_row, prev_file, new_row, new_file):
     if (prev_row == new_row):
         if (new_file > prev_file):
             checked_file = prev_file+1
@@ -93,7 +93,7 @@ def check_straights(chess_board, prev_row, prev_file, new_row, new_file):
     else: return False
     
 # Returns True if diagonal move is clear
-def check_diagonals(chess_board, prev_row, prev_file, new_row, new_file):
+def checkDiagonals(chess_board, prev_row, prev_file, new_row, new_file):
     if (abs(new_row - prev_row) == abs(new_file - prev_file)):
         if (new_row > prev_row and new_file > prev_file):
             checked_row = prev_row + 1
