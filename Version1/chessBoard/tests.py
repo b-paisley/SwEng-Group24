@@ -6,6 +6,8 @@ from chessBoard import *
 from Pieces import *
 from square import square
 from moveChecker import *
+from allMovesFinder import *
+
 
 def test_ai_move_generator():
     # Test all possible random moves from start of game position for black 
@@ -417,7 +419,10 @@ def create_test_board():
         square_to_fill = pieces_pos_dict[piece_to_draw]
         test_board.orginal_draw(piece_to_draw, square_to_fill)
         
+    test_board.draw()    
+        
     return test_board
+
 def test_piece_captures():
     piece_one = Pawn(False)
     piece_two = Pawn(True)
@@ -475,3 +480,27 @@ def test_king():
     king = King(False)
     # Test string representation
     assert repr(king) == 'k'
+'''
+def test_all_moves_finder_pawn():
+    test_board = create_test_board()
+    assert(allMovesFinder(test_board, "B2") == ["B3", "B4"])    # All valid White B-Pawn moves
+    assert(allMovesFinder(test_board, "D7") == ["D5", "D6"])    # All valid Black D-Pawn moves
+    
+    test_board.update_board("B7", "B5")
+    test_board.update_board("B5", "B4")
+    
+    assert(allMovesFinder(test_board, "B2") == ["B3"])          # White B-Pawn double move blocked
+    test_board.update_board("B4", "B3")
+    assert(allMovesFinder(test_board, "B2") == [])              # All White B-Pawn moves blocked
+    test_board.update_board("D2", "D4")
+    test_board.update_board("D4", "D5")
+    assert(allMovesFinder(test_board, "D7") == ["D6"])          # Black D-Pawn double move blocked
+    test_board.update_board("D5", "D6")
+    assert(allMovesFinder(test_board, "D7") == [])              # All Black D-Pawn moves blocked
+    
+    assert(allMovesFinder(test_board, "A2") == ["A3", "A4", "xB3"])  # All White A-Pawn moves, including +file take
+    assert(allMovesFinder(test_board, "C2") == ["C3", "C4", "xB3"])  # All White C-Pawn moves, including -file take
+    assert(allMovesFinder(test_board, "C7") == ["C5", "C6", "xD6"])  # All Black C-Pawn moves, including +file take
+    print(allMovesFinder(test_board, "E7"))
+    assert(allMovesFinder(test_board, "E7") == ["E5", "E6", "xD6"])  # All Black E-Pawn moves, including -file take
+'''

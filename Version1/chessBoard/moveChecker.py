@@ -3,6 +3,7 @@ from Pieces import *
 
 # Single unified function for checking if a move is legal. Returns true for a legal move, false otherwise
 def move_checker(chess_board, prev_square, new_square):
+    if(not isinstance(new_square[0], str) or not new_square[1].isdigit()): return False
     prev_file = ord(prev_square[0])-65
     prev_row = int(prev_square[1])-1
     new_file = ord(new_square[0])-65

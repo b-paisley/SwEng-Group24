@@ -4,7 +4,12 @@ from Pieces import *
 from moveChecker import *
 from aiMoveGenerator import *
 from PiecesPosDict import *
+'''
+from allMovesFinder import *
+from tests import *
 
+test_all_moves_finder_pawn()
+'''
 
 board = ChessBoard()
 board.draw()
