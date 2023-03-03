@@ -2,6 +2,7 @@ FROM ubuntu:latest
 EXPOSE 4200
 EXPOSE 5000
 WORKDIR /base
+COPY package*.json ./ 
 COPY . .
 
 RUN apt-get update && apt-get install -y python3 curl
