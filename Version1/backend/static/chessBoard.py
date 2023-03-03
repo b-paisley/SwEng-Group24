@@ -3,11 +3,10 @@ from square import *
 
 
 class ChessBoard:
-
+    board = [[], [], [], [], [], [], [], []]
     # board bottom left starting point
     def __init__(self):
         letters = "ABCDEFGH"
-        self.board = [[], [], [], [], [], [], [], []]
         for i in range(8):  # num
             for j in range(8):  # char
                 self.board[i].append(square(letters[j]+str(i+1)))
@@ -58,7 +57,7 @@ class ChessBoard:
         self.draw()
 
     #will return FEN(Forsyth–Edwards Notation) this is return string
-    def GiveFEN(self):
+    def giveFEN(self):
         count=0
         strFen=""
         for i in range(8):
