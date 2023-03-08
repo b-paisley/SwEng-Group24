@@ -4,6 +4,7 @@ from Pieces import *
 from moveChecker import *
 from aiMoveGenerator import *
 from PiecesPosDict import *
+from CheckmateChecker import *
 
 
 # board.draw()
@@ -15,6 +16,9 @@ class Game:
         board.orginal_draw(piece_to_draw, square_to_fill)
     board.draw()
     black=False
+    
+    board.update_board('E8', 'E3')
+    bool = CheckmateChecker(board, 'black')
 
     def playMove(self, move:str):  
         move = move.upper()
