@@ -1,163 +1,163 @@
 from moveChecker import *
 
-def allMovesFinder(chess_board, square):
+def AllMovesFinder(chessBoard, square):
     taking = ""
-    valid_moves = []
+    validMoves = []
     file = ord(square[0])-65
     row = int(square[1])-1
-    piece = chess_board.board[row][file].placed_in_square
+    piece = chessBoard.board[row][file].placedInSquare
     
     # Brute Force approach for Pawn
     if (isinstance(piece, Pawn)):
-        row_shift = [2, 1, 1, 1]
-        file_shift = [0, -1, 0, 1]
-        if (not piece.is_black):
+        rowShift = [2, 1, 1, 1]
+        fileShift = [0, -1, 0, 1]
+        if (not piece.isBlack):
             for x in range (4):
-                if (move_checker(chess_board, square, positionsToNotation(file+file_shift[x], row+row_shift[x]))):
-                    if(checkIfTaking(chess_board, positionsToNotation(file+file_shift[x], row+row_shift[x]))): taking = "x"
+                if (MoveChecker(chessBoard, square, PositionsToNotation(file+fileShift[x], row+rowShift[x]))):
+                    if(CheckIfTaking(chessBoard, PositionsToNotation(file+fileShift[x], row+rowShift[x]))): taking = "x"
                     else: taking = ""
-                    valid_moves.append(taking + positionsToNotation(file+file_shift[x], row+row_shift[x]))
+                    validMoves.append(taking + PositionsToNotation(file+fileShift[x], row+rowShift[x]))
         else:
             for x in range (4):
-                if (move_checker(chess_board, square, positionsToNotation(file+file_shift[x], row-row_shift[x]))):
-                    if(checkIfTaking(chess_board, positionsToNotation(file+file_shift[x], row-row_shift[x]))): taking = "x"
+                if (MoveChecker(chessBoard, square, PositionsToNotation(file+fileShift[x], row-rowShift[x]))):
+                    if(CheckIfTaking(chessBoard, PositionsToNotation(file+fileShift[x], row-rowShift[x]))): taking = "x"
                     else: taking = ""
-                    valid_moves.append(taking + positionsToNotation(file+file_shift[x], row-row_shift[x]))
+                    validMoves.append(taking + PositionsToNotation(file+fileShift[x], row-rowShift[x]))
     
     # Brute force also applicable for Knight  
     if (isinstance(piece, Knight)):
-        row_shift = [2, 2, 1, 1, -1, -1, -2, -2]
-        file_shift = [-1, 1, -2, 2, -2, 2, -1, 1]
+        rowShift = [2, 2, 1, 1, -1, -1, -2, -2]
+        fileShift = [-1, 1, -2, 2, -2, 2, -1, 1]
         for x in range(8):
-            if (move_checker(chess_board, square, positionsToNotation(file+file_shift[x], row+row_shift[x]))):
-                if(checkIfTaking(chess_board, positionsToNotation(file+file_shift[x], row+row_shift[x]))): taking = "x"
+            if (MoveChecker(chessBoard, square, PositionsToNotation(file+fileShift[x], row+rowShift[x]))):
+                if(CheckIfTaking(chessBoard, PositionsToNotation(file+fileShift[x], row+rowShift[x]))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(file+file_shift[x], row+row_shift[x]))
+                validMoves.append(taking + PositionsToNotation(file+fileShift[x], row+rowShift[x]))
         
     if (isinstance(piece, Rook)):
-        valid_moves = appendValidStraights(chess_board, square, file, row, valid_moves)
+        validMoves = AppendValidStraights(chessBoard, square, file, row, validMoves)
     
     if (isinstance(piece, Bishop)):
-        valid_moves = appendValidDiagonals(chess_board, square, file, row, valid_moves)
+        validMoves = AppendValidDiagonals(chessBoard, square, file, row, validMoves)
     
     if (isinstance(piece, Queen)):
-        valid_moves = appendValidStraights(chess_board, square, file, row, valid_moves)
-        valid_moves = appendValidDiagonals(chess_board, square, file, row, valid_moves)
+        validMoves = AppendValidStraights(chessBoard, square, file, row, validMoves)
+        validMoves = AppendValidDiagonals(chessBoard, square, file, row, validMoves)
     
-    valid_moves.sort()
-    return valid_moves
+    validMoves.sort()
+    return validMoves
     
-def appendValidStraights(chess_board, square, file, row, valid_moves):
+def AppendValidStraights(chessBoard, square, file, row, validMoves):
     taking = ""
-    checked_row = 7
-    while (checked_row > row):
-        if move_checker(chess_board, square, positionsToNotation(file, checked_row)):
-            while (checked_row > row):
-                if(checkIfTaking(chess_board, positionsToNotation(file, checked_row))): taking = "x"
+    checkedRow = 7
+    while (checkedRow > row):
+        if MoveChecker(chessBoard, square, PositionsToNotation(file, checkedRow)):
+            while (checkedRow > row):
+                if(CheckIfTaking(chessBoard, PositionsToNotation(file, checkedRow))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(file, checked_row))
-                checked_row -= 1
-        checked_row -= 1
-    checked_row = 0
-    while (checked_row < row):
-        if move_checker(chess_board, square, positionsToNotation(file, checked_row)):
-            while (checked_row < row):
-                if(checkIfTaking(chess_board, positionsToNotation(file, checked_row))): taking = "x"
+                validMoves.append(taking + PositionsToNotation(file, checkedRow))
+                checkedRow -= 1
+        checkedRow -= 1
+    checkedRow = 0
+    while (checkedRow < row):
+        if MoveChecker(chessBoard, square, PositionsToNotation(file, checkedRow)):
+            while (checkedRow < row):
+                if(CheckIfTaking(chessBoard, PositionsToNotation(file, checkedRow))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(file, checked_row))
-                checked_row += 1
-        checked_row += 1
+                validMoves.append(taking + PositionsToNotation(file, checkedRow))
+                checkedRow += 1
+        checkedRow += 1
         
-    checked_file = 7
-    while (checked_file > file):
-        if move_checker(chess_board, square, positionsToNotation(checked_file, row)):
-            while (checked_file > file):
-                if(checkIfTaking(chess_board, positionsToNotation(checked_file, row))): taking = "x"
+    checkedFile = 7
+    while (checkedFile > file):
+        if MoveChecker(chessBoard, square, PositionsToNotation(checkedFile, row)):
+            while (checkedFile > file):
+                if(CheckIfTaking(chessBoard, PositionsToNotation(checkedFile, row))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, row))
-                checked_file -= 1
-        checked_file -= 1
-    checked_file = 0
-    while (checked_file < file):
-        if move_checker(chess_board, square, positionsToNotation(checked_file, row)):
-            while (checked_file < file):
-                if(checkIfTaking(chess_board, positionsToNotation(checked_file, row))): taking = "x"
+                validMoves.append(taking + PositionsToNotation(checkedFile, row))
+                checkedFile -= 1
+        checkedFile -= 1
+    checkedFile = 0
+    while (checkedFile < file):
+        if MoveChecker(chessBoard, square, PositionsToNotation(checkedFile, row)):
+            while (checkedFile < file):
+                if(CheckIfTaking(chessBoard, PositionsToNotation(checkedFile, row))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, row))
-                checked_file += 1
-        checked_file += 1
-    return valid_moves
+                validMoves.append(taking + PositionsToNotation(checkedFile, row))
+                checkedFile += 1
+        checkedFile += 1
+    return validMoves
 
-def appendValidDiagonals(chess_board, square, file, row, valid_moves):
-    checked_file = file
-    checked_row = row
-    while (checked_file > 0 and checked_row < 7):
-        checked_file -= 1
-        checked_row += 1
-    while (checked_file < file):
-        if move_checker(chess_board, square, positionsToNotation(checked_file, checked_row)):
-            while (checked_file < file):
-                if(checkIfTaking(chess_board, positionsToNotation(checked_file, checked_row))): taking = "x"
+def AppendValidDiagonals(chessBoard, square, file, row, validMoves):
+    checkedFile = file
+    checkedRow = row
+    while (checkedFile > 0 and checkedRow < 7):
+        checkedFile -= 1
+        checkedRow += 1
+    while (checkedFile < file):
+        if MoveChecker(chessBoard, square, PositionsToNotation(checkedFile, checkedRow)):
+            while (checkedFile < file):
+                if(CheckIfTaking(chessBoard, PositionsToNotation(checkedFile, checkedRow))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, checked_row))
-                checked_file += 1
-                checked_row -= 1
-        checked_file += 1
-        checked_row -= 1
+                validMoves.append(taking + PositionsToNotation(checkedFile, checkedRow))
+                checkedFile += 1
+                checkedRow -= 1
+        checkedFile += 1
+        checkedRow -= 1
         
-    checked_file = file
-    checked_row = row
-    while (checked_file < 7 and checked_row < 7):
-        checked_file += 1
-        checked_row += 1
-    while (checked_file > file):
-        if move_checker(chess_board, square, positionsToNotation(checked_file, checked_row)):
-            while (checked_file > file):
-                if(checkIfTaking(chess_board, positionsToNotation(checked_file, checked_row))): taking = "x"
+    checkedFile = file
+    checkedRow = row
+    while (checkedFile < 7 and checkedRow < 7):
+        checkedFile += 1
+        checkedRow += 1
+    while (checkedFile > file):
+        if MoveChecker(chessBoard, square, PositionsToNotation(checkedFile, checkedRow)):
+            while (checkedFile > file):
+                if(CheckIfTaking(chessBoard, PositionsToNotation(checkedFile, checkedRow))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, checked_row))
-                checked_file -= 1
-                checked_row -= 1
-        checked_file -= 1
-        checked_row -= 1
+                validMoves.append(taking + PositionsToNotation(checkedFile, checkedRow))
+                checkedFile -= 1
+                checkedRow -= 1
+        checkedFile -= 1
+        checkedRow -= 1
         
-    while (checked_file > 0 and checked_row > 0):
-        checked_file -= 1
-        checked_row -= 1
-    while (checked_file < file):
-        if move_checker(chess_board, square, positionsToNotation(checked_file, checked_row)):
-            while (checked_file < file):
-                if(checkIfTaking(chess_board, positionsToNotation(checked_file, checked_row))): taking = "x"
+    while (checkedFile > 0 and checkedRow > 0):
+        checkedFile -= 1
+        checkedRow -= 1
+    while (checkedFile < file):
+        if MoveChecker(chessBoard, square, PositionsToNotation(checkedFile, checkedRow)):
+            while (checkedFile < file):
+                if(CheckIfTaking(chessBoard, PositionsToNotation(checkedFile, checkedRow))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, checked_row))
-                checked_file += 1
-                checked_row += 1
-        checked_file += 1
-        checked_row += 1
+                validMoves.append(taking + PositionsToNotation(checkedFile, checkedRow))
+                checkedFile += 1
+                checkedRow += 1
+        checkedFile += 1
+        checkedRow += 1
         
-    checked_file = file
-    checked_row = row
-    while (checked_file < 7 and checked_row > 0):
-        checked_file += 1
-        checked_row -= 1
-    while (checked_file > file):
-        if move_checker(chess_board, square, positionsToNotation(checked_file, checked_row)):
-            while (checked_file > file):
-                if(checkIfTaking(chess_board, positionsToNotation(checked_file, checked_row))): taking = "x"
+    checkedFile = file
+    checkedRow = row
+    while (checkedFile < 7 and checkedRow > 0):
+        checkedFile += 1
+        checkedRow -= 1
+    while (checkedFile > file):
+        if MoveChecker(chessBoard, square, PositionsToNotation(checkedFile, checkedRow)):
+            while (checkedFile > file):
+                if(CheckIfTaking(chessBoard, PositionsToNotation(checkedFile, checkedRow))): taking = "x"
                 else: taking = ""
-                valid_moves.append(taking + positionsToNotation(checked_file, checked_row))
-                checked_file -= 1
-                checked_row += 1
-        checked_file -= 1
-        checked_row += 1
+                validMoves.append(taking + PositionsToNotation(checkedFile, checkedRow))
+                checkedFile -= 1
+                checkedRow += 1
+        checkedFile -= 1
+        checkedRow += 1
     
-    return valid_moves
+    return validMoves
 
-def positionsToNotation(file, row):
+def PositionsToNotation(file, row):
         return chr(file+65) + str(row+1)
     
-def checkIfTaking(chess_board, square):
+def CheckIfTaking(chessBoard, square):
     file = ord(square[0])-65
     row = int(square[1])-1
-    if (chess_board.board[row][file].placed_in_square == None): return False
+    if (chessBoard.board[row][file].placedInSquare == None): return False
     else: return True
