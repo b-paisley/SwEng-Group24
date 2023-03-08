@@ -12,25 +12,25 @@ class ChessBoard:
                 self.board[i].append(square(letters[j]+str(i+1)))
                 # print((self.board[i][j]).square)
 
-    def access_square(self, square):
-        letter_file = ord(square[0])-65
-        number_row = int(square[1]) - 1
-        return self.board[number_row][letter_file].get_piece()
+    def AccessSquare(self, square):
+        letterFile = ord(square[0])-65
+        numberRow = int(square[1]) - 1
+        return self.board[numberRow][letterFile].GetPiece()
 
-    # add all the orginal piece when completed the call draw
-    def orginal_draw(self, piece, square):
+    # add all the original piece when completed the call draw
+    def OriginalDraw(self, piece, square):
         # doing unicode calculations, easiest way to get the first index
-        letter_file = ord(square[0])-65
-        number_row = int(square[1]) - 1
-        square_obj = self.board[number_row][letter_file]
-        square_obj.place_piece(piece)
+        letterFile = ord(square[0])-65
+        numberRow = int(square[1]) - 1
+        squareObj = self.board[numberRow][letterFile]
+        squareObj.PlacePiece(piece)
 
-    def draw(self):
+    def Draw(self):
         print("\n   +---+---+---+---+---+---+---+---+")
         for i in range(8):
             print(" "+str(8-i)+" ", end="")
             for j in range(8):
-                piece = self.board[abs(i-7)][j].placed_in_square
+                piece = self.board[abs(i-7)][j].placedInSquare
                 print("| ", end="")
                 if (piece == None):
                     print("  ", end="")
@@ -40,29 +40,29 @@ class ChessBoard:
             print("   +---+---+---+---+---+---+---+---+")
         print("     A   B   C   D   E   F   G   H\n")
 
-    def update_board(self, prev_square, new_square):  # C1_C2
-        letter_file = ord(prev_square[0])-65
-        number_row = int(prev_square[1]) - 1
-        piece = self.board[number_row][letter_file].move_off_square()
+    def UpdateBoard(self, prevSquare, newSquare):  # C1_C2
+        letterFile = ord(prevSquare[0])-65
+        numberRow = int(prevSquare[1]) - 1
+        piece = self.board[numberRow][letterFile].MoveOffSquare()
 
-        letter_file = ord(new_square[0])-65
-        number_row = int(new_square[1]) - 1
+        letterFile = ord(newSquare[0])-65
+        numberRow = int(newSquare[1]) - 1
         
-        piece_in_dest = self.board[number_row][letter_file].get_piece()
+        pieceInDest = self.board[numberRow][letterFile].GetPiece()
         
-        self.board[number_row][letter_file].place_piece(piece)
+        self.board[numberRow][letterFile].PlacePiece(piece)
         
-        piece.has_moved = True
+        piece.hasMoved = True
         
-        self.draw()
+        self.Draw()
 
     #will return FEN(Forsyth–Edwards Notation) this is return string
-    def giveFEN(self):
+    def GiveFEN(self):
         count=0
         strFen=""
         for i in range(8):
             for j in range(8):
-                piece = self.board[abs(i-7)][j].placed_in_square
+                piece = self.board[abs(i-7)][j].placedInSquare
                 if(piece==None):
                     count+=1
                 else:
