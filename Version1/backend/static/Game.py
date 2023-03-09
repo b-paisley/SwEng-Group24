@@ -17,7 +17,9 @@ class Game:
     board.draw()
     black=False
     
-    board.update_board('E8', 'E3')
+    board.update_board('E8', 'D6')
+    board.update_board('C1', 'F4')
+    board.update_board('G7', 'G5')
     bool = CheckmateChecker(board, 'black')
 
     def playMove(self, move:str):  
