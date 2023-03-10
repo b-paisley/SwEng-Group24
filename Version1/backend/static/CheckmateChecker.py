@@ -38,6 +38,10 @@ def CheckmateChecker(currentBoard, playerColour):
    kingRow = row
    kingCol = col
    kingNotation = GetChessNotation((row, col))
+   # If King not in check
+   isCheck = movingIntoCheck(currentBoard, i, j, row, col, isBlack) 
+   if isCheck == True:
+       return False
    # Possible King moves from current square in chess notation
    notation1 = GetChessNotation((row-1, col))
    notation2 = GetChessNotation((row+1, col))
@@ -51,10 +55,6 @@ def CheckmateChecker(currentBoard, playerColour):
    coordsCheckPiece = (coordsCheckPieceArray[0][0], coordsCheckPieceArray[0][1])
    checkPieceNotation = GetChessNotation(coordsCheckPiece)
    
-   # If King not in check
-   isCheck = movingIntoCheck(currentBoard, i, j, row, col, isBlack) 
-   if isCheck == True:
-       return False
    if len(coordsCheckPieceArray) == 1:
     # Check if King can move out of check/take piece putting it in check
     if move_checker(currentBoard, kingNotation, notation1) == True:
