@@ -17,10 +17,32 @@ class Game:
     board.draw()
     black=False
     
-    board.update_board('E8', 'D6')
-    board.update_board('C1', 'F4')
-    board.update_board('G7', 'G5')
+    board.update_board('E8', 'A6')
+    board.update_board('D8', 'C6')
+    board.update_board('C1', 'D3')
+    board.update_board('F1', 'C3')
+    board.update_board('D1', 'E3')
     bool = CheckmateChecker(board, 'black')
+
+    # Queen blocks rook
+    # board.update_board('E8', 'E4')
+    # board.update_board('D8', 'F6')
+    # board.update_board('A1', 'G4')
+    # board.update_board('H1', 'A5')
+
+    #vertical rook test
+    #board.update_board('E8', 'A4')
+    #board.update_board('D8', 'F5')
+    #board.update_board('A1', 'A6')
+    #board.update_board('H1', 'B6')
+    #board.update_board('B7', 'C6')
+    #board.update_board('B8', 'A8')
+    #board.update_board('C8', 'B8')
+
+    #king-bishop-pawn test
+    #board.update_board('E8', 'B3')
+    #board.update_board('C1', 'F4')
+    #board.update_board('G7', 'G5')
 
     def playMove(self, move:str):  
         move = move.upper()

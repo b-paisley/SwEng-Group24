@@ -4,6 +4,7 @@ import random
 from chessBoard import *
 from moveChecker import *
 from square import *
+from CheckmateChecker import *
 
 '''
 This function takes in the current state of the board (current_board) and an 
