@@ -47,18 +47,17 @@ def CheckmateChecker(currentBoard, playerColour):
    notation6 = GetChessNotation((row+1, col+1))
    notation7 = GetChessNotation((row, col-1))
    notation8 = GetChessNotation((row, col+1))
-   
    coordsCheckPieceArray = PiecesCausingCheck(currentBoard, row, col, isBlack)
-   if len(coordsCheckPieceArray) == 1: # Only one piece checking King
-    coordsCheckPiece = (coordsCheckPieceArray[0][0], coordsCheckPieceArray[0][1])
-    checkPieceNotation = GetChessNotation(coordsCheckPiece)
-    # checkPiece = currentBoard.board[coordsCheckPiece[0]][coordsCheckPiece[1]].placed_in_square
-
-    isCheck = movingIntoCheck(currentBoard, i, j, row, col, isBlack) 
-    if isCheck == True:
-        return False
+   coordsCheckPiece = (coordsCheckPieceArray[0][0], coordsCheckPieceArray[0][1])
+   checkPieceNotation = GetChessNotation(coordsCheckPiece)
+   
+   # If King not in check
+   isCheck = movingIntoCheck(currentBoard, i, j, row, col, isBlack) 
+   if isCheck == True:
+       return False
+   if len(coordsCheckPieceArray) == 1:
     # Check if King can move out of check/take piece putting it in check
-    elif move_checker(currentBoard, kingNotation, notation1) == True:
+    if move_checker(currentBoard, kingNotation, notation1) == True:
         return False
     elif move_checker(currentBoard, kingNotation, notation2) == True:
         return False
@@ -83,15 +82,15 @@ def CheckmateChecker(currentBoard, playerColour):
                 pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
                 pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                 if not isinstance(pieceName, King):
-                  if pieceName.is_black and isBlack == 1:
-                    if move_checker(currentBoard, pieceNotation, checkPieceNotation):
-                       return False
-                    elif not pieceName.is_black and isBlack == 0:
-                       if move_checker(currentBoard, pieceNotation, checkPieceNotation):
-                          return False
+                    if pieceName.is_black and isBlack == 1:
+                        if move_checker(currentBoard, pieceNotation, checkPieceNotation):
+                            return False
+                        elif not pieceName.is_black and isBlack == 0:
+                            if move_checker(currentBoard, pieceNotation, checkPieceNotation):
+                                return False
                 i += 1
-        # Check if pieces can block 
-        # Pawns and Knights can't be blocked -> if get this far, checkmate
+            # Check if pieces can block 
+            # Pawns and Knights can't be blocked -> if get this far, checkmate
         if isinstance(piece, Pawn) or isinstance(piece, Knight):
             return True
         else:
@@ -119,11 +118,11 @@ def CheckmateChecker(currentBoard, playerColour):
                             pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                             if not isinstance(pieceName, King):
                                 if pieceName.is_black and isBlack == 1:
-                                 if move_checker(currentBoard, pieceNotation, blockNotation):
-                                   return False
-                                elif not pieceName.is_black and isBlack == 0:
-                                  if move_checker(currentBoard, pieceNotation, blockNotation):
-                                    return False
+                                    if move_checker(currentBoard, pieceNotation, blockNotation):
+                                        return False
+                                    elif not pieceName.is_black and isBlack == 0:
+                                        if move_checker(currentBoard, pieceNotation, blockNotation):
+                                            return False
                             j += 1
                         checkCol += 1
                         i += 1
@@ -139,10 +138,10 @@ def CheckmateChecker(currentBoard, playerColour):
                             pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                             if not isinstance(pieceName, King):
                                 if pieceName.is_black and isBlack == 1:
-                                    if move_checker(currentBoard, pieceNotation, blockNotation):
+                                    if move_checker(currentBoard, pieceNotation, blockNotation) == True:
                                         return False
                                 elif not pieceName.is_black and isBlack == 0:
-                                    if move_checker(currentBoard, pieceNotation, blockNotation):
+                                    if move_checker(currentBoard, pieceNotation, blockNotation) == True:
                                         return False
                             j += 1
                         checkCol -= 1
@@ -189,7 +188,7 @@ def CheckmateChecker(currentBoard, playerColour):
                             j += 1
                         checkRow -= 1
                         i += 1
-            
+                
             # Blocking when piece checking is Bishop/Queen diag
             # Diag Left Below
             if coordsCheckPiece[0] < kingRow and coordsCheckPiece[1] < kingCol:
@@ -279,7 +278,25 @@ def CheckmateChecker(currentBoard, playerColour):
                     checkCol -= 1
                     checkRow -= 1
                     i += 1
-      
+   else:
+       # More than one piece putting king in check
+       # Check if King can move out of check/take piece putting it in check
+    if move_checker(currentBoard, kingNotation, notation1) == True:
+        return False
+    elif move_checker(currentBoard, kingNotation, notation2) == True:
+        return False
+    elif move_checker(currentBoard, kingNotation, notation3) == True:
+        return False
+    elif move_checker(currentBoard, kingNotation, notation4) == True:
+        return False
+    elif move_checker(currentBoard, kingNotation, notation5) == True:
+        return False
+    elif move_checker(currentBoard, kingNotation, notation6) == True:
+        return False
+    elif move_checker(currentBoard, kingNotation, notation7) == True:
+        return False
+    elif move_checker(currentBoard, kingNotation, notation8) == True:
+        return False
    return True # if get this far its checkmate 
       
 def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what peice is putting check on King
@@ -460,14 +477,6 @@ def GetChessNotation(coords):
     row = int(coords[0]) + 1
     column = chr(coords[1]+65)
     return column + str(row)
-
-# Takes in chess notation and retruns coords  
-def GetCoords(notation):
-    coords = []
-    destY = int(notation[1])-1
-    destX = ord(notation[0])-65
-    coords.append([destY, destX])
-    return coords
 
 # This gets all the pieces of the colour of the ai player
 def GetPieceArray(chessBoard, playerColour):

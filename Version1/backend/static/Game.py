@@ -16,19 +16,44 @@ class Game:
         board.orginal_draw(piece_to_draw, square_to_fill)
     board.draw()
     black=False
-    
-    board.update_board('E8', 'A6')
-    board.update_board('D8', 'C6')
-    board.update_board('C1', 'D3')
-    board.update_board('F1', 'C3')
-    board.update_board('D1', 'E3')
+    board.update_board('B2', 'B5')
+    board.update_board('A1', 'B2')
+    board.update_board('E8', 'A1')
+    board.update_board('B1', 'B3')
     bool = CheckmateChecker(board, 'black')
+    # HORSE cHECKMATE
+    #board.update_board('B2', 'B5')
+    #board.update_board('A1', 'B2')
+    #board.update_board('E8', 'A1')
+    #board.update_board('B1', 'B3')
+
+    # pawn checkmate
+    #board.update_board('E8', 'A6')
+    #board.update_board('A2', 'A5')
+    #board.update_board('B2', 'B5')
+    #board.update_board('C2', 'B4')
+    #board.update_board('D2', 'C4')
+
+    # multiple checks - checkmate
+    #board.update_board('E8', 'A5')
+    #board.update_board('A1', 'A3')
+    #board.update_board('H1', 'E5')
+    #board.update_board('D1', 'C3')
+    #board.update_board('F1', 'D3')
+    #board.update_board('C1', 'E3')
 
     # Queen blocks rook
     # board.update_board('E8', 'E4')
     # board.update_board('D8', 'F6')
     # board.update_board('A1', 'G4')
     # board.update_board('H1', 'A5')
+
+    # diag bishop check with bishop and queen either side 
+    # board.update_board('E8', 'A6')
+    #board.update_board('D8', 'C6')
+    #board.update_board('C1', 'D3')
+    #board.update_board('F1', 'C3')
+    #board.update_board('D1', 'E3')
 
     #vertical rook test
     #board.update_board('E8', 'A4')
