@@ -3,14 +3,12 @@ from CheckmateChecker import *
 from PiecesPosDict import *
 
 def test_CheckmateChecker():
-    tempBoard =MakeBoard()
     # King not in check
-    board = tempBoard
+    board = MakeBoard()
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
     # Horse and Rook Checkmate
-    board = tempBoard
     board.update_board('B2', 'B5')
     board.update_board('A1', 'B2')
     board.update_board('E8', 'A1')
@@ -19,7 +17,11 @@ def test_CheckmateChecker():
     assert(checkmate)
 
     # Pawn checkmate
-    board = tempBoard
+    board.update_board('B3', 'B1')
+    board.update_board('A1', 'E8')
+    board.update_board('B2', 'A1')
+    board.update_board('B5', 'B2')
+    
     board.update_board('E8', 'A6')
     board.update_board('A2', 'A5')
     board.update_board('B2', 'B5')
@@ -29,7 +31,12 @@ def test_CheckmateChecker():
     assert(checkmate)
 
     # Bishop - Queen checkmate
-    board = tempBoard
+    board.update_board('C4', 'D2')
+    board.update_board('B4', 'C2')
+    board.update_board('B5', 'B2')
+    board.update_board('A5', 'A2')
+    board.update_board('A6', 'E8')
+
     board.update_board('E8', 'A5')
     board.update_board('A1', 'A3')
     board.update_board('H1', 'E5')
@@ -40,7 +47,13 @@ def test_CheckmateChecker():
     assert(checkmate)
 
     # Queen Blocks
-    board = tempBoard
+    board.update_board('E3', 'C1')
+    board.update_board('D3', 'F1')
+    board.update_board('C3', 'D1')
+    board.update_board('E5', 'H1')
+    board.update_board('A3', 'A1')
+    board.update_board('A5', 'E8')
+
     board.update_board('E8', 'E4')
     board.update_board('D8', 'F6')
     board.update_board('A1', 'G4')
@@ -49,7 +62,11 @@ def test_CheckmateChecker():
     assert(checkmate) == False
 
     # diag bishop check with bishop and queen either side 
-    board = tempBoard
+    board.update_board('A5', 'H1')
+    board.update_board('G4', 'A1')
+    board.update_board('F6', 'D8')
+    board.update_board('E4', 'E8')
+    
     board.update_board('E8', 'A6')
     board.update_board('D8', 'C6')
     board.update_board('C1', 'D3')
@@ -59,7 +76,12 @@ def test_CheckmateChecker():
     assert(checkmate) == False
 
     #vertical rook test (block)
-    board = tempBoard
+    board.update_board('E3', 'D1')
+    board.update_board('C3', 'F1')
+    board.update_board('D3', 'C1')
+    board.update_board('C6', 'D8')
+    board.update_board('A6', 'E8')
+
     board.update_board('E8', 'A4')
     board.update_board('D8', 'F5')
     board.update_board('A1', 'A6')
@@ -71,7 +93,14 @@ def test_CheckmateChecker():
     assert(checkmate) == False
 
     # Pawn takes bishop putting King in check
-    board = tempBoard
+    board.update_board('B8', 'C8')
+    board.update_board('A8', 'B8')
+    board.update_board('C6', 'B7')
+    board.update_board('B6', 'H1')
+    board.update_board('A6', 'A1')
+    board.update_board('F5', 'D8')
+    board.update_board('A4', 'E8')
+
     board.update_board('E8', 'B3')
     board.update_board('C1', 'F4')
     board.update_board('G7', 'G5')
