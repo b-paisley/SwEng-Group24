@@ -1,0 +1,47 @@
+/
+
+No input required, this call will return the starting state of the board in the form of a FEN value, eg. RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr, with numbers representing the number of consecutive empty postitions,  slash representing the end of the row, lowercase letters representing the white pieces, and uppercase letters representing the black pieces.
+
+|♜|♞|♝|♛|♚|♝|♞|♜|
+|♟|♟|♟|♟|♟|♟|♟|♟|
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |
+|♙|♙|♙|♙|♙|♙|♙|♙|
+|♖|♘|♗|♕|♔|♗|♘|♖|
+FEN: RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr
+
+
+
+/FEN
+
+No input required, this call will return the current state of the board in the form of a FEN value, eg. R1BK3R/P2PbPnP/N4N2/1P1np2p/6p1/3p4/p1p1k3/Q5B1, with numbers representing the number of consecutive empty postitions, slash representing the end of the row, lowercase letters representing the white pieces, and uppercase letters representing the black pieces.
+
+|♜|  |♝|♚|  |  |  |♜|
+|♟|  |  |♟|♗|♟|♞|♟|
+|♞|  |  |  |  |♞|  |  |
+|  |♟|  |♘|♙|  |  |♙|
+|  |  |  |  |  |  |♙|  |
+|  |  |  |♙|  |  |  |  |
+|♙|  |♙|  |♔|  |  |  |
+|♛|  |  |  |  |  |♝|  |
+FEN: R1BK3R/P2PbPnP/N4N2/1P1np2p/6p1/3p4/p1p1k3/Q5B1
+
+
+
+/move/<move>
+Input <move> is the source square and destination square, this call will send the requested action as a parameter and move the selected piece if the piece is a valid move, returning the new FEN value after the action is complete. The input parameter is not case sensitive. The fomat of the input must be the source_destination. For example, if the board is in its default state of RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr, the user may enter B2_B3, this will move the white pawn in b2 to the empty square labelled b3, returning the FEN value of RNBQKBNR/PPPPPPPP/8/8/8/1p6/p1pppppp/rnbqkbnr.
+
+move input: b1_b2
+
+|♜|♞|♝|♛|♚|♝|♞|♜|			=>		|♜|♞|♝|♛|♚|♝|♞|♜|
+|♟|♟|♟|♟|♟|♟|♟|♟|			=>		|♟|♟|♟|♟|♟|♟|♟|♟|
+|  |  |  |  |  |  |  |  |		=>		|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |		=>		|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |		=>		|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |		=>		|  |♙|  |  |  |  |  |  |
+|♙|♙|♙|♙|♙|♙|♙|♙|			=>		|♙|  |♙|♙|♙|♙|♙|♙|
+|♖|♘|♗|♕|♔|♗|♘|♖|			=>		|♖|♘|♗|♕|♔|♗|♘|♖|	
+
+

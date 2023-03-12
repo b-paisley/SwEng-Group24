@@ -1,0 +1,65 @@
+/
+
+Return the starting state of the board in the form of a FEN value.
+
+Parameters: None.
+
+Numbers represent the number of consecutive empty postitions, slash representing the end of the row, lowercase letters representing the white pieces, and uppercase letters representing the black pieces.
+
+|♜|♞|♝|♛|♚|♝|♞|♜|
+|♟|♟|♟|♟|♟|♟|♟|♟|
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |
+|♙|♙|♙|♙|♙|♙|♙|♙|
+|♖|♘|♗|♕|♔|♗|♘|♖|
+
+Response: {data: 'RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr'}, 200
+
+
+
+/FEN
+
+Returns the current state of the board in the form of a FEN value.
+
+Parameters: None.
+
+Numbers represent the number of consecutive empty postitions, slash representing the end of the row, lowercase letters representing the white pieces, and uppercase letters representing the black pieces.
+
+|♜|  |♝|♚|  |  |  |♜|
+|♟|  |  |♟|♗|♟|♞|♟|
+|♞|  |  |  |  |♞|  |  |
+|  |♟|  |♘|♙|  |  |♙|
+|  |  |  |  |  |  |♙|  |
+|  |  |  |♙|  |  |  |  |
+|♙|  |♙|  |♔|  |  |  |
+|♛|  |  |  |  |  |♝|  |
+
+Response: {data: 'R1BK3R/P2PbPnP/N4N2/1P1np2p/6p1/3p4/p1p1k3/Q5B1'}, 200
+
+
+
+/move/<move>
+
+Move the piece from the source to the destination, and returns the updated FEN value.
+
+Parameters: <move>
+		This parameter is not case sensitive. The fomat of the input must be source_destination.
+
+Default state is RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr
+Sample input: B2_B3
+
+8|♜|♞|♝|♛|♚|♝|♞|♜|			=>		8|♜|♞|♝|♛|♚|♝|♞|♜|
+7|♟|♟|♟|♟|♟|♟|♟|♟|			=>		7|♟|♟|♟|♟|♟|♟|♟|♟|
+6|  |  |  |  |  |  |  |  |			=>		6|  |  |  |  |  |  |  |  |
+5|  |  |  |  |  |  |  |  |			=>		5|  |  |  |  |  |  |  |  |
+4|  |  |  |  |  |  |  |  |			=>		4|  |  |  |  |  |  |  |  |
+3|  |  |  |  |  |  |  |  |			=>		3|  |♙|  |  |  |  |  |  |
+2|♙|♙|♙|♙|♙|♙|♙|♙|			=>		2|♙|  |♙|♙|♙|♙|♙|♙|
+1|♖|♘|♗|♕|♔|♗|♘|♖|			=>		1|♖|♘|♗|♕|♔|♗|♘|♖|
+  a  b  c  d  e  f  g  h					  a  b  c  d  e  f  g  h
+
+
+Response: {data: 'RNBQKBNR/PPPPPPPP/8/8/8/1p6/p1pppppp/rnbqkbnr'}, 200
+	
