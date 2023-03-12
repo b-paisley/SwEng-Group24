@@ -194,7 +194,10 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)==0):
             return False
         if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)==1):
-            break
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     squareToCheckX = newFile
     squareToCheckY = newRow
@@ -204,7 +207,10 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
         if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     squareToCheckY = newRow
     squareToCheckX = newFile
@@ -214,7 +220,10 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
         if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     squareToCheckY = newRow
     squareToCheckX = newFile
@@ -224,7 +233,10 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
         if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     # check diagonally for bishops and queens
     # 0=bishop  1=diff obj  2=nothing
@@ -238,7 +250,10 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
         if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     squareToCheckX = newFile
     squareToCheckY = newRow
@@ -249,7 +264,10 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
         if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     squareToCheckY = newRow
     squareToCheckX = newFile
@@ -260,7 +278,10 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
         if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     squareToCheckY = newRow
     squareToCheckX = newFile
@@ -271,7 +292,10 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
         if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     #pawn checks
     squareToCheckY = newRow - 1
