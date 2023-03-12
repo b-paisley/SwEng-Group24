@@ -302,174 +302,198 @@ def CheckmateChecker(currentBoard, playerColour):
 def PiecesCausingCheck(chessBoard, newRow, newFile, black):  # check what peice is putting check on King
     piecesCheckingArray = []
     # check for Rooks putting check on King
-    squareToCheckX = new_file + 1
-    squareToCheckY = new_row - 2
+    squareToCheckX = newFile + 1
+    squareToCheckY = newRow - 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if(not knightCheck(chess_board,squareToCheckX,squareToCheckY,black,piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if(not knightCheck(chessBoard,squareToCheckX,squareToCheckY,black,piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckX = new_file - 1
+    squareToCheckX = newFile - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckX = new_file + 1
-    squareToCheckY = new_row + 2
+    squareToCheckX = newFile + 1
+    squareToCheckY = newRow + 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckX = new_file - 1
+    squareToCheckX = newFile - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckY = new_row + 1
-    squareToCheckX = new_file - 2
+    squareToCheckY = newRow + 1
+    squareToCheckX = newFile - 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckY = new_row - 1
+    squareToCheckY = newRow - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckY = new_row + 1
-    squareToCheckX = new_file + 2
+    squareToCheckY = newRow + 1
+    squareToCheckX = newFile + 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckY = new_row - 1
+    squareToCheckY = newRow - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     # check for castles and queen straights
     # 0=castle  1=diff obj  2=nothing
 
-    squareToCheckX = new_file
-    squareToCheckY = new_row
+    squareToCheckX = newFile
+    squareToCheckY = newRow
     while (squareToCheckX < 7):
         squareToCheckX= squareToCheckX + 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)==0):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
-        if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)==1):
-            break
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)==0):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)==1):
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
-    squareToCheckX = new_file
-    squareToCheckY = new_row
+    squareToCheckX = newFile
+    squareToCheckY = newRow
     while (squareToCheckX > 0):
         squareToCheckX=squareToCheckX - 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
-        if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
-    squareToCheckY = new_row
-    squareToCheckX = new_file
+    squareToCheckY = newRow
+    squareToCheckX = newFile
     while (squareToCheckY < 7):
         squareToCheckY=squareToCheckY + 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
-        if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
-    squareToCheckY = new_row
-    squareToCheckX = new_file
+    squareToCheckY = newRow
+    squareToCheckX = newFile
     while (squareToCheckY > 0):
         squareToCheckY=squareToCheckY - 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
-        if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     # check diagonally for bishops and queens
     # 0=bishop  1=diff obj  2=nothing
 
-    squareToCheckX = new_file
-    squareToCheckY = new_row
+    squareToCheckX = newFile
+    squareToCheckY = newRow
     while ((squareToCheckX < 7) and (squareToCheckY < 7)):
         squareToCheckX=squareToCheckX + 1
         squareToCheckY=squareToCheckY + 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
-        if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
-    squareToCheckX = new_file
-    squareToCheckY = new_row
+    squareToCheckX = newFile
+    squareToCheckY = newRow
     while ((squareToCheckX > 0) and (squareToCheckY < 7)):
         squareToCheckX=squareToCheckX - 1
         squareToCheckY=squareToCheckY + 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
-        if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
-    squareToCheckY = new_row
-    squareToCheckX = new_file
+    squareToCheckY = newRow
+    squareToCheckX = newFile
     while (squareToCheckY > 0 and squareToCheckX < 7):
         squareToCheckX=squareToCheckX + 1
         squareToCheckY=squareToCheckY - 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
-        if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
-    squareToCheckY = new_row
-    squareToCheckX = new_file
+    squareToCheckY = newRow
+    squareToCheckX = newFile
     while (squareToCheckY > 0 and squareToCheckX > 0):
         squareToCheckX=squareToCheckX - 1
         squareToCheckY=squareToCheckY - 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
-        if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
-            break
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+            if(not isinstance(piece, King)):
+              break
+            elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
+              break
 
     #pawn checks
-    squareToCheckY = new_row - 1
-    squareToCheckX = new_file - 1
+    squareToCheckY = newRow - 1
+    squareToCheckX = newFile - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not pawnCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-           piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not pawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+           return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckX = new_file + 1
+    squareToCheckX = newFile + 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not pawnCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not pawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckY = new_row + 1
-    squareToCheckX = new_file - 1
+    squareToCheckY = newRow + 1
+    squareToCheckX = newFile - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not pawnCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not pawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
-    squareToCheckX = new_file + 1
+    squareToCheckX = newFile + 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
-        if (not pawnCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
-            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
+        piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
+        if (not pawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+            return piecesCheckingArray.append((squareToCheckY, squareToCheckX))
     return piecesCheckingArray 
 
 # take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : d4
