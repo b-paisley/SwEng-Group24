@@ -481,8 +481,17 @@ def TestCheckmateChecker():
     board = MakeBoard()
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
+    
+    # King takes pawn putting it in check
+    board.update_board('E8', 'E6')
+    board.update_board('B2', 'D5')
+    checkmate = CheckmateChecker(board, 'black')
+    assert(checkmate) == False
 
     # Horse and Rook Checkmate
+    board.update_board('E6', 'E8')
+    board.update_board('D5', 'B2')
+    
     board.update_board('B2', 'B5')
     board.update_board('A1', 'B2')
     board.update_board('E8', 'A1')
