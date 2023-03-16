@@ -53,6 +53,7 @@ class ChessBoard:
         self.board[numberRow][letterFile].PlacePiece(piece)
         
         piece.hasMoved = True
+        piece.hasMovedTwoSpacesLast = True 
         
         self.Draw()
 
