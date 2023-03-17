@@ -4,25 +4,25 @@ class square:
     # this is for creating the square and will be used only when creating the board
     def __init__(self,square):
         self.square = square
-        self.placedInSquare = None
+        self.PlacedInSquare = None
 
     def PlacePiece(self,piece):
-        if(self.placedInSquare == None):
-            self.placedInSquare=piece
+        if(self.PlacedInSquare == None):
+            self.PlacedInSquare=piece
         else:
-            self.TakePiece(piece,self.placedInSquare)
+            self.TakePiece(piece,self.PlacedInSquare)
             
 
     def TakePiece(self, pieceTake, pieceTaken):
-        self.placedInSquare=pieceTake
+        self.PlacedInSquare=pieceTake
         #piecesPosDict.pop(pieceTaken)      <- TODO: Make this method work
         pieceTake.Capture(pieceTaken)
 
     def MoveOffSquare(self):
-        piece=self.placedInSquare
-        self.placedInSquare=None
+        piece=self.PlacedInSquare
+        self.PlacedInSquare=None
         return piece
 
     def GetPiece(self):
-        output=self.placedInSquare
+        output=self.PlacedInSquare
         return output
