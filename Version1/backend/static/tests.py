@@ -6,6 +6,7 @@ from chessBoard import *
 from Pieces import *
 from square import square
 from moveChecker import *
+from CheckmateChecker import *
 
 def TestAiMoveGenerator():
     # Test all possible random moves from start of game position for black 
