@@ -7,44 +7,44 @@ class Piece:
     the game will extend from this class.
     '''
 
-    def __init__(self, value, is_black):
+    def __init__(self, value, isBlack):
         self.value = value
-        self.is_black = is_black
-        self.has_moved = False
-        self.is_captured = False
+        self.isBlack = isBlack
+        self.hasMoved = False
+        self.isCaptured = False
 
     def __repr__(self, notation):
-        if not self.is_black:
+        if not self.isBlack:
             return notation.lower()
         return notation
 
-    def capture(self, other):
+    def Capture(self, other):
         '''
         Captures the opposing piece.
         '''
-        other.remove()
+        other.Remove()
 
-    def remove(self):
+    def Remove(self):
         '''
         Removes the piece from the game.
         '''
-        self.is_captured = True
+        self.isCaptured = True
         
 
 class Pawn(Piece):
 
-    def __init__(self, is_black):
-        super().__init__(1, is_black)
-        self.has_moved_two_spaces_last = False
+    def __init__(self, isBlack):
+        super().__init__(1, isBlack)
+        self.hasMovedTwoSpacesLast = False
 
-    def promote(self, new_piece_notation):
+    def Promote(self, newPieceNotation):
         '''
         Promote the pawn to another piece. Returns a
         boolean variable determining if the promotion
         is successful.
         '''
 
-        notation_pieces_dict = {
+        notationPiecesDict = {
         'R': Rook,
         'N': Knight,
         'B': Bishop,
@@ -52,10 +52,10 @@ class Pawn(Piece):
         'K': King
         }
         
-        if new_piece_notation not in notation_pieces_dict.keys() or new_piece_notation == 'K':
+        if newPieceNotation not in notationPiecesDict.keys() or newPieceNotation == 'K':
             return False
         
-        self.__class__ = (notation_pieces_dict[new_piece_notation])
+        self.__class__ = (notationPiecesDict[newPieceNotation])
         return True
 
     def __repr__(self):
@@ -63,40 +63,40 @@ class Pawn(Piece):
 
 
 class Rook(Piece):
-    def __init__(self, is_black):
-        super().__init__(5, is_black)
+    def __init__(self, isBlack):
+        super().__init__(5, isBlack)
 
     def __repr__(self):
         return super().__repr__('R')
 
 
 class Knight(Piece):
-    def __init__(self, is_black):
-        super().__init__(3, is_black)
+    def __init__(self, isBlack):
+        super().__init__(3, isBlack)
 
     def __repr__(self) -> str:
         return super().__repr__('N')
 
 
 class Bishop(Piece):
-    def __init__(self, is_black):
-        super().__init__(3, is_black)
+    def __init__(self, isBlack):
+        super().__init__(3, isBlack)
 
     def __repr__(self):
         return super().__repr__('B')
 
 
 class King(Piece):
-    def __init__(self, is_black):
-        super().__init__(0, is_black)
+    def __init__(self, isBlack):
+        super().__init__(0, isBlack)
 
     def __repr__(self):
         return super().__repr__('K')
 
 
 class Queen(Piece):
-    def __init__(self, is_black):
-        super().__init__(9, is_black)
+    def __init__(self, isBlack):
+        super().__init__(9, isBlack)
 
     def __repr__(self):
         return super().__repr__('Q')

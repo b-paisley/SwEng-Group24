@@ -27,14 +27,14 @@ def after_request(response):
 
 @app.route('/', methods=['GET'])
 def giveFEN():
-    fenVal = game.getBoard().giveFEN()
+    fenVal = game.GetBoard().GiveFEN()
     return {'data':fenVal}
 
 @app.route('/move/<move>', methods=['GET'])
 def makeMove(move):
-    game.playMove(move)
+    game.PlayMove(move)
     move = ''
-    fenVal = game.getBoard().giveFEN()
+    fenVal = game.GetBoard().GiveFEN()
     return {'data':fenVal}
 
 if __name__ == '__main__':

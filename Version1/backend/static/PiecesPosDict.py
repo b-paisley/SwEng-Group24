@@ -1,6 +1,6 @@
 from Pieces import *
 
-pieces_pos_dict = {
+piecesPosDict = {
     # White pieces
     Rook(False): "A1",
     Knight(False): "B1",

@@ -1,13 +1,13 @@
 from Pieces import *
 
-white_points = 0
-black_points = 0
+WHITE_POINTS = 0
+BLACK_POINTS = 0
 
-def update_points(board):
+def UpdatePoints(board):
     for row in board:
         for square in row:
-            piece = square.placed_in_square
-            if piece.is_black:
-                black_points += piece.value
+            piece = square.placedInSquare
+            if piece.isBlack:
+                BLACK_POINTS += piece.value
             else:
-                white_points += piece.value
+                WHITE_POINTS += piece.value
