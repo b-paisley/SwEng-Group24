@@ -34,14 +34,14 @@ def MoveChecker(chessBoard, prevSquare, newSquare):
         return False
     
     if (isinstance(movingSquarePiece, Rook)):
-        return checkStraights(chessBoard, prevRow, prevFile, newRow, newFile)
+        return CheckStraights(chessBoard, prevRow, prevFile, newRow, newFile)
     
     if (isinstance(movingSquarePiece, Bishop)):
-        return checkDiagonals(chessBoard, prevRow, prevFile, newRow, newFile)
+        return CheckDiagonals(chessBoard, prevRow, prevFile, newRow, newFile)
     
     if (isinstance(movingSquarePiece, Queen)):
-        if (checkStraights(chessBoard, prevRow, prevFile, newRow, newFile) 
-            or checkDiagonals(chessBoard, prevRow, prevFile, newRow, newFile)): return True
+        if (CheckStraights(chessBoard, prevRow, prevFile, newRow, newFile) 
+            or CheckDiagonals(chessBoard, prevRow, prevFile, newRow, newFile)): return True
         else: return False
         
     if (isinstance(movingSquarePiece, Knight)):
@@ -54,7 +54,7 @@ def MoveChecker(chessBoard, prevSquare, newSquare):
             black = 1
         if (not movingSquarePiece.isBlack):
             black = 0
-        if (movingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black)):
+        if (MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black)):
             # if it moves by 1 or less in both directions its legal
             if (abs(newFile - prevFile) <= 1 and abs(newRow - prevRow) <= 1):
                 return True
@@ -135,52 +135,52 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
     squareToCheckY = newRow - 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if(not knightCheck(chessBoard,squareToCheckX,squareToCheckY,black,piece)):
+        if(not KnightCheck(chessBoard,squareToCheckX,squareToCheckY,black,piece)):
             return False
 
     squareToCheckX = newFile - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not KnightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
 
     squareToCheckX = newFile + 1
     squareToCheckY = newRow + 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not KnightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
 
     squareToCheckX = newFile - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not KnightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
 
     squareToCheckY = newRow + 1
     squareToCheckX = newFile - 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not KnightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
 
     squareToCheckY = newRow - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not KnightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
 
     squareToCheckY = newRow + 1
     squareToCheckX = newFile + 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not KnightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
 
     squareToCheckY = newRow - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not knightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not KnightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
 
     # check for castles and queen straights
@@ -191,9 +191,9 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
     while (squareToCheckX < 7):
         squareToCheckX= squareToCheckX + 1
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)==0):
+        if (RookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)==0):
             return False
-        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)==1):
+        if (RookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)==1):
             if(not isinstance(piece, King)):
               break
             elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
@@ -204,9 +204,9 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
     while (squareToCheckX > 0):
         squareToCheckX=squareToCheckX - 1
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+        if (RookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
-        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+        if (RookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
             if(not isinstance(piece, King)):
               break
             elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
@@ -217,9 +217,9 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
     while (squareToCheckY < 7):
         squareToCheckY=squareToCheckY + 1
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+        if (RookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
-        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+        if (RookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
             if(not isinstance(piece, King)):
               break
             elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
@@ -230,9 +230,9 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
     while (squareToCheckY > 0):
         squareToCheckY=squareToCheckY - 1
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+        if (RookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
-        if (rookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+        if (RookCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
             if(not isinstance(piece, King)):
               break
             elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
@@ -247,9 +247,9 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         squareToCheckX=squareToCheckX + 1
         squareToCheckY=squareToCheckY + 1
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+        if (BishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
-        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+        if (BishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
             if(not isinstance(piece, King)):
               break
             elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
@@ -261,9 +261,9 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         squareToCheckX=squareToCheckX - 1
         squareToCheckY=squareToCheckY + 1
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+        if (BishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
-        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+        if (BishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
             if(not isinstance(piece, King)):
               break
             elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
@@ -275,9 +275,9 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         squareToCheckX=squareToCheckX + 1
         squareToCheckY=squareToCheckY - 1
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+        if (BishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
-        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+        if (BishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
             if(not isinstance(piece, King)):
               break
             elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
@@ -289,9 +289,9 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         squareToCheckX=squareToCheckX - 1
         squareToCheckY=squareToCheckY - 1
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
+        if (BishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 0):
             return False
-        if (bishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
+        if (BishopCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece) == 1):
             if(not isinstance(piece, King)):
               break
             elif(isinstance(piece, King) and piece.is_black == True and black != 1) or (isinstance(piece, King) and piece.is_black == False and black != 0):
@@ -302,26 +302,26 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
     squareToCheckX = newFile - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not pawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not PawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
            return False
 
     squareToCheckX = newFile + 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not pawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not PawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
 
     squareToCheckY = newRow + 1
     squareToCheckX = newFile - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not pawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not PawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
 
     squareToCheckX = newFile + 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
-        if (not pawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
+        if (not PawnCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
     return True
 
