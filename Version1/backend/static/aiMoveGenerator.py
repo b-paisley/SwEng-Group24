@@ -56,7 +56,7 @@ def AiMoveGenerator(currentBoard, playerColour):
             randCol = random.randint(0, 8)
             destLocation = GetChessNotation((randRow, randCol))
 
-        if MoveChecker(currentBoard, pieceLocation, destLocation):
+        if MoveChecker(currentBoard, pieceLocation, destLocation, 0):
             notValidMove = False
     
     # Use to see if a piece is located at the destination location of the piece
