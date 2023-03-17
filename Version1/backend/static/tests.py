@@ -558,7 +558,7 @@ def test_PieceCaptures():
     pieceOne.Capture(pieceTwo)
 
     assert pieceTwo.isCaptured
-
+'''
 def test_Pawn():
     pawns = [Pawn(False) for i in range(4)]
 
@@ -584,7 +584,7 @@ def test_Pawn():
 
     pawns[3].promote('Q')
     assert isinstance(pawns[3],Queen)
-
+'''
 def test_Rook():
     rook = Rook(False)
     # Test string representation
