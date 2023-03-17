@@ -267,7 +267,7 @@ def TestPlacePiece():
 def TestMoveOffSquare():
     # Test case 1: No piece on square
     s = square("A1")
-    piece = s.moveOffSquare()
+    piece = s.MoveOffSquare()
     assert piece is None
 
     # Test case 2: Piece on square

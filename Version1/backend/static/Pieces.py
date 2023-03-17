@@ -22,7 +22,7 @@ class Piece:
         '''
         Captures the opposing piece.
         '''
-        other.remove()
+        other.Remove()
 
     def Remove(self):
         '''
@@ -37,7 +37,7 @@ class Pawn(Piece):
         super().__init__(1, isBlack)
         self.hasMovedTwoSpacesLast = False
 
-    def promote(self, newPieceNotation):
+    def Promote(self, newPieceNotation):
         '''
         Promote the pawn to another piece. Returns a
         boolean variable determining if the promotion

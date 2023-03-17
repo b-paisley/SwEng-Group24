@@ -18,7 +18,7 @@ def CheckmateChecker(currentBoard, playerColour):
    col = 0
    while kingPiece == False:
       for j in range(8):
-        piece = currentBoard.board[i][j].placed_in_square
+        piece = currentBoard.board[i][j].PlacedInSquare
         if piece != None:
           # Black King
           if piece.is_black == True and isBlack == True:
@@ -110,7 +110,7 @@ def CheckPieceBlock(currentBoard, piecesArray, checkPieceNotation, isBlack):
     i = 0
     while i < len(piecesArray):
         pieceTaking = piecesArray[i]
-        pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+        pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
         pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
         if not isinstance(pieceName, King):
             if pieceName.is_black and isBlack == 1:
@@ -127,7 +127,7 @@ def CheckPieceTake(currentBoard, piecesArray, checkPieceNotation, isBlack):
 # Check if other pieces can take the piece putting the King in check
     while i < len(piecesArray):
         pieceTaking = piecesArray[i]
-        pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+        pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
         pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
         if not isinstance(pieceName, King):
             if pieceName.is_black and isBlack == 1:
@@ -149,7 +149,7 @@ def checkHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray
                 j = 0
                 while j < len(piecesArray):
                     pieceTaking = piecesArray[j]
-                    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+                    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
                     pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                     if not isinstance(pieceName, King):
                         if pieceName.is_black and isBlack == 1:
@@ -169,7 +169,7 @@ def checkHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray
                 j = 0
                 while j < len(piecesArray):
                     pieceTaking = piecesArray[j]
-                    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+                    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
                     pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                     if not isinstance(pieceName, King):
                         if pieceName.is_black and isBlack == 1:
@@ -194,7 +194,7 @@ def checkVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray,
                 j = 0
                 while j < len(piecesArray):
                     pieceTaking = piecesArray[j]
-                    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+                    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
                     pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                     if not isinstance(pieceName, King):
                         if pieceName.is_black and isBlack == 1:
@@ -214,7 +214,7 @@ def checkVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray,
                 j = 0
                 while j < len(piecesArray):
                     pieceTaking = piecesArray[j]
-                    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+                    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
                     pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                     if not isinstance(pieceName, King):
                         if pieceName.is_black and isBlack == 1:
@@ -238,7 +238,7 @@ def CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesAr
             j = 0
             while j < len(piecesArray):
                 pieceTaking = piecesArray[j]
-                pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+                pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
                 pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                 if not isinstance(pieceName, King):
                     if pieceName.is_black and isBlack == 1:
@@ -260,7 +260,7 @@ def CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesAr
             j = 0
             while j < len(piecesArray):
                 pieceTaking = piecesArray[j]
-                pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+                pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
                 pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                 if not isinstance(pieceName, King):
                     if pieceName.is_black and isBlack == 1:
@@ -285,7 +285,7 @@ def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesA
             j = 0
             while j < len(piecesArray):
                 pieceTaking = piecesArray[j]
-                pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+                pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
                 pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                 if not isinstance(pieceName, King):
                     if pieceName.is_black and isBlack == 1:
@@ -307,7 +307,7 @@ def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesA
             j = 0
             while j < len(piecesArray):
                 pieceTaking = piecesArray[j]
-                pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placed_in_square
+                pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].PlacedInSquare
                 pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                 if not isinstance(pieceName, King):
                     if pieceName.is_black and isBlack == 1:
@@ -328,52 +328,52 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     squareToCheckX = new_file + 1
     squareToCheckY = new_row - 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if(not knightCheck(chess_board,squareToCheckX,squareToCheckY,black,piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckX = new_file - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckX = new_file + 1
     squareToCheckY = new_row + 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckX = new_file - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckY = new_row + 1
     squareToCheckX = new_file - 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckY = new_row - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckY = new_row + 1
     squareToCheckX = new_file + 2
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckY = new_row - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not knightCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
@@ -384,7 +384,7 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     squareToCheckY = new_row
     while (squareToCheckX < 7):
         squareToCheckX= squareToCheckX + 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)==0):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
         if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)==1):
@@ -394,7 +394,7 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     squareToCheckY = new_row
     while (squareToCheckX > 0):
         squareToCheckX=squareToCheckX - 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
         if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
@@ -404,7 +404,7 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     squareToCheckX = new_file
     while (squareToCheckY < 7):
         squareToCheckY=squareToCheckY + 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
         if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
@@ -414,7 +414,7 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     squareToCheckX = new_file
     while (squareToCheckY > 0):
         squareToCheckY=squareToCheckY - 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
         if (rookCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
@@ -428,7 +428,7 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     while ((squareToCheckX < 7) and (squareToCheckY < 7)):
         squareToCheckX=squareToCheckX + 1
         squareToCheckY=squareToCheckY + 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
         if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
@@ -439,7 +439,7 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     while ((squareToCheckX > 0) and (squareToCheckY < 7)):
         squareToCheckX=squareToCheckX - 1
         squareToCheckY=squareToCheckY + 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
         if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
@@ -450,7 +450,7 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     while (squareToCheckY > 0 and squareToCheckX < 7):
         squareToCheckX=squareToCheckX + 1
         squareToCheckY=squareToCheckY - 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
         if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
@@ -461,7 +461,7 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     while (squareToCheckY > 0 and squareToCheckX > 0):
         squareToCheckX=squareToCheckX - 1
         squareToCheckY=squareToCheckY - 1
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 0):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
         if (bishopCheck(chess_board, squareToCheckX, squareToCheckY, black, piece) == 1):
@@ -471,26 +471,26 @@ def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what pei
     squareToCheckY = new_row - 1
     squareToCheckX = new_file - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not pawnCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
            piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckX = new_file + 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not pawnCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckY = new_row + 1
     squareToCheckX = new_file - 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not pawnCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
 
     squareToCheckX = new_file + 1
     if (squareToCheckY >= 0 and squareToCheckX <= 7 and squareToCheckY >= 0 and squareToCheckY <= 7):
-        piece = chess_board.board[squareToCheckY][squareToCheckX].placed_in_square
+        piece = chess_board.board[squareToCheckY][squareToCheckX].PlacedInSquare
         if (not pawnCheck(chess_board, squareToCheckX, squareToCheckY, black, piece)):
             piecesCheckingArray.append((squareToCheckY, squareToCheckX))
     return piecesCheckingArray 
@@ -510,7 +510,7 @@ def GetPieceArray(chessBoard, playerColour):
         isBlack = False
     for i in range(8):
         for j in range(8):
-            piece = chessBoard.board[i][j].placed_in_square
+            piece = chessBoard.board[i][j].PlacedInSquare
             if piece != None:
                 # Black Piece Array
                 if piece.is_black == True and isBlack == True:
