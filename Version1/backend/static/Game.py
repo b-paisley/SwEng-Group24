@@ -13,7 +13,7 @@ class Game:
         pieceToDraw = list(piecesPosDict.keys())[i]
         squareToFill = piecesPosDict[pieceToDraw]
         board.OriginalDraw(pieceToDraw, squareToFill)
-    board.draw()
+    board.Draw()
     black=False
 
     def PlayMove(self, move:str):

@@ -74,7 +74,6 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
         return True
     return False
 
-
 # this is only used by moveChecker, so I'm just passing the files and rows directly
 # we don't need to check the target square itself, as that's handled in moveChecker
 # returns True if the straight move is clear
@@ -201,6 +200,7 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
       if (not KnightCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
         return False
 
+
   # check for castles and queen straights
   # 0=castle  1=diff obj  2=nothing
 
@@ -245,6 +245,7 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         elif (isinstance(piece, King) and piece.isBlack == True and black != 1) or (
           isinstance(piece, King) and piece.isBlack == False and black != 0):
           break
+
 
     squareToCheckY = newRow
     squareToCheckX = newFile
@@ -383,6 +384,7 @@ def MovingIntoCheck(chessBoard, prevRow, prevFile, newRow, newFile, black):  # c
         piece = chessBoard.board[squareToCheckY][squareToCheckX].placedInSquare
         if (not KingCheck(chessBoard, squareToCheckX, squareToCheckY, black, piece)):
             return False
+
 
     squareToCheckY = newRow - 1
     squareToCheckX = newFile + 1
