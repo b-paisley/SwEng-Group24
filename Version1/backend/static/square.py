@@ -10,13 +10,13 @@ class square:
         if(self.placedInSquare == None):
             self.placedInSquare=piece
         else:
-            self.takePiece(piece,self.placedInSquare)
+            self.TakePiece(piece,self.placedInSquare)
             
 
     def TakePiece(self, pieceTake, pieceTaken):
         self.placedInSquare=pieceTake
         #piecesPosDict.pop(pieceTaken)      <- TODO: Make this method work
-        pieceTake.capture(pieceTaken)
+        pieceTake.Capture(pieceTaken)
 
     def MoveOffSquare(self):
         piece=self.placedInSquare
@@ -24,5 +24,5 @@ class square:
         return piece
 
     def GetPiece(self):
-        thing=self.placedInSquare
-        return thing
+        output=self.placedInSquare
+        return output

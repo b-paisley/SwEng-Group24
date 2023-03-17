@@ -367,7 +367,7 @@ def TestRook():
     testBoard.UpdateBoard("B8", "C6")
     assert(MoveChecker(testBoard, "C3", "C7") == False)    # Illegal take, vertical jumping
     testBoard.UpdateBoard("C6", "B8")
-    assert(moveChecker(testBoard, "C3", "C7") == True)     # Legal take
+    assert(MoveChecker(testBoard, "C3", "C7") == True)     # Legal take
     
     
 def TestBishop():
