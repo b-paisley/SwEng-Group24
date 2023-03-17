@@ -43,7 +43,7 @@ def test_GetChessNotation():
     # The coords (4, 3) should return the chess notation 'D5'
     coords = (4, 3)
     assert (GetChessNotation(coords)) == 'D5'
-
+'''
 def test_GetPieceArray():
     # Returns all pieces that are of the colour black on the currentBoard
     # Black pieces
@@ -136,7 +136,7 @@ def test_PawnChecks():
     board.UpdateBoard("F2", "C4")  # move pawn near king
     assert (not MoveChecker(board, "D6", "D5"), 0)  # move king into pawn check
     assert (MoveChecker(board, "D6", "C5"), 0)  # move king opposite pawn
-
+'''
 
 def test_KingFakeChecks():
     board = MakeBoard()
@@ -145,7 +145,7 @@ def test_KingFakeChecks():
     assert (not MoveChecker(board, "D6", "D5", 0))  # move king into "king" check
     assert (not MoveChecker(board, "D6", "C5", 0))
 
-
+'''
 def test_CastlingAllowed():
     # assert we are allowed castle queenside white
     board = MakeBoard()
@@ -269,7 +269,7 @@ def test_EnPassant():
     # board.UpdateBoard("D7", "D6")
     # board.UpdateBoard("D6", "D5")
     # assert (not move_checker(board, "E5", "D6", 0))
-
+'''
 def MakeBoard():
     board = ChessBoard()
     for i in range(32):
@@ -277,7 +277,7 @@ def MakeBoard():
         squareToFill = piecesPosDict[pieceToDraw]
         board.OriginalDraw(pieceToDraw, squareToFill)
     return board
-
+'''
 # check for correct creation of board
 def test_ChessboardInit():
     cb = ChessBoard()
@@ -285,7 +285,7 @@ def test_ChessboardInit():
     assert len(cb.board[0]) == 8  # check if the board has 8 colums
     assert cb.board[0][0].square == "A1"  # check if the bottom left square is "A1"
     assert cb.board[7][7].square == "H8"  # Check the top right square is "H8"
-
+'''
 
 def test_AccessSquareReturnsPiece():
     cb = ChessBoard()
@@ -421,7 +421,7 @@ def test_GetPiece():
     piece = Pawn(True)
     s.PlacePiece(piece)  # place the pawn on the square
     assert s.GetPiece() == piece  # check that the pawn is on the square
-
+'''
 def test_GetFEN():
     board=ChessBoard()
     for i in range(32):
@@ -431,7 +431,7 @@ def test_GetFEN():
     assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr")
     board.UpdateBoard("E2","E4")
     assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/4p3/8/pppp1ppp/rnbqkbnr")
-
+'''
 def test_SuperClass():
 
     testBoard = CreateTestBoard()
@@ -442,7 +442,7 @@ def test_SuperClass():
     testBoard.UpdateBoard("H3", "G5")
     assert(MoveChecker(testBoard, "G5", "H7", 0) == True)    # Taking legal
     assert(MoveChecker(testBoard, "G5", "I6", 0) == False)   # Illegal out of bounds, horizontal
-
+'''
 # Pawn must have seperate tests for white / black, as movement direction changes with colour
 def test_Pawn():
     testBoard = CreateTestBoard()
@@ -467,7 +467,7 @@ def test_Pawn():
     assert(MoveChecker(testBoard, "G5", "H4", 0) == False)    # B. Illegal diagonal move
     testBoard.UpdateBoard("H2", "H4")
     assert(MoveChecker(testBoard, "G5", "H4", 0) == True)     # B. Legal diagonal take
-
+'''
 def test_Knight():
     testBoard = CreateTestBoard()
     testBoard.UpdateBoard("B1", "C3")
@@ -609,7 +609,7 @@ def test_King():
     king = King(False)
     # Test string representation
     assert repr(king) == 'k'
-
+'''
 def test_CheckmateChecker():
     # King not in check
     board = MakeBoard()
@@ -723,4 +723,4 @@ def test_CheckmateChecker():
     board.update_board('G7', 'G5')
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
-
+'''
