@@ -31,3 +31,14 @@ class Game:
 
     def getBoard(self):
             return self.board
+    
+    def restart(self):
+        for i in range(8):
+            for j in range(8):
+                self.board.board[i][j].reset_square()
+        for i in range(32):
+            piece_to_draw = list(pieces_pos_dict.keys())[i]
+            square_to_fill = pieces_pos_dict[piece_to_draw]
+            self.board.orginal_draw(piece_to_draw, square_to_fill)
+        self.board.draw()
+        self.black=False
