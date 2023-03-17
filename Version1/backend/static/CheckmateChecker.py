@@ -39,7 +39,7 @@ def CheckmateChecker(currentBoard, playerColour):
    kingCol = col
    kingNotation = GetChessNotation((row, col))
    # If King not in check
-   isCheck = movingIntoCheck(currentBoard, i, j, row, col, isBlack) 
+   isCheck = MovingIntoCheck(currentBoard, i, j, row, col, isBlack) 
    if isCheck == True:
        return False
    # Possible King moves from current square in chess notation
@@ -86,9 +86,9 @@ def CheckmateChecker(currentBoard, playerColour):
             elif (coordsCheckPiece[0] == kingRow and coordsCheckPiece[1] == kingCol-1) or (coordsCheckPiece[0] == kingRow and coordsCheckPiece[1] == kingCol+1):
                 return True
             # Blocking when piece checking is a Rook/Queen straight
-            if CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
+            if checkHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
                 return False 
-            if CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
+            if checkVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
                 return False
             # Blocking when piece checking is Bishop/Queen diag
             if CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
@@ -100,7 +100,7 @@ def CheckmateChecker(currentBoard, playerColour):
     # Check if King can move out of check/take piece putting it in check
     k = 0
     while k < len(kingNotationArray):
-      if move_checker(currentBoard, kingNotation, kingNotationArray[k]):
+      if MoveChecker(currentBoard, kingNotation, kingNotationArray[k]):
          return False
       k += 1
    return True # if get this far its checkmate 
@@ -114,10 +114,10 @@ def CheckPieceBlock(currentBoard, piecesArray, checkPieceNotation, isBlack):
         pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
         if not isinstance(pieceName, King):
             if pieceName.is_black and isBlack == 1:
-                if move_checker(currentBoard, pieceNotation, checkPieceNotation):
+                if MoveChecker(currentBoard, pieceNotation, checkPieceNotation):
                     return False
             elif not pieceName.is_black and isBlack == 0:
-                if move_checker(currentBoard, pieceNotation, checkPieceNotation):
+                if MoveChecker(currentBoard, pieceNotation, checkPieceNotation):
                     return False
         i += 1  
     return True  
@@ -131,14 +131,14 @@ def CheckPieceTake(currentBoard, piecesArray, checkPieceNotation, isBlack):
         pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
         if not isinstance(pieceName, King):
             if pieceName.is_black and isBlack == 1:
-                if move_checker(currentBoard, pieceNotation, checkPieceNotation):
+                if MoveChecker(currentBoard, pieceNotation, checkPieceNotation):
                     return False
             elif not pieceName.is_black and isBlack == 0:
-                if move_checker(currentBoard, pieceNotation, checkPieceNotation):
+                if MoveChecker(currentBoard, pieceNotation, checkPieceNotation):
                     return False
         i += 1
 
-def CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
+def checkHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
     # Horizontal -
     if coordsCheckPiece[0] == kingRow:
         checkCol = coordsCheckPiece[1]+1
@@ -153,11 +153,11 @@ def CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray
                     pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                     if not isinstance(pieceName, King):
                         if pieceName.is_black and isBlack == 1:
-                            if move_checker(currentBoard, pieceNotation, blockNotation):
+                            if MoveChecker(currentBoard, pieceNotation, blockNotation):
                                 return False
-                            elif not pieceName.is_black and isBlack == 0:
-                                if move_checker(currentBoard, pieceNotation, blockNotation):
-                                    return False
+                        elif not pieceName.is_black and isBlack == 0:
+                            if MoveChecker(currentBoard, pieceNotation, blockNotation):
+                                return False
                     j += 1
                 checkCol += 1
                 i += 1
@@ -173,17 +173,17 @@ def CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray
                     pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                     if not isinstance(pieceName, King):
                         if pieceName.is_black and isBlack == 1:
-                            if move_checker(currentBoard, pieceNotation, blockNotation) == True:
+                            if MoveChecker(currentBoard, pieceNotation, blockNotation) == True:
                                 return False
                         elif not pieceName.is_black and isBlack == 0:
-                            if move_checker(currentBoard, pieceNotation, blockNotation) == True:
+                            if MoveChecker(currentBoard, pieceNotation, blockNotation) == True:
                                 return False
                     j += 1
                 checkCol -= 1
                 i += 1 
     return True
 
-def CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
+def checkVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
     # Vertical - 
     if coordsCheckPiece[1] == kingCol: 
         checkRow = coordsCheckPiece[0]+1
@@ -198,10 +198,10 @@ def CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray,
                     pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                     if not isinstance(pieceName, King):
                         if pieceName.is_black and isBlack == 1:
-                            if move_checker(currentBoard, pieceNotation, blockNotation):
+                            if MoveChecker(currentBoard, pieceNotation, blockNotation):
                                 return False
                             elif not pieceName.is_black and isBlack == 0:
-                                if move_checker(currentBoard, pieceNotation, blockNotation):
+                                if MoveChecker(currentBoard, pieceNotation, blockNotation):
                                     return False
                     j += 1
                 checkRow += 1
@@ -218,10 +218,10 @@ def CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray,
                     pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                     if not isinstance(pieceName, King):
                         if pieceName.is_black and isBlack == 1:
-                            if move_checker(currentBoard, pieceNotation, blockNotation):
+                            if MoveChecker(currentBoard, pieceNotation, blockNotation):
                                 return False
                         elif not pieceName.is_black and isBlack == 0:
-                            if move_checker(currentBoard, pieceNotation, blockNotation):
+                            if MoveChecker(currentBoard, pieceNotation, blockNotation):
                                 return False
                     j += 1
                 checkRow -= 1
@@ -242,10 +242,10 @@ def CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesAr
                 pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                 if not isinstance(pieceName, King):
                     if pieceName.is_black and isBlack == 1:
-                        if move_checker(currentBoard, pieceNotation, blockNotation):
+                        if MoveChecker(currentBoard, pieceNotation, blockNotation):
                             return False
                     elif not pieceName.is_black and isBlack == 0:
-                        if move_checker(currentBoard, pieceNotation, blockNotation):
+                        if MoveChecker(currentBoard, pieceNotation, blockNotation):
                             return False
                 j += 1
             checkCol += 1
@@ -264,10 +264,10 @@ def CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesAr
                 pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                 if not isinstance(pieceName, King):
                     if pieceName.is_black and isBlack == 1:
-                        if move_checker(currentBoard, pieceNotation, blockNotation):
+                        if MoveChecker(currentBoard, pieceNotation, blockNotation):
                             return False
                     elif not pieceName.is_black and isBlack == 0:
-                        if move_checker(currentBoard, pieceNotation, blockNotation):
+                        if MoveChecker(currentBoard, pieceNotation, blockNotation):
                             return False
                 j += 1
             checkCol += 1
@@ -289,10 +289,10 @@ def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesA
                 pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                 if not isinstance(pieceName, King):
                     if pieceName.is_black and isBlack == 1:
-                        if move_checker(currentBoard, pieceNotation, blockNotation):
+                        if MoveChecker(currentBoard, pieceNotation, blockNotation):
                             return False
                     elif not pieceName.is_black and isBlack == 0:
-                        if move_checker(currentBoard, pieceNotation, blockNotation):
+                        if MoveChecker(currentBoard, pieceNotation, blockNotation):
                             return False
                 j += 1
             checkCol -= 1
@@ -311,10 +311,10 @@ def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesA
                 pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1])) 
                 if not isinstance(pieceName, King):
                     if pieceName.is_black and isBlack == 1:
-                        if move_checker(currentBoard, pieceNotation, blockNotation):
+                        if MoveChecker(currentBoard, pieceNotation, blockNotation):
                             return False
                     elif not pieceName.is_black and isBlack == 0:
-                        if move_checker(currentBoard, pieceNotation, blockNotation):
+                        if MoveChecker(currentBoard, pieceNotation, blockNotation):
                             return False
                 j += 1
             checkCol -= 1
