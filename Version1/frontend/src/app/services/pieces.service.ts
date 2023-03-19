@@ -19,4 +19,7 @@ export class PiecesService {
   makeMove(move: string) {
     return this.http.get<Response>(this.url+'api/move/'+move)
   }
+  doRestart(){
+    return this.http.get<Response>(this.url +'api/reset')
+  }
 }
