@@ -38,6 +38,7 @@ class Game:
                 self.board.board[i][j].reset_square()
         for i in range(32):
             piece_to_draw = list(pieces_pos_dict.keys())[i]
+            piece_to_draw.has_moved=False
             square_to_fill = pieces_pos_dict[piece_to_draw]
             self.board.orginal_draw(piece_to_draw, square_to_fill)
         self.board.draw()

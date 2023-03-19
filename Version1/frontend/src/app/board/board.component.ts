@@ -130,4 +130,11 @@ export class BoardComponent {
             this.updateBoard(data.data.fen.toString());
         });
     }
+    doRestart(){
+        this.piecesService.doRestart().subscribe(data =>{
+            console.log("enterFun");
+            console.log(data.data.fen.toString());
+            this.updateBoard(data.data.fen.toString());
+        });
+    }
 }
