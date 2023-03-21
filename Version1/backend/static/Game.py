@@ -41,18 +41,18 @@ class Game:
              return "error"
         if move == "0-0" or move == "O-O":
           if self.black:
-            self.board.update_board("E8", "G8")
-            self.board.update_board("H8", "F8")
+            self.board.UpdateBoard("E8", "G8")
+            self.board.UpdateBoard("H8", "F8")
           if not self.black:
-            self.board.update_board("E1", "G1")
-            self.board.update_board("H1", "F1")
+            self.board.UpdateBoard("E1", "G1")
+            self.board.UpdateBoard("H1", "F1")
         elif move == "0-0-0" or move == "O-O-O":
           if self.black:
-            self.board.update_board("E8", "C8")
-            self.board.update_board("A8", "D8")
+            self.board.UpdateBoard("E8", "C8")
+            self.board.UpdateBoard("A8", "D8")
           if not self.black:
-            self.board.update_board("E1", "C1")
-            self.board.update_board("A1", "D1")
+            self.board.UpdateBoard("E1", "C1")
+            self.board.UpdateBoard("A1", "D1")
 
         else:
             self.board.UpdateBoard(move[0:2],move[3:5]) #updates board
@@ -67,6 +67,7 @@ class Game:
                 self.board.board[i][j].ResetSquare()
         for i in range(32):
             pieceToDraw = list(piecesPosDict.keys())[i]
+            pieceToDraw.hasMoved = False
             squareToFill = piecesPosDict[pieceToDraw]
             self.board.OriginalDraw(pieceToDraw, squareToFill)
         self.board.Draw()
