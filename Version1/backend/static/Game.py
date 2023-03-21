@@ -67,6 +67,7 @@ class Game:
                 self.board.board[i][j].ResetSquare()
         for i in range(32):
             pieceToDraw = list(piecesPosDict.keys())[i]
+            pieceToDraw.hasMoved=False
             squareToFill = piecesPosDict[pieceToDraw]
             self.board.OriginalDraw(pieceToDraw, squareToFill)
         self.board.Draw()
