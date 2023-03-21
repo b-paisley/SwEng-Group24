@@ -14,59 +14,59 @@ It is used to generate random moves for the AI player anf returns in the forms:
  ->
 '''
 
-#def ai_move_generator(current_board, pieces_array):
-def ai_move_generator(current_board, player_colour):
-    not_valid_move = True
-    pieces_array = get_piece_array(current_board, player_colour)
+#def AiMoveGenerator(currentBoard, piecesArray):
+def AiMoveGenerator(currentBoard, playerColour):
+    notValidMove = True
+    piecesArray = GetPieceArray(currentBoard, playerColour)
     # Continue looping until find a valid move
-    while not_valid_move:
-        rand_index = random.randint(0, len(pieces_array)-1)
-        piece = pieces_array[rand_index]
-        piece_name = current_board.board[piece[0]][piece[1]].placed_in_square
-        piece_location = get_chess_notation((piece[0], piece[1]))
+    while notValidMove:
+        randIndex = random.randint(0, len(piecesArray)-1)
+        piece = piecesArray[randIndex]
+        pieceName = currentBoard.board[piece[0]][piece[1]].placedInSquare
+        pieceLocation = GetChessNotation((piece[0], piece[1]))
         
         # Check for valid pawn moves
-        if (isinstance(piece_name, Pawn)):
-            coords = get_coords(current_board, piece_location)
-            pawn_moves = []
-            if piece_name.is_black == True:
-                if piece_name.has_moved == False:
-                    move = get_chess_notation((coords[0][0]-2, coords[0][1]))
-                move = get_chess_notation((coords[0][0]-1, coords[0][1]))
-                pawn_moves.append(move)
-                move = get_chess_notation((coords[0][0]-1, coords[0][1]-1))
-                pawn_moves.append(move)
-                move = get_chess_notation((coords[0][0]-1, coords[0][1]+1))
-                pawn_moves.append(move)
-                rand_index = random.randint(0, len(pawn_moves)-1)
-                dest_location = pawn_moves[rand_index]
+        if (isinstance(pieceName, Pawn)):
+            coords = GetCoords(currentBoard, pieceLocation)
+            pawnMoves = []
+            if pieceName.isBlack == True:
+                if pieceName.hasMoved == False:
+                    move = GetChessNotation((coords[0][0]-2, coords[0][1]))
+                move = GetChessNotation((coords[0][0]-1, coords[0][1]))
+                pawnMoves.append(move)
+                move = GetChessNotation((coords[0][0]-1, coords[0][1]-1))
+                pawnMoves.append(move)
+                move = GetChessNotation((coords[0][0]-1, coords[0][1]+1))
+                pawnMoves.append(move)
+                randIndex = random.randint(0, len(pawnMoves)-1)
+                destLocation = pawnMoves[randIndex]
             else:
-                if piece_name.has_moved == True:
-                    move = get_chess_notation((coords[0][0]+2, coords[0][1]))
-                move = get_chess_notation((coords[0][0]+1, coords[0][1]))
-                pawn_moves.append(move)
-                move = get_chess_notation((coords[0][0]+1, coords[0][1]-1))
-                pawn_moves.append(move)
-                move = get_chess_notation((coords[0][0]+1, coords[0][1]+1))
-                pawn_moves.append(move)
-                rand_index = random.randint(0, len(pawn_moves)-1)
-                dest_location = pawn_moves[rand_index]
+                if pieceName.hasMoved == True:
+                    move = GetChessNotation((coords[0][0]+2, coords[0][1]))
+                move = GetChessNotation((coords[0][0]+1, coords[0][1]))
+                pawnMoves.append(move)
+                move = GetChessNotation((coords[0][0]+1, coords[0][1]-1))
+                pawnMoves.append(move)
+                move = GetChessNotation((coords[0][0]+1, coords[0][1]+1))
+                pawnMoves.append(move)
+                randIndex = random.randint(0, len(pawnMoves)-1)
+                destLocation = pawnMoves[randIndex]
         else:
-            rand_row = random.randint(0, 8)
-            rand_col = random.randint(0, 8)
-            dest_location = get_chess_notation((rand_row, rand_col))
+            randRow = random.randint(0, 8)
+            randCol = random.randint(0, 8)
+            destLocation = GetChessNotation((randRow, randCol))
 
-        if move_checker(current_board, piece_location, dest_location):
-            not_valid_move = False
+        if MoveChecker(currentBoard, pieceLocation, destLocation, 0):
+            notValidMove = False
     
     # Use to see if a piece is located at the destination location of the piece
     # If there is a piece it will always be a piece of the other colour, 
     # therefore a capture will take place in this situataion
-    dest_coords = get_coords(current_board, dest_location)
-    dest_pos = current_board.board[dest_coords[0][0]][dest_coords[0][1]]
+    destCoords = GetCoords(currentBoard, destLocation)
+    destPos = currentBoard.board[destCoords[0][0]][destCoords[0][1]]
     
     # check colour of piece 
-    if piece_name.is_black:
+    if pieceName.isBlack:
         # check if the move captured a piece
         ''' 
         if dest_pos.placed_in_square != None:
@@ -84,32 +84,32 @@ def ai_move_generator(current_board, player_colour):
                 notation = 'k' + piece_location + 'x' + dest_location    
         else:
         '''
-        if(isinstance(piece_name, Pawn)):
-            notation = piece_location + '_' + dest_location
-        elif(isinstance(piece_name, Rook)):
-            notation = 'r' + piece_location +  '_' + dest_location
-        elif(isinstance(piece_name, Knight)):
-            notation = 'n' + piece_location + '_' + dest_location
-        elif(isinstance(piece_name, Bishop)):
-            notation = 'b' + piece_location + '_' + dest_location
-        elif(isinstance(piece_name, Queen)):
-            notation = 'q' + piece_location + '_' + dest_location
-        elif(isinstance(piece_name, King)):
-            notation = 'k' + piece_location + '_' + dest_location
+        if(isinstance(pieceName, Pawn)):
+            notation = pieceLocation + '_' + destLocation
+        elif(isinstance(pieceName, Rook)):
+            notation = 'r' + pieceLocation +  '_' + destLocation
+        elif(isinstance(pieceName, Knight)):
+            notation = 'n' + pieceLocation + '_' + destLocation
+        elif(isinstance(pieceName, Bishop)):
+            notation = 'b' + pieceLocation + '_' + destLocation
+        elif(isinstance(pieceName, Queen)):
+            notation = 'q' + pieceLocation + '_' + destLocation
+        elif(isinstance(pieceName, King)):
+            notation = 'k' + pieceLocation + '_' + destLocation
     else:
         # if dest_pos.placed_in_square != None:
-        if(isinstance(piece_name, Pawn)):
-            notation = piece_location + '_' + dest_location
-        elif(isinstance(piece_name, Rook)):
-            notation = 'R' + piece_location + '_' + dest_location
-        elif(isinstance(piece_name, Knight)):
-            notation = 'N' + piece_location + '_' + dest_location
-        elif(isinstance(piece_name, Bishop)):
-            notation = 'B' + piece_location + '_' + dest_location
-        elif(isinstance(piece_name, Queen)):
-            notation = 'Q' + piece_location + '_' + dest_location
-        elif(isinstance(piece_name, King)):
-            notation = 'K' + piece_location + '_' + dest_location    
+        if(isinstance(pieceName, Pawn)):
+            notation = pieceLocation + '_' + destLocation
+        elif(isinstance(pieceName, Rook)):
+            notation = 'R' + pieceLocation + '_' + destLocation
+        elif(isinstance(pieceName, Knight)):
+            notation = 'N' + pieceLocation + '_' + destLocation
+        elif(isinstance(pieceName, Bishop)):
+            notation = 'B' + pieceLocation + '_' + destLocation
+        elif(isinstance(pieceName, Queen)):
+            notation = 'Q' + pieceLocation + '_' + destLocation
+        elif(isinstance(pieceName, King)):
+            notation = 'K' + pieceLocation + '_' + destLocation    
         '''
         else:
             if(isinstance(piece_name, Pawn)):
@@ -127,44 +127,44 @@ def ai_move_generator(current_board, player_colour):
         '''
     
      # Update the current board
-    current_board.update_board(piece_location, dest_location)
+    currentBoard.UpdateBoard(pieceLocation, destLocation)
     return notation
     
 
 # take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : d4
-def get_chess_notation(coords):
+def GetChessNotation(coords):
     row = int(coords[0]) + 1
     column = chr(coords[1]+65)
     return column + str(row)
 
 # Takes in chess notation and retruns coords  
-def get_coords(current_board, notation):
+def GetCoords(currentBoard, notation):
     coords = []
-    dest_Y = int(notation[1])-1
-    dest_X = ord(notation[0])-65
-    coords.append([dest_Y, dest_X])
+    destY = int(notation[1])-1
+    destX = ord(notation[0])-65
+    coords.append([destY, destX])
     return coords
 
 # This gets all the pieces of the colour of the ai player
-def get_piece_array(chess_board, player_colour):
-    piece_array = []
-    if player_colour.lower() == 'black':
-        is_black = True
+def GetPieceArray(chessBoard, playerColour):
+    pieceArray = []
+    if playerColour.lower() == 'black':
+        isBlack = True
     else:
-        is_black = False
+        isBlack = False
     for i in range(8):
         for j in range(8):
-            piece = chess_board.board[i][j].placed_in_square
+            piece = chessBoard.board[i][j].placedInSquare
             if piece != None:
                 # Black Piece Array
-                if piece.is_black == True and is_black == True:
-                    piece_array.append([i,j])
+                if piece.isBlack == True and isBlack == True:
+                    pieceArray.append([i,j])
 
                 # White Piece Array
-                elif piece.is_black == False and is_black == False:
-                   piece_array.append([i,j])
+                elif piece.isBlack == False and isBlack == False:
+                   pieceArray.append([i,j])
 
-    return piece_array
+    return pieceArray
     
 
 

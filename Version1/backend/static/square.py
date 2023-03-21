@@ -6,19 +6,20 @@ class square:
         self.square = square
         self.placedInSquare = None
 
-    def place_piece(self,piece):
+
+    def PlacePiece(self,piece):
         if(self.placedInSquare == None):
             self.placedInSquare=piece
         else:
-            self.take_piece(piece,self.placedInSquare)
+            self.TakePiece(piece,self.placedInSquare)
             
 
-    def take_piece(self, piece_take, piece_taken):
-        self.placedInSquare=piece_take
-        #pieces_pos_dict.pop(piece_taken)      <- TODO: Make this method work
-        piece_take.capture(piece_taken)
+    def TakePiece(self, pieceTake, pieceTaken):
+        self.placedInSquare=pieceTake
+        #piecesPosDict.pop(pieceTaken)      <- TODO: Make this method work
+        pieceTake.Capture(pieceTaken)
 
-    def move_off_square(self):
+    def MoveOffSquare(self):
         piece=self.placedInSquare
         self.placedInSquare=None
         return piece

@@ -2,6 +2,7 @@ FROM ubuntu:latest
 EXPOSE 4200
 EXPOSE 5000
 WORKDIR /base
+COPY package*.json ./ 
 COPY . .
 
 RUN apt-get update && apt-get install -y python3 curl
@@ -15,11 +16,9 @@ RUN apt install -y yarn
 
 
 RUN apt-get update && apt install -y python3-pip
-RUN pip install Flask
-RUN pip install flask-restful 
-RUN pip install flask-cors
-RUN npm install
-RUN npm install -g @angular/cli
+RUN pip install Flask flask-restful flask-cors
+RUN npm -f install -g npm@9.5.1
+RUN npm -f install -g @angular/cli
 
 
 #RUN ng serve
