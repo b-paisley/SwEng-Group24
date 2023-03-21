@@ -74,7 +74,7 @@ export class BoardComponent {
                         blankSpace += " "
                     }
                     let pre = 1;
-                    let post = this.pieceArr.length - 1;
+                    let post = this.pieceArr.length;
                     if (j - 1 > 0) {
                         pre = j - 1
                     }

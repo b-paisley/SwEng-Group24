@@ -6,3 +6,6 @@
 *.pyc
 *.pyc
 Version1/backend/static/venv/Lib/site-packages/_distutils_hack/__pycache__/override.cpython-38.pyc
+Version1/frontend/.angular/cache/15.2.0/babel-webpack/fbbd6074c404fbd4042eb2be1a1b7be6c6f24e895fd37317fd8554cfb21eb8b7.json
+Version1/frontend/.angular/cache/15.2.0/babel-webpack/9b513ff851d507cf9c84b90932d8d61342f7e75ef195047b7f30b647dc0a433e.json
+Version1/frontend/.angular/cache/15.2.0/babel-webpack/14bc30e401408c1d08e9fe7f755ceb00f9d77f0822343d0d9eb89879f5125490.json
