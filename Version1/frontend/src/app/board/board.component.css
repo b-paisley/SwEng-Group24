@@ -1,0 +1,48 @@
+.board {
+    width: 35rem;
+    height: 35rem;
+    border: 0.5rem solid black;
+    display: grid;
+    grid-template-columns: repeat(8, 12.5%);
+    grid-template-rows: repeat(8, 12.5%);
+}
+
+.legendTop {
+    width: 35rem;
+    height: 1rem;
+    text-align: center;
+    border: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(8, 12.5%);
+    grid-template-rows: repeat(1, 100%);
+    font-weight: 400;
+    font-size: 1.5rem;
+    /* line-height: 4.5rem; */
+}
+
+.legendSide {
+    width: 1rem;
+    height: 35rem;
+    text-align: center;
+    border: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(1, 100%);
+    grid-template-rows: repeat(8, 12.5%);
+    font-weight: 400;
+    font-size: 1.5rem;
+    /* line-height: 4.5rem; */
+}
+.reset{
+    position: absolute; left: 607px; top: 200px;
+    border-radius: 50%;
+    background-color: #ac1807;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

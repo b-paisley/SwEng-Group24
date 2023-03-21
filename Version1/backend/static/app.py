@@ -49,9 +49,15 @@ from flask import Flask, request
 from chessBoard import *
 from PiecesPosDict import *
 from Game import *
-from main import game
+from flask_restful import Resource, Api
+from flask_cors import CORS
+# from main import game
 
+app = Flask(__name__)
+api = Api(app)
+CORS(app, resources={r'/api/*': {'origins': 'http://localhost:4200'}})
 
+game = Game()
 app = Flask(__name__)
 @app.after_request
 def after_request(response):
@@ -62,18 +68,40 @@ def after_request(response):
 
 @app.route('/fen')
 def getFen():
-    fenVal = ChessBoard.GiveFEN(game.GetBoard())
-    return {'data':fenVal}, 200
+    fenVal = ChessBoard.giveFEN(game.getBoard())
+    return {
+        "data": {
+            "fen": fenVal,
+        }
+    }
 
 
 @app.route('/')
 def runGame():
     # game.play()
-    fenVal = ChessBoard.GiveFEN(game.GetBoard())
-    return {'data':fenVal}, 200
+    fenVal = ChessBoard.giveFEN(game.getBoard())
+    return {
+        "data": {
+            "fen": fenVal,
+        }
+    }
 
-@app.route('/move/<move>')
+@app.route('/api/move/<move>')
 def movePiece(move):
-    game.PlayMove(move)
-    fenVal = ChessBoard.GiveFEN(game.getBoard())
-    return {'data': fenVal}, 200
+    game.playMove(move)
+    fenVal = ChessBoard.giveFEN(game.getBoard())
+    return {
+        "data": {
+            "fen": fenVal,
+        }
+    }
+
+@app.route('/api/reset')
+def reset():
+    game.restart()
+    fenVal = ChessBoard.giveFEN(game.getBoard())
+    return {
+        "data": {
+            "fen":fenVal,
+        }
+    }

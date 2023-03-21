@@ -6,6 +6,7 @@ class square:
         self.square = square
         self.placedInSquare = None
 
+
     def PlacePiece(self,piece):
         if(self.placedInSquare == None):
             self.placedInSquare=piece
@@ -24,5 +25,8 @@ class square:
         return piece
 
     def GetPiece(self):
-        output=self.placedInSquare
-        return output
+        return self.placedInSquare
+    
+
+    def ResetSquare(self):
+        self.placedInSquare=None

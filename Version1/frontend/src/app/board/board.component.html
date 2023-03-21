@@ -1,0 +1,36 @@
+<table>
+    <tr>
+        <td>
+            <div class="legendSide">
+                <div  *ngFor="let i of numbers" style="align-self: center;">
+                            {{i}}
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="board">
+                <div *ngFor="let i of sixtyFour">
+                    <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" (click)="storePos(i)">
+                        <app-piece [char] = getSymbol(pieceArr[pos.y][pos.x])></app-piece>
+                    </app-square>
+                </div>
+            </div>
+        </td>
+        <td>
+            <p>Source = {{sourceSquare}}</p>
+            <p>Destination = {{destSquare}}</p>
+        </td>
+    </tr>
+</table>
+<div class="legendTop" style="padding-left: 1.75rem;">
+    <div *ngFor="let i of legend">
+        {{i}}
+    </div>
+</div>
+<form [formGroup]="movePiece" (ngSubmit)="onSubmit()" style="padding: 1rem">
+    <div class="form-group col-md-6">
+        <input type="text" class="form-control" formControlName="positionMove" id="positionMove" placeholder="Move">
+    </div>
+    <button type="submit" name="button">Submit</button>
+</form>
+<button class="reset" (click)="doRestart()">Reset Game</button>

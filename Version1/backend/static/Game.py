@@ -60,4 +60,14 @@ class Game:
 
     def GetBoard(self):
             return self.board
-
+    
+    def Restart(self):
+        for i in range(8):
+            for j in range(8):
+                self.board.board[i][j].ResetSquare()
+        for i in range(32):
+            pieceToDraw = list(piecesPosDict.keys())[i]
+            squareToFill = piecesPosDict[pieceToDraw]
+            self.board.OriginalDraw(pieceToDraw, squareToFill)
+        self.board.Draw()
+        self.black=False
