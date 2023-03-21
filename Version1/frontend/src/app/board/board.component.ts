@@ -74,7 +74,7 @@ export class BoardComponent {
                         blankSpace += " "
                     }
                     let pre = 1;
-                    let post = this.pieceArr.length - 1;
+                    let post = this.pieceArr.length;
                     if (j - 1 > 0) {
                         pre = j - 1
                     }
@@ -94,9 +94,11 @@ export class BoardComponent {
                 }
             }
         }
+        console.log(this.pieceArr);
     }
 
     getSymbol(letter: string) {
+        console.log("letter "+ letter+ " " + this.piecesSymbol.piecesList[letter])
         return this.piecesSymbol.piecesList[letter]
     }
 
