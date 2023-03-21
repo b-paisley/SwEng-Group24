@@ -17,7 +17,7 @@ RUN apt install -y yarn
 
 RUN apt-get update && apt install -y python3-pip
 RUN pip install Flask flask-restful flask-cors
-RUN npm -f install
+RUN npm -f install -g npm@9.5.1
 RUN npm -f install -g @angular/cli
 
 
