@@ -98,8 +98,8 @@ def movePiece(move):
 
 @app.route('/api/reset')
 def reset():
-    game.restart()
-    fenVal = ChessBoard.giveFEN(game.getBoard())
+    game.Restart()
+    fenVal = ChessBoard.GiveFEN(game.GetBoard())
     return {
         "data": {
             "fen":fenVal,
