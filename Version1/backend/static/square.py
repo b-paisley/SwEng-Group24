@@ -23,9 +23,9 @@ class square:
         self.placed_in_square=None
         return piece
 
-    def getpiece(self):
+    def GetPiece(self):
         return self.placed_in_square
     
 
-    def resetSquare(self):
+    def ResetSquare(self):
         self.placed_in_square=None
