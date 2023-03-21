@@ -94,11 +94,9 @@ export class BoardComponent {
                 }
             }
         }
-        console.log(this.pieceArr);
     }
 
     getSymbol(letter: string) {
-        console.log("letter "+ letter+ " " + this.piecesSymbol.piecesList[letter])
         return this.piecesSymbol.piecesList[letter]
     }
 

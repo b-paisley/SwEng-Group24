@@ -11,7 +11,7 @@
             <div class="board">
                 <div *ngFor="let i of sixtyFour">
                     <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" (click)="storePos(i)">
-                        <app-piece [char] = pieceArr[pos.y][pos.x]></app-piece>
+                        <app-piece [char] = getSymbol(pieceArr[pos.y][pos.x])></app-piece>
                     </app-square>
                 </div>
             </div>
