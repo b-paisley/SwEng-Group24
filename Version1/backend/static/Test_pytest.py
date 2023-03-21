@@ -6,7 +6,7 @@ from square import *
 from Pieces import *
 from PiecesPosDict import *
 
-def test_reset_sqaure():
+def test_ResetSqaure():
     game = Game()
     game.board.update_board("D1","C4")
     square="C4"
@@ -16,7 +16,7 @@ def test_reset_sqaure():
     square_obj.reset_square()
     assert (game.board.board[number_row][letter_file].placed_in_square ) == None
 
-def test_restart():
+def test_Restart():
     game = Game()
     #game.board.update_board("D1","C4") #queen
 
@@ -29,7 +29,7 @@ def test_restart():
     assert (repr(game.board.access_square("F2")) == "p")
     assert (repr(game.board.access_square("C1"))=="b")
     
-def test_is_moved():
+def test_IsMoved():
     game=Game()
     game.board.update_board("F2","F4")
     game.restart()
