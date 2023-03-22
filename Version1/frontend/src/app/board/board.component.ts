@@ -21,6 +21,7 @@ export class BoardComponent {
     sixtyFour:number[] = []
     legend:string[] = []
     numbers:number[] = []
+    errorMessage:boolean = false;
     
     
     xy(i: number) {
@@ -65,31 +66,36 @@ export class BoardComponent {
     }
 
     updateBoard(data: string) {
-        this.pieceArr = data.split('/')
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
-                if (parseInt(this.pieceArr[i][j]) <= 8 && parseInt(this.pieceArr[i][j]) > 0) {
-                    let blankSpace = ""
-                    for (let blank = parseInt(this.pieceArr[i][j]); blank > 0; blank--) {
-                        blankSpace += " "
-                    }
-                    let pre = 1;
-                    let post = this.pieceArr.length;
-                    if (j - 1 > 0) {
-                        pre = j - 1
-                    }
-                    if (j + 1 < this.pieceArr.length) {
-                        post = j + 1
-                    }
-                    if (j != 0 && j != this.pieceArr.length) {
-                        this.pieceArr[i] = this.pieceArr[i].slice(0, post - 1) + blankSpace 
-                        + this.pieceArr[i].slice(post);
-                    }
-                    else if (j == 0) {
-                        this.pieceArr[i] = blankSpace + this.pieceArr[i].slice(1);
-                    }
-                    else if (j == this.pieceArr.length) {
-                        this.pieceArr[i] = this.pieceArr[i].slice(0, pre) + blankSpace;
+        if (data == "error") {
+            this.errorMessage = true;
+        } else {
+            this.errorMessage = false;
+            this.pieceArr = data.split('/')
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 8; j++) {
+                    if (parseInt(this.pieceArr[i][j]) <= 8 && parseInt(this.pieceArr[i][j]) > 0) {
+                        let blankSpace = ""
+                        for (let blank = parseInt(this.pieceArr[i][j]); blank > 0; blank--) {
+                            blankSpace += " "
+                        }
+                        let pre = 1;
+                        let post = this.pieceArr.length;
+                        if (j - 1 > 0) {
+                            pre = j - 1
+                        }
+                        if (j + 1 < this.pieceArr.length) {
+                            post = j + 1
+                        }
+                        if (j != 0 && j != this.pieceArr.length) {
+                            this.pieceArr[i] = this.pieceArr[i].slice(0, post - 1) + blankSpace 
+                            + this.pieceArr[i].slice(post);
+                        }
+                        else if (j == 0) {
+                            this.pieceArr[i] = blankSpace + this.pieceArr[i].slice(1);
+                        }
+                        else if (j == this.pieceArr.length) {
+                            this.pieceArr[i] = this.pieceArr[i].slice(0, pre) + blankSpace;
+                        }
                     }
                 }
             }
