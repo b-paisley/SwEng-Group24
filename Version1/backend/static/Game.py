@@ -13,10 +13,10 @@ class Game:
         pieceToDraw = list(piecesPosDict.keys())[i]
         squareToFill = piecesPosDict[pieceToDraw]
         board.OriginalDraw(pieceToDraw, squareToFill)
-    board.draw()
+    board.Draw()
     black=False
 
-    def PlayMove(self, move:str):  
+    def PlayMove(self, move:str):
         move = move.upper()
 
         validMove=False #both bools have to be set false to check error handling
@@ -31,3 +31,5 @@ class Game:
 
     def GetBoard(self):
             return self.board
+
+

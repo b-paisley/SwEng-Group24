@@ -47,13 +47,13 @@ class ChessBoard:
 
         letterFile = ord(newSquare[0])-65
         numberRow = int(newSquare[1]) - 1
-        
+
         pieceInDest = self.board[numberRow][letterFile].GetPiece()
-        
+
         self.board[numberRow][letterFile].PlacePiece(piece)
-        
+
         piece.hasMoved = True
-        
+
         self.Draw()
 
     #will return FEN(Forsyth–Edwards Notation) this is return string
@@ -74,4 +74,4 @@ class ChessBoard:
             if(i!=7):
                 strFen+="/"
         return strFen
-    
+

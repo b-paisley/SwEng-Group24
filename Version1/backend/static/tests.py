@@ -8,7 +8,7 @@ from square import square
 from moveChecker import *
 
 def TestAiMoveGenerator():
-    # Test all possible random moves from start of game position for black 
+    # Test all possible random moves from start of game position for black
     board = MakeBoard()
     move = AiMoveGenerator(board, 'black')
     validMove = False
@@ -20,7 +20,7 @@ def TestAiMoveGenerator():
             validMove = True
         index += 1
     assert(validMove)
-    # Test all possible random moves from start of game position for 
+    # Test all possible random moves from start of game position for
     board = MakeBoard()
     move = AiMoveGenerator(board, 'white')
     validMove = False
@@ -31,16 +31,16 @@ def TestAiMoveGenerator():
         index += 1
     assert(validMove)
 
-def TestGetChessNotation(): 
+def TestGetChessNotation():
     # The coords (2, 2) should return the chess notation 'C3'
     coords = (2, 2)
-    assert (GetChessNotation(coords)) == 'C3' 
+    assert (GetChessNotation(coords)) == 'C3'
     # The coords (6, 0) should return the chess notation 'A7'
     coords = (6, 0)
-    assert (GetChessNotation(coords)) == 'A7' 
+    assert (GetChessNotation(coords)) == 'A7'
     # The coords (4, 3) should return the chess notation 'D5'
     coords = (4, 3)
-    assert (GetChessNotation(coords)) == 'D5' 
+    assert (GetChessNotation(coords)) == 'D5'
 
 def TestGetPieceArray():
     # Returns all pieces that are of the colour black on the currentBoard
@@ -54,7 +54,7 @@ def TestGetPieceArray():
 def TestGetCoords():
     # The chess notation 'C3' should return the coords (2, 2)
     notation = 'C3'
-    assert(GetCoords(notation)) == [(2, 2)]  
+    assert(GetCoords(notation)) == [(2, 2)]
     # The chess notation 'A7' should return the coords (6, 0)
     notation = 'A7'
     assert(GetCoords(notation)) == [(6, 0)]
@@ -72,7 +72,7 @@ def TestValidPawnMove():
     if move == 'F6':
         assert(MoveChecker(board, "F7", move))
     elif move == 'F5':
-        assert(MoveChecker(board, "F7", move)) 
+        assert(MoveChecker(board, "F7", move))
 
     # Check valid pawn moves from 'F2' with white pawn @ start of game
     board = MakeBoard()
@@ -83,7 +83,7 @@ def TestValidPawnMove():
     if move == 'F3':
         assert(MoveChecker(board, "F2", move))
     elif move == 'F4':
-        assert(MoveChecker(board, "F2", move))                
+        assert(MoveChecker(board, "F2", move))
 
 
 
@@ -296,10 +296,10 @@ def TestGetFEN():
         board.OriginalDraw(pieceToDraw, squareToFill)
     assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr")
     board.UpdateBoard("E2","E4")
-    assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/4p3/8/pppp1ppp/rnbqkbnr") 
+    assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/4p3/8/pppp1ppp/rnbqkbnr")
 
 def TestSuperClass():
-    
+
     testBoard = CreateTestBoard()
     assert(MoveChecker(testBoard, "G1", "E0") == False)   # Illegal out of bounds, vertical
     assert(MoveChecker(testBoard, "E3", "E4") == False)   # Empty square detectioin
@@ -310,7 +310,7 @@ def TestSuperClass():
     assert(MoveChecker(testBoard, "G5", "I6") == False)   # Illegal out of bounds, horizontal
 
 # Pawn must have seperate tests for white / black, as movement direction changes with colour
-def TestPawn():        
+def TestPawn():
     testBoard = CreateTestBoard()
     assert(MoveChecker(testBoard, "A2", "A3") == True)     # W. Legal move
     testBoard.UpdateBoard("A2", "A3")
@@ -333,7 +333,7 @@ def TestPawn():
     assert(MoveChecker(testBoard, "G5", "H4") == False)    # B. Illegal diagonal move
     testBoard.UpdateBoard("H2", "H4")
     assert(MoveChecker(testBoard, "G5", "H4") == True)     # B. Legal diagonal take
-    
+
 def TestKnight():
     testBoard = CreateTestBoard()
     testBoard.UpdateBoard("B1", "C3")
@@ -345,14 +345,14 @@ def TestKnight():
     assert(MoveChecker(testBoard, "C3", "D4") == False)
     assert(MoveChecker(testBoard, "C3", "B5") == True)     # Legal moves...
     assert(MoveChecker(testBoard, "C3", "D5") == True)
-    
+
     testBoard.UpdateBoard("C3", "E4")
     assert(MoveChecker(testBoard, "E4", "C4") == False)    # Illegal moves, horizontal...
     assert(MoveChecker(testBoard, "E4", "D4") == False)
     assert(MoveChecker(testBoard, "E4", "C3") == True)     # Legal moves...
     assert(MoveChecker(testBoard, "E4", "C5") == True)
-    
-    
+
+
 def TestRook():
     testBoard = CreateTestBoard()
     assert(MoveChecker(testBoard, "A1", "A3") == False)    # Illegal move, jumping
@@ -367,8 +367,8 @@ def TestRook():
     assert(MoveChecker(testBoard, "C3", "C7") == False)    # Illegal take, vertical jumping
     testBoard.UpdateBoard("C6", "B8")
     assert(moveChecker(testBoard, "C3", "C7") == True)     # Legal take
-    
-    
+
+
 def TestBishop():
     testBoard = CreateTestBoard()
     assert(MoveChecker(testBoard, "C1", "F4") == False)    # Illegal move, jumping
@@ -381,7 +381,7 @@ def TestBishop():
     assert(MoveChecker(testBoard, "F4", "B8") == False)    # Illegal take, jumping
     testBoard.UpdateBoard("C7", "C6")
     assert(MoveChecker(testBoard, "F4", "B8") == True)     # Legal take
-    
+
 def TestQueen():
     testBoard = CreateTestBoard()
     assert(MoveChecker(testBoard, "D1", "F3") == False)    # Illegal move, diagonal jumping
@@ -394,20 +394,20 @@ def TestQueen():
     assert(MoveChecker(testBoard, "C4", "A4") == True)     # Legal move, horizontal
     assert(MoveChecker(testBoard, "C4", "E4") == False)    # Illegal move, horizontal jumping
     assert(MoveChecker(testBoard, "C4", "A5") == False)    # Illegal move
-    
+
     testBoard.UpdateBoard("B8", "C6")
     assert(MoveChecker(testBoard, "C4", "C7") == False)    # Illegal take, vertical jumping
     testBoard.UpdateBoard("C6", "B4")
-    assert(MoveChecker(testBoard, "C4", "C7") == True)     # Legal take, vertical 
+    assert(MoveChecker(testBoard, "C4", "C7") == True)     # Legal take, vertical
     assert(MoveChecker(testBoard, "C4", "G8") == False)    # Illegal take, diagonal jumping
     testBoard.UpdateBoard("F7", "F6")
-    assert(MoveChecker(testBoard, "C4", "G8") == True)     # Legal take, diagonal  
+    assert(MoveChecker(testBoard, "C4", "G8") == True)     # Legal take, diagonal
     testBoard.UpdateBoard("A7", "A5")
     testBoard.UpdateBoard("A5", "A4")
     assert(MoveChecker(testBoard, "C4", "A4") == False)    # Illegal take, horizontal jumping
     testBoard.UpdateBoard("B4", "A6")
     assert(MoveChecker(testBoard, "C4", "A4") == True)     # Legal take, horizontal
-    
+
 def CreateTestBoard():
     testBoard = ChessBoard()
     testBoard.Draw()
@@ -416,13 +416,13 @@ def CreateTestBoard():
         pieceToDraw = list(piecesPosDict.keys())[i]
         squareToFill = piecesPosDict[pieceToDraw]
         testBoard.OriginalDraw(pieceToDraw, squareToFill)
-        
+
     return testBoard
 def TestPieceCaptures():
     pieceOne = Pawn(False)
     pieceTwo = Pawn(True)
     pieceOne.Capture(pieceTwo)
-    
+
     assert pieceTwo.isCaptured
 
 def TestPawn():
@@ -475,7 +475,7 @@ def TestKing():
     king = King(False)
     # Test string representation
     assert repr(king) == 'k'
-    
+
 def TestCheckmateChecker():
     # King not in check
     board = MakeBoard()
@@ -495,7 +495,7 @@ def TestCheckmateChecker():
     board.update_board('A1', 'E8')
     board.update_board('B2', 'A1')
     board.update_board('B5', 'B2')
-    
+
     board.update_board('E8', 'A6')
     board.update_board('A2', 'A5')
     board.update_board('B2', 'B5')
@@ -535,12 +535,12 @@ def TestCheckmateChecker():
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
-    # diag bishop check with bishop and queen either side 
+    # diag bishop check with bishop and queen either side
     board.update_board('A5', 'H1')
     board.update_board('G4', 'A1')
     board.update_board('F6', 'D8')
     board.update_board('E4', 'E8')
-    
+
     board.update_board('E8', 'A6')
     board.update_board('D8', 'C6')
     board.update_board('C1', 'D3')

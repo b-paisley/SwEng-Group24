@@ -62,18 +62,20 @@ def after_request(response):
 
 @app.route('/fen')
 def getFen():
-    fenVal = ChessBoard.giveFEN(game.getBoard())
+    fenVal = ChessBoard.GiveFEN(game.GetBoard())
     return {'data':fenVal}, 200
 
 
 @app.route('/')
 def runGame():
     # game.play()
-    fenVal = ChessBoard.giveFEN(game.getBoard())
+    fenVal = ChessBoard.GiveFEN(game.GetBoard())
     return {'data':fenVal}, 200
 
 @app.route('/move/<move>')
 def movePiece(move):
-    game.playMove(move)
-    fenVal = ChessBoard.giveFEN(game.getBoard())
+    if game.PlayMove(move) == "error":
+      return {'data': "incorrect move"}, 200
+    game.PlayMove(move)
+    fenVal = ChessBoard.GiveFEN(game.GetBoard())
     return {'data': fenVal}, 200
