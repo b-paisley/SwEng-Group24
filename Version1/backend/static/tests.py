@@ -4,6 +4,7 @@ from PiecesPosDict import *
 import unittest
 from chessBoard import *
 from Pieces import *
+from Game import *
 from square import square
 from moveChecker import *
 from CheckmateChecker import *
@@ -428,14 +429,11 @@ def test_GetPiece():
     assert s.GetPiece() == piece  # check that the pawn is on the square
 
 def test_GetFEN():
-    board=ChessBoard()
-    for i in range(32):
-        pieceToDraw = list(piecesPosDict.keys())[i]
-        squareToFill = piecesPosDict[pieceToDraw]
-        board.OriginalDraw(pieceToDraw, squareToFill)
-    assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr")
-    board.UpdateBoard("E2","E4")
-    assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/4p3/8/pppp1ppp/rnbqkbnr")
+    game = Game()
+    game.Restart()
+    assert(game.board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr")
+    game.board.UpdateBoard("E2","E4")
+    assert(game.board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/4p3/8/pppp1ppp/rnbqkbnr")
 
 def test_SuperClass():
 
