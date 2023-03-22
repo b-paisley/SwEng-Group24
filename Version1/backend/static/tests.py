@@ -78,9 +78,9 @@ def test_ValidPawnMove():
     pieceName = board.board[piece[0]][piece[1]].placedInSquare
     move = ValidPawnMove(pieceName, board, 'F7')
     if move == 'F6':
-        assert(MoveChecker(board, "F7", move), 0)
+        assert(MoveChecker(board, "F7", move, 0))
     elif move == 'F5':
-        assert(MoveChecker(board, "F7", move), 0)
+        assert(MoveChecker(board, "F7", move, 0))
 
     # Check valid pawn moves from 'F2' with white pawn @ start of game
     board = MakeBoard()
@@ -89,60 +89,57 @@ def test_ValidPawnMove():
     pieceName = board.board[piece[0]][piece[1]].placedInSquare
     move = ValidPawnMove(pieceName, board, 'F7')
     if move == 'F3':
-        assert(MoveChecker(board, "F2", move), 0)
+        assert(MoveChecker(board, "F2", move, 0))
     elif move == 'F4':
-        assert(MoveChecker(board, "F2", move), 0)
-
+        assert(MoveChecker(board, "F2", move, 0))
 
 
 def test_BasicMovement():
     board = MakeBoard()
     board.UpdateBoard("E8", "E5")  # update the board
-    assert (MoveChecker(board, "E5", "D5"), 0)   # check if it can move left
-    assert (MoveChecker(board, "E5", "F5"), 0)   # check if it can move right
-    assert (MoveChecker(board, "E5", "E6"), 0)   # check if it can move up
-    assert (MoveChecker(board, "E5", "E4"), 0)   # check if it can move down
-    assert (MoveChecker(board, "E5", "F6"), 0)   # check if it can move right up
-    assert (MoveChecker(board, "E5", "D6"), 0)   # check if it can move left up
-    assert (MoveChecker(board, "E5", "F4"), 0)   # check if it can move right down
-    assert (MoveChecker(board, "E5", "D4"), 0)   # check if it can move left down
-    assert (not MoveChecker(board, "E5", "C5"), 0)   # check if it can move two
-
+    assert (MoveChecker(board, "E5", "D5", 0))   # check if it can move left
+    assert (MoveChecker(board, "E5", "F5", 0))  # check if it can move right
+    assert (MoveChecker(board, "E5", "E6", 0))   # check if it can move up
+    assert (MoveChecker(board, "E5", "E4", 0))   # check if it can move down
+    assert (MoveChecker(board, "E5", "F6", 0))  # check if it can move right up
+    assert (MoveChecker(board, "E5", "D6", 0))  # check if it can move left up
+    assert (MoveChecker(board, "E5", "F4", 0))   # check if it can move right down
+    assert (MoveChecker(board, "E5", "D4", 0))   # check if it can move left down
+    assert (not MoveChecker(board, "E5", "C5", 0))   # check if it can move two
 
 def test_KnightChecks():
     board = MakeBoard()
     board.UpdateBoard("E7", "E6")  # update the board
     board.UpdateBoard("E8", "E7")  # update the board
-    assert (MoveChecker(board, "E7", "D6"), 0)  # try to move king into open square
+    assert (MoveChecker(board, "E7", "D6", 0))  # try to move king into open square
     board.UpdateBoard("B1", "C4")  # move knight near king
-    assert (not MoveChecker(board, "E7", "D6"), 0)  # try to move king into knight check
+    assert (not MoveChecker(board, "E7", "D6", 0))  # try to move king into knight check
 
 
 def test_StraightChecks():
     board = MakeBoard()
     board.UpdateBoard("E8", "E5")  # move king into the middle
     board.UpdateBoard("A1", "D3")  # move rook near middle
-    assert (MoveChecker(board, "E5", "D5"), 0) == False  # move king into rook check
+    assert (MoveChecker(board, "E5", "D5", 0)) == False  # move king into rook check
     board.UpdateBoard("D8", "D4")  # block future rook check with our queen
-    assert (MoveChecker(board, "E5", "D5"), 0) # move king into now blocked off no check
+    assert (MoveChecker(board, "E5", "D5", 0)) # move king into now blocked off no check
 
 
 def test_DiagonalChecks():
     board = MakeBoard()
     board.UpdateBoard("E8", "E5")  # move king into the middle
     board.UpdateBoard("F1", "B3")  # move bishop near king
-    assert (not MoveChecker(board, "E5", "D5"), 0)  # move king into bishop check
+    assert (not MoveChecker(board, "E5", "D5", 0))  # move king into bishop check
     board.UpdateBoard("D8", "C4")  # block future bishop check with our queen
-    assert (MoveChecker(board, "E5", "D5"), 0)  # move king into now blocked off no check
+    assert (MoveChecker(board, "E5", "D5", 0))  # move king into now blocked off no check
 
 
 def test_PawnChecks():
     board = MakeBoard()
     board.UpdateBoard("E8", "D6")  # move king into the middle
     board.UpdateBoard("F2", "C4")  # move pawn near king
-    assert (not MoveChecker(board, "D6", "D5"), 0)  # move king into pawn check
-    assert (MoveChecker(board, "D6", "C5"), 0)  # move king opposite pawn
-
+    assert (not MoveChecker(board, "D6", "D5", 0))  # move king into pawn check
+    assert (MoveChecker(board, "D6", "C5", 0))  # move king opposite pawn
 
 def test_KingFakeChecks():
     board = MakeBoard()
@@ -151,7 +148,6 @@ def test_KingFakeChecks():
     assert (not MoveChecker(board, "D6", "D5", 0))  # move king into "king" check
     assert (not MoveChecker(board, "D6", "C5", 0))
 
-
 def test_CastlingAllowed():
     # assert we are allowed castle queenside white
     board = MakeBoard()
@@ -159,31 +155,47 @@ def test_CastlingAllowed():
     board.UpdateBoard("D1", "D3")
     board.UpdateBoard("C1", "D2")
     board.UpdateBoard("B1", "A3")
-    assert (MoveChecker(board, "q", 1, 1))
+    assert (MoveChecker(board, "q", 1, 0))
+    board.UpdateBoard("D4", "D2")
+    board.UpdateBoard("D3", "D1")
+    board.UpdateBoard("D2", "C1")
+    board.UpdateBoard("A3", "B1")
     # assert we are allowed castle queenside black
     board = MakeBoard()
     board.UpdateBoard("D7", "D5")
     board.UpdateBoard("D8", "D6")
     board.UpdateBoard("C8", "D7")
     board.UpdateBoard("B8", "A6")
-    assert (MoveChecker(board, "q", 0, 1))
+    assert (MoveChecker(board, "q", 0, 0))
+    board.UpdateBoard("D5", "D7")
+    board.UpdateBoard("D6", "D8")
+    board.UpdateBoard("D7", "C8")
+    board.UpdateBoard("A6", "B8")
     # assert we are allowed castle kingside white
     board = MakeBoard()
     board.UpdateBoard("E2", "E4")
     board.UpdateBoard("F1", "E2")
     board.UpdateBoard("G1", "H3")
-    assert (MoveChecker(board, "k", 1, 1))
+    assert (MoveChecker(board, "k", 1, 0))
+    board.UpdateBoard("E4", "E2")
+    board.UpdateBoard("E2", "F1")
+    board.UpdateBoard("H3", "G1")
     # assert we are allowed castle kingside black
     board = MakeBoard()
     board.UpdateBoard("E7", "E5")
     board.UpdateBoard("F8", "F7")
     board.UpdateBoard("G8", "H6")
-    assert (MoveChecker(board, "k", 0, 1))
+    assert (MoveChecker(board, "k", 0, 0))
+    board.UpdateBoard("E5", "E7")
+    board.UpdateBoard("F7", "F8")
+    board.UpdateBoard("H6", "G8")
     # castling with piece there
     board = MakeBoard()
     board.UpdateBoard("E2", "E3")
     board.UpdateBoard("F1", "E2")
-    assert (not MoveChecker(board, "k", 1, 1))
+    assert (not MoveChecker(board, "k", 1, 0))
+    board.UpdateBoard("E3", "E2")
+    board.UpdateBoard("E2", "F1")
     # Castling without rook
     board = MakeBoard()
     board.UpdateBoard("E2", "E3")
@@ -191,38 +203,39 @@ def test_CastlingAllowed():
     board.UpdateBoard("G1", "F3")
     board.UpdateBoard("H2", "H3")
     board.UpdateBoard("H1", "H2")
-    assert (not MoveChecker(board, "k", 1, 1))
+    assert (not MoveChecker(board, "k", 1, 0))
     # castling with rook having moved
-    board = MakeBoard()
-    board.UpdateBoard("E2", "E3")
-    board.UpdateBoard("F1", "E2")
-    board.UpdateBoard("G1", "F3")
-    board.UpdateBoard("H2", "H3")
-    board.UpdateBoard("H1", "H2")
     board.UpdateBoard("H2", "H1")
-    assert (not MoveChecker(board, "k", 1, 1))
+    assert (not MoveChecker(board, "k", 1, 0))
+    board.UpdateBoard("E3", "E2")
+    board.UpdateBoard("E2", "F1")
+    board.UpdateBoard("F3", "G1")
+    board.UpdateBoard("H3", "H2")
     # castling with king not there
     board = MakeBoard()
     board.UpdateBoard("E2", "E4")
     board.UpdateBoard("F1", "D3")
     board.UpdateBoard("G1", "F3")
     board.UpdateBoard("E1", "E2")
-    assert (not MoveChecker(board, "k", 1, 1))
+    assert (not MoveChecker(board, "k", 1, 0))
     # castling with king having moved
     board = MakeBoard()
-    board.UpdateBoard("E2", "E4")
-    board.UpdateBoard("F1", "D3")
-    board.UpdateBoard("G1", "F3")
-    board.UpdateBoard("E1", "E2")
     board.UpdateBoard("E2", "E1")
-    assert (not MoveChecker(board, "k", 1, 1))
+    assert (not MoveChecker(board, "k", 1, 0))
+    board.UpdateBoard("E4", "E2")
+    board.UpdateBoard("D3", "F1")
+    board.UpdateBoard("F3", "G1")
     # castling while in check
     board = MakeBoard()
     board.UpdateBoard("E2", "A4")
     board.UpdateBoard("F1", "D3")
     board.UpdateBoard("G1", "H3")
     board.UpdateBoard("D8", "E4")
-    assert (not MoveChecker(board, "k", 1, 1))
+    assert (not MoveChecker(board, "k", 1, 0))
+    board.UpdateBoard("A4", "E2")
+    board.UpdateBoard("D3", "F1")
+    board.UpdateBoard("H3", "G1")
+    board.UpdateBoard("E4", "D8")
     # castling while where king castles through is in check
     board = MakeBoard()
     board.UpdateBoard("E2", "A4")
@@ -230,7 +243,12 @@ def test_CastlingAllowed():
     board.UpdateBoard("G1", "H3")
     board.UpdateBoard("D8", "F4")
     board.UpdateBoard("F2", "A6")
-    assert (not MoveChecker(board, "k", 1, 1))
+    assert (not MoveChecker(board, "k", 1, 0))
+    board.UpdateBoard("A4", "E2")
+    board.UpdateBoard("E2", "F1")
+    board.UpdateBoard("H3", "G1")
+    board.UpdateBoard("F4", "D8")
+    board.UpdateBoard("A6", "F2")
     # castling while where king castles inTO check
     board = MakeBoard()
     board.UpdateBoard("E2", "A4")
@@ -238,7 +256,7 @@ def test_CastlingAllowed():
     board.UpdateBoard("G1", "H3")
     board.UpdateBoard("D8", "G4")
     board.UpdateBoard("G2", "A6")
-    assert (not MoveChecker(board, "k", 1, 1))
+    assert (not MoveChecker(board, "k", 1, 0))
 
 
 def test_EnPassant():
@@ -247,21 +265,29 @@ def test_EnPassant():
     board.UpdateBoard("E2", "E5")
     board.UpdateBoard("D7", "D5")
     assert (MoveChecker(board, "E5", "D6", 0))
+    board.UpdateBoard("E5", "E2")
+    board.UpdateBoard("D5", "D7")
     # Successful right
     board = MakeBoard()
     board.UpdateBoard("E2", "E5")
     board.UpdateBoard("F7", "F5")
     assert (MoveChecker(board, "E5", "F6", 0))
+    board.UpdateBoard("E5", "E2")
+    board.UpdateBoard("F5", "F7")
     # Unsuccessful-wrong rank
     board = MakeBoard()
     board.UpdateBoard("E2", "E4")
     board.UpdateBoard("F7", "F5")
     assert (not MoveChecker(board, "E5", "F6", 0))
+    board.UpdateBoard("E4", "E2")
+    board.UpdateBoard("F5", "F7")
     # Unsuccessful-wrong rank
     board = MakeBoard()
     board.UpdateBoard("E2", "E6")
     board.UpdateBoard("F7", "F6")
     assert (not MoveChecker(board, "E6", "E5", 0))
+    board.UpdateBoard("E6", "E2")
+    board.UpdateBoard("F6", "F7")
     # opposite pawn didnt move last turn (Relies on has_moved_two_spaces_last function and therefore is not being tested rn)
     # board = MakeBoard()
     # board.UpdateBoard("E2", "E4")
@@ -269,6 +295,10 @@ def test_EnPassant():
     # board.UpdateBoard("E4", "E5")
     # board.UpdateBoard("D6", "D5")
     # assert (not move_checker(board, "E5", "D6", 0))
+    # board.UpdateBoard("E4", "E2")
+    # board.UpdateBoard("D5", "D7")
+    # board.UpdateBoard("E5", "E4")
+    # board.UpdateBoard("D5", "D6")
     # they didnt just move two (Relies on has_moved_two_spaces_last function and therefore is not being tested rn)
     # board = MakeBoard()
     # board.UpdateBoard("E2", "E5")
