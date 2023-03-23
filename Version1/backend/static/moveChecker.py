@@ -100,7 +100,7 @@ def CheckStraights(chessBoard, prevRow, prevFile, newRow, newFile):
       return True
     else:
       checkedRow = prevRow - 1
-      while (checkedRow < newRow):
+      while (checkedRow > newRow):
         if (chessBoard.board[checkedRow][prevFile].placedInSquare != None): return False
         checkedRow -= 1
       return True
