@@ -1,5 +1,7 @@
 from chessBoard import *
 from Pieces import *
+from CheckmateChecker import *
+import copy
 
 
 # Single unified function for checking if a move is legal. Returns true for a legal move, false otherwise
@@ -21,6 +23,46 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
   if (targetSquarePiece != None):
     taking = True
     if (movingSquarePiece.isBlack == targetSquarePiece.isBlack): return False
+
+  #scary
+  kingPos = getKingPosition(chessBoard, prevRow, prevFile)
+  kingFile = ord(kingPos[0]) - 65
+  kingRow = int(kingPos[1]) - 1
+
+  if taking:
+    pieceCopy = copy.copy(chessBoard.board[newRow][newFile].placedInSquare)
+    chessBoard.UpdateBoard(prevSquare, newSquare)
+
+    if not MovingIntoCheck(chessBoard, prevRow, prevFile, kingRow, kingFile,
+                       chessBoard.board[newRow][newFile].placedInSquare.isBlack):
+      chessBoard.UpdateBoard(newSquare, prevSquare)
+      chessBoard.board[newRow][newFile].placedInSquare = pieceCopy
+      return False
+
+    chessBoard.UpdateBoard(newSquare, prevSquare)
+    chessBoard.board[newRow][newFile].placedInSquare = pieceCopy
+  elif (EnPassant(chessBoard, prevRow, prevFile, newRow, newFile)):
+    pieceCopy = copy.copy(chessBoard.board[prevRow][newFile].placedInSquare)
+    chessBoard.board[prevRow][newFile].placedInSquare = None
+    chessBoard.UpdateBoard(prevSquare, newSquare)
+
+    if not MovingIntoCheck(chessBoard, prevRow, prevFile, kingRow, kingFile,
+                       chessBoard.board[newRow][newFile].placedInSquare.isBlack):
+      chessBoard.UpdateBoard(newSquare, prevSquare)
+      chessBoard.board[prevRow][newFile].placedInSquare = pieceCopy
+      return False
+
+    chessBoard.UpdateBoard(newSquare, prevSquare)
+    chessBoard.board[prevRow][newFile].placedInSquare = pieceCopy
+  else:
+    chessBoard.UpdateBoard(prevSquare, newSquare)
+
+    if not MovingIntoCheck(chessBoard, prevRow, prevFile, kingRow, kingFile,
+                        chessBoard.board[newRow][newFile].placedInSquare.isBlack):
+      chessBoard.UpdateBoard(newSquare, prevSquare)
+      return False
+
+    chessBoard.UpdateBoard(newSquare, prevSquare)
 
   if (isinstance(movingSquarePiece, Pawn)):
     if (not taking):
@@ -575,3 +617,31 @@ def EnPassant(chessBoard, prev_row, prev_file, newRow, newFile):
   if not theirPiece.hasMovedTwoSpacesLast:  # if their pawn hasn't just moved forward two
     return False
   return True
+
+
+def getKingPosition(chessBoard, prevRow, prevFile):
+  kingPiece = False
+  isBlack = chessBoard.board[prevRow][prevFile].placedInSquare.isBlack
+  i = 0
+  row = 0
+  col = 0
+  while kingPiece == False:
+    for j in range(8):
+      piece = chessBoard.board[i][j].placedInSquare
+      if piece != None:
+        # Black King
+        if piece.isBlack == True and isBlack == True:
+          if isinstance(piece, King):
+            kingPiece = True
+            row = i
+            col = j
+
+        # White King
+        elif piece.isBlack == False and isBlack == False:
+          if isinstance(piece, King):
+            kingPiece = True
+            row = i
+            col = j
+    i += 1
+    j = 0
+  return GetChessNotation((row, col))
