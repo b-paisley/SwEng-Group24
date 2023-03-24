@@ -307,12 +307,15 @@ def test_EnPassant():
     # assert (not move_checker(board, "E5", "D6", 0))
 
 def MakeBoard():
-    board = ChessBoard()
-    for i in range(32):
-        pieceToDraw = list(piecesPosDict.keys())[i]
-        squareToFill = piecesPosDict[pieceToDraw]
-        board.OriginalDraw(pieceToDraw, squareToFill)
-    return board
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(32):
+    pieceToDraw = list(piecesPosDict.keys())[i]
+    squareToFill = piecesPosDict[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
 
 # check for correct creation of board
 def test_ChessboardInit():
@@ -467,7 +470,7 @@ def test_GetFEN():
 
 def test_SuperClass():
 
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "G1", "E0", 0) == False)   # Illegal out of bounds, vertical
     assert(MoveChecker(testBoard, "E3", "E4", 0) == False)   # Empty square detectioin
     testBoard.UpdateBoard("G1", "H3")
@@ -478,7 +481,7 @@ def test_SuperClass():
 
 # Pawn must have seperate tests for white / black, as movement direction changes with colour
 def test_Pawn():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "A2", "A3", 0) == True)     # W. Legal move
     testBoard.UpdateBoard("A2", "A3")
     assert(MoveChecker(testBoard, "B2", "B4", 0) == True)     # W. Legal first double move
@@ -502,7 +505,7 @@ def test_Pawn():
     assert(MoveChecker(testBoard, "G5", "H4", 0) == True)     # B. Legal diagonal take
 
 def test_Knight():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     testBoard.UpdateBoard("B1", "C3")
     assert(MoveChecker(testBoard, "C3", "A5", 0) == False)    # Illegal moves, vertical...
     assert(MoveChecker(testBoard, "C3", "C5", 0) == False)
@@ -521,7 +524,7 @@ def test_Knight():
 
 
 def test_Rook():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "A1", "A3", 0) == False)    # Illegal move, jumping
     testBoard.UpdateBoard("A2", "A4")
     assert(MoveChecker(testBoard, "A1", "A3", 0) == True)     # Legal move, vertical
@@ -537,7 +540,7 @@ def test_Rook():
 
 
 def test_Bishop():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "C1", "F4", 0) == False)    # Illegal move, jumping
     testBoard.UpdateBoard("D2", "D3")
     assert(MoveChecker(testBoard, "C1", "F4", 0) == True)     # Legal move
@@ -550,7 +553,7 @@ def test_Bishop():
     assert(MoveChecker(testBoard, "F4", "B8", 0) == True)     # Legal take
 
 def test_Queen():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "D1", "F3", 0) == False)    # Illegal move, diagonal jumping
     assert(MoveChecker(testBoard, "D1", "D3", 0) == False)    # Illegal move, vertical jumping
     testBoard.UpdateBoard("D2", "D4")
@@ -575,16 +578,7 @@ def test_Queen():
     testBoard.UpdateBoard("B4", "A6")
     assert(MoveChecker(testBoard, "C4", "A4", 0) == True)     # Legal take, horizontal
 
-def CreateTestBoard():
-    testBoard = ChessBoard()
-    testBoard.Draw()
 
-    for i in range(32):
-        pieceToDraw = list(piecesPosDict.keys())[i]
-        squareToFill = piecesPosDict[pieceToDraw]
-        testBoard.OriginalDraw(pieceToDraw, squareToFill)
-
-    return testBoard
 def test_PieceCaptures():
     pieceOne = Pawn(False)
     pieceTwo = Pawn(True)
