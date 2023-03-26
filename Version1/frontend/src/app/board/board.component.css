@@ -46,3 +46,14 @@
     margin: 4px 2px;
     cursor: pointer;
 }
+.errorMessage{
+    position: absolute;
+    left: 611px;
+    top: 340px;
+    color: #e74c3c;
+    background-color: #f1c40f;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
