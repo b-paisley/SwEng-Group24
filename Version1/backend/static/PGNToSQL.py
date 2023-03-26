@@ -28,18 +28,18 @@ def PGNToSQL():
 
         # Insert the white and black moves into the table
         PGNGame = PGNData[i]
-        for i in PGNGame.whitePieces:
-            if i == len(PGNGame.BlackPieces):
+        for j in PGNGame.whitePieces:
+            if j == len(PGNGame.BlackPieces):
                 cursor.execute(
                 f"""INSERT INTO Game{i}
                 (WhiteMove. BlackMove)
                 VALUES (%s,%s)
-                """, (PGNGame.WhitePieces[i], None))
+                """, (PGNGame.WhitePieces[j], None))
             else:
                 cursor.execute(
                     f"""INSERT INTO Game{i}
                     (WhiteMove. BlackMove)
                     VALUES (%s,%s)
-                    """, (PGNGame.WhitePieces[i], PGNGame.BlackPieces[i]))
+                    """, (PGNGame.WhitePieces[j], PGNGame.BlackPieces[j]))
                 
     db.commit()
