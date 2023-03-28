@@ -3,14 +3,15 @@ from square import *
 
 
 class ChessBoard:
-    board = [[], [], [], [], [], [], [], []]
+    board = []
     # board bottom left starting point
     def __init__(self):
         letters = "ABCDEFGH"
+        self.board = [[], [], [], [], [], [], [], []]
+        print(len(self.board[0]))
         for i in range(8):  # num
-            for j in range(8):  # char
-                self.board[i].append(square(letters[j]+str(i+1)))
-                # print((self.board[i][j]).square)
+          for j in range(8):  # char
+            self.board[i].append(square(letters[j] + str(i + 1)))
 
     def AccessSquare(self, square):
         letterFile = ord(square[0])-65
@@ -53,8 +54,8 @@ class ChessBoard:
         self.board[numberRow][letterFile].PlacePiece(piece)
 
         piece.hasMoved = True
-        piece.hasMovedTwoSpacesLast = True 
-        
+        piece.hasMovedTwoSpacesLast = True
+
         self.Draw()
 
     #will return FEN(Forsyth–Edwards Notation) this is return string
