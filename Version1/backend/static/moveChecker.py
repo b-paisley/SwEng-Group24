@@ -30,38 +30,45 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
 
   if taking:
     pieceCopy = copy.copy(chessBoard.board[newRow][newFile].placedInSquare)
+    pieceCopyOurPiece = copy.copy(chessBoard.board[prevRow][prevFile].placedInSquare)
     chessBoard.UpdateBoard(prevSquare, newSquare)
 
     if not MovingIntoCheck(chessBoard, prevRow, prevFile, kingRow, kingFile,
                        chessBoard.board[newRow][newFile].placedInSquare.isBlack):
       chessBoard.UpdateBoard(newSquare, prevSquare)
       chessBoard.board[newRow][newFile].placedInSquare = pieceCopy
+      chessBoard.board[prevRow][prevFile].placedInSquare = pieceCopyOurPiece
       return False
-
     chessBoard.UpdateBoard(newSquare, prevSquare)
     chessBoard.board[newRow][newFile].placedInSquare = pieceCopy
+    chessBoard.board[prevRow][prevFile].placedInSquare = pieceCopyOurPiece
   elif (EnPassant(chessBoard, prevRow, prevFile, newRow, newFile)):
     pieceCopy = copy.copy(chessBoard.board[prevRow][newFile].placedInSquare)
+    pieceCopyOurPiece = copy.copy(chessBoard.board[prevRow][prevFile].placedInSquare)
     chessBoard.board[prevRow][newFile].placedInSquare = None
     chessBoard.UpdateBoard(prevSquare, newSquare)
-
     if not MovingIntoCheck(chessBoard, prevRow, prevFile, kingRow, kingFile,
                        chessBoard.board[newRow][newFile].placedInSquare.isBlack):
       chessBoard.UpdateBoard(newSquare, prevSquare)
       chessBoard.board[prevRow][newFile].placedInSquare = pieceCopy
+      chessBoard.board[prevRow][prevFile].placedInSquare = pieceCopyOurPiece
       return False
-
     chessBoard.UpdateBoard(newSquare, prevSquare)
     chessBoard.board[prevRow][newFile].placedInSquare = pieceCopy
+    chessBoard.board[prevRow][prevFile].placedInSquare = pieceCopyOurPiece
   else:
+    pieceCopyOurPiece = copy.copy(chessBoard.board[prevRow][prevFile].placedInSquare)
     chessBoard.UpdateBoard(prevSquare, newSquare)
-
     if not MovingIntoCheck(chessBoard, prevRow, prevFile, kingRow, kingFile,
                         chessBoard.board[newRow][newFile].placedInSquare.isBlack):
       chessBoard.UpdateBoard(newSquare, prevSquare)
+      chessBoard.board[prevRow][prevFile].placedInSquare = pieceCopyOurPiece
       return False
-
     chessBoard.UpdateBoard(newSquare, prevSquare)
+    chessBoard.board[prevRow][prevFile].placedInSquare = pieceCopyOurPiece
+
+  movingSquarePiece = chessBoard.board[prevRow][prevFile].placedInSquare
+
 
   if (isinstance(movingSquarePiece, Pawn)):
     if (not taking):
@@ -118,7 +125,7 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
 # this is only used by moveChecker, so I'm just passing the files and rows directly
 # we don't need to check the target square itself, as that's handled in moveChecker
 # returns True if the straight move is clear
-def CheckStraights(chessBoard, prevRow, prevFile, newRow, newFile): 
+def CheckStraights(chessBoard, prevRow, prevFile, newRow, newFile):
   if (prevRow == newRow):
     if (newFile > prevFile):
       checkedFile = prevFile + 1
@@ -1262,7 +1269,7 @@ def MoveChecker1(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnP
 # this is only used by moveChecker, so I'm just passing the files and rows directly
 # we don't need to check the target square itself, as that's handled in moveChecker
 # returns True if the straight move is clear
-def CheckStraights(chessBoard, prevRow, prevFile, newRow, newFile): 
+def CheckStraights(chessBoard, prevRow, prevFile, newRow, newFile):
   if (prevRow == newRow):
     if (newFile > prevFile):
       checkedFile = prevFile + 1
