@@ -9,6 +9,7 @@ from aiMoveGenerator import *
 
 def CheckmateChecker(currentBoard, playerColour):
   # Find King
+  #i = MovingIntoCheck(currentBoard, 0, 1, 1, 2, 0)
   kingPiece = False
   if playerColour.lower() == 'black':
     isBlack = 1
@@ -539,3 +540,6 @@ def GetPieceArray(chessBoard, playerColour):
           pieceArray.append([i, j])
 
   return pieceArray
+
+
+

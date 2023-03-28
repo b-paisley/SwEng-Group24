@@ -133,9 +133,9 @@ def AiMoveGenerator(currentBoard, playerColour):
 
 # take in array notation and return chess notation co-ordinates ( e.g. input : (2, 2) - output : d4
 def GetChessNotation(coords):
-    row = int(coords[0]) + 1
-    column = chr(coords[1]+65)
-    return column + str(row)
+   row = int(coords[0]) + 1
+   column = chr(coords[1]+65)
+   return column + str(row)
 
 # Takes in chess notation and retruns coords  
 def GetCoords(currentBoard, notation):

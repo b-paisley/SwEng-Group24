@@ -1,6 +1,6 @@
 from chessBoard import *
 from Pieces import *
-from CheckmateChecker import *
+from CheckmateChecker1 import *
 import copy
 
 
@@ -119,7 +119,7 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
 # this is only used by moveChecker, so I'm just passing the files and rows directly
 # we don't need to check the target square itself, as that's handled in moveChecker
 # returns True if the straight move is clear
-def CheckStraights(chessBoard, prevRow, prevFile, newRow, newFile):
+def CheckStraights(chessBoard, prevRow, prevFile, newRow, newFile): 
   if (prevRow == newRow):
     if (newFile > prevFile):
       checkedFile = prevFile + 1
