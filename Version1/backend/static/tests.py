@@ -10,6 +10,7 @@ from moveChecker import *
 from app import app # Flask instance of the API
 
 
+
 def MakeBoard():
   board = ChessBoard()
   for i in range(8):
@@ -289,6 +290,24 @@ def test_EnPassant():
     # board.UpdateBoard("D7", "D6")
     # board.UpdateBoard("D6", "D5")
     # assert (not move_checker(board, "E5", "D6", 0))
+
+def test_MovingThroughCheck():
+  board = MakeBoard()
+  board.UpdateBoard("E2", "A3")
+  board.UpdateBoard("D8","E6")
+  assert (not MoveChecker(board, "B2", "B3", 0)) #check not allowed to ignore check
+  assert (MoveChecker(board,"F1","E2",0))  #check allowed block check
+  board = MakeBoard()
+  board.UpdateBoard("E2", "E4")
+  board.UpdateBoard("D8", "E6")
+  board.UpdateBoard("D7", "D5")
+  assert (not MoveChecker(board, "E4", "D5", 0))  # check not allowed to ignore check
+  board = MakeBoard()
+  board.UpdateBoard("E2", "E5")
+  board.UpdateBoard("D7", "D5")
+  assert (MoveChecker(board, "E5", "D6", 0)) # assert we can en passant normally
+  board.UpdateBoard("D8", "E6")
+  assert (not MoveChecker(board, "E5", "D6", 0))  # assert we cant en passant into a check
 
 def MakeBoard():
   board = ChessBoard()
@@ -618,7 +637,7 @@ def test_CheckmateChecker():
     board.UpdateBoard('B2', 'D5')
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
-    
+
 
     # Pawn Checkmate
     board.UpdateBoard('D5', 'B2')
@@ -711,4 +730,3 @@ def test_CheckmateChecker():
 
 
 
-    
