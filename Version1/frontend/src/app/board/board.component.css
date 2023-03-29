@@ -1,7 +1,7 @@
 .board {
     width: 35rem;
     height: 35rem;
-    border: 0.5rem solid black;
+    border: 0.5rem solid #312e2c;
     display: grid;
     grid-template-columns: repeat(8, 12.5%);
     grid-template-rows: repeat(8, 12.5%);
@@ -33,8 +33,8 @@
     /* line-height: 4.5rem; */
 }
 .reset{
-    position: absolute; left: 607px; top: 200px;
-    border-radius: 50%;
+    /* position: absolute; */
+    /* border-radius: 50%;
     background-color: #ac1807;
     border: none;
     color: white;
@@ -43,15 +43,15 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 4px 2px; */
     cursor: pointer;
 }
 .errorMessage{
-    position: absolute;
+    /* position: absolute;
     left: 611px;
-    top: 340px;
-    color: #e74c3c;
-    background-color: #f1c40f;
+    top: 340px; */
+    color: black;
+    /* background-color: #f1c40f; */
     padding: 10px;
     border-radius: 5px;
     font-weight: 600;

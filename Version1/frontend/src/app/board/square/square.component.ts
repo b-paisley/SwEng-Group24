@@ -11,7 +11,7 @@ export class SquareComponent {
 
     getStyle() {
         return this.black
-            ? { backgroundColor: 'grey' }
-            : { backgroundColor: 'white' };
+            ? { backgroundColor: '#b48866' }
+            : { backgroundColor: '#efd8b6' };
     }
 }

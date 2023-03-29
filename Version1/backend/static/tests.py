@@ -728,5 +728,11 @@ def test_CheckmateChecker():
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
+def test_KingMoveInCheck():
+    board= MakeBoard()
+    board.UpdateBoard("D1", "A4")
+    board.UpdateBoard("F7", "F6")
+    board.UpdateBoard("A4", "D7")
+    assert(MoveChecker(board,"E8","F7",0))
 
 

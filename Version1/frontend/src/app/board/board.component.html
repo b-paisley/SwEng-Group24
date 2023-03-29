@@ -17,8 +17,10 @@
             </div>
         </td>
         <td>
+            <button class="reset" (click)="doRestart()">Reset Game</button>
             <p>Source = {{sourceSquare}}</p>
             <p>Destination = {{destSquare}}</p>
+            <div class="errorMessage" *ngIf="errorMessage">Incorrect Input</div>
         </td>
     </tr>
 </table>
@@ -33,5 +35,3 @@
     </div>
     <button type="submit" name="button">Submit</button>
 </form>
-<button class="reset" (click)="doRestart()">Reset Game</button>
-<div class="errorMessage" *ngIf="errorMessage">Incorrect Input</div>
