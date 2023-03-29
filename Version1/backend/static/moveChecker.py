@@ -741,12 +741,12 @@ def CheckmateChecker(currentBoard, playerColour):
         # Blocking when piece checking is a Rook/Queen straight
         if CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
           return False
-        if CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
+        if CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
           return False
         # Blocking when piece checking is Bishop/Queen diag
         if CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
           return False
-        if CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
+        if CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
           return False
   else:
     # More than one piece putting king in check
