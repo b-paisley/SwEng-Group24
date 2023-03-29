@@ -27,6 +27,11 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
   kingPos = getKingPosition(chessBoard, prevRow, prevFile)
   kingFile = ord(kingPos[0]) - 65
   kingRow = int(kingPos[1]) - 1
+  if  isinstance(movingSquarePiece, King):
+    kingPos = newSquare
+    kingFile = newFile
+    kingRow = newRow
+    
 
   if taking:
     pieceCopy = copy.copy(chessBoard.board[newRow][newFile].placedInSquare)
