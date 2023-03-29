@@ -27,7 +27,7 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
   kingPos = getKingPosition(chessBoard, prevRow, prevFile)
   kingFile = ord(kingPos[0]) - 65
   kingRow = int(kingPos[1]) - 1
-    
+
   if isinstance(movingSquarePiece, King):
     kingIs= 1
   elif taking:
@@ -85,7 +85,7 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
       elif EnPassant(chessBoard, prevRow, prevFile, newRow, newFile):
         theirPieceSquare = newSquare[0] + str(prevSquare[1])
         if (inDrawFunctionForPossibleEnPassant == 1):
-          chessBoard.update_board(theirPieceSquare, newSquare)
+          chessBoard.UpdateBoard(theirPieceSquare, newSquare)
         return True
     else:
       if (movingSquarePiece.isBlack and prevRow - 1 == newRow and (1 == abs(newFile - prevFile))): return True
