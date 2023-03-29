@@ -22,6 +22,7 @@ export class BoardComponent {
     legend:string[] = []
     numbers:number[] = []
     errorMessage:boolean = false;
+    gameOver:boolean = false;
     
     
     xy(i: number) {
@@ -131,14 +132,19 @@ export class BoardComponent {
     }
 
     makeMove(moveStr: string) {
-        console.log(moveStr)
-        this.piecesService.makeMove(moveStr).subscribe(data => {
-            console.log(data)
-            this.movePiece.reset();
-            this.updateBoard(data.data.fen.toString());
-        });
+        if (!this.gameOver) {
+            this.piecesService.makeMove(moveStr).subscribe(data => {
+                console.log(data)
+                this.movePiece.reset();
+                this.updateBoard(data.data.fen.toString());
+                if (data.data.gameOver) {
+                    this.gameOver = true
+                }
+            });
+        }
     }
     doRestart(){
+        this.gameOver = false
         this.piecesService.doRestart().subscribe(data =>{
             console.log("enterFun");
             console.log(data.data.fen.toString());

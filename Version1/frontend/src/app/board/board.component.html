@@ -8,6 +8,9 @@
             </div>
         </td>
         <td>
+            <div *ngIf="gameOver">
+                <p class="gameOver">GAME OVER</p>
+            </div>
             <div class="board">
                 <div *ngFor="let i of sixtyFour">
                     <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" (click)="storePos(i)">

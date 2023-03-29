@@ -57,3 +57,16 @@
     font-weight: 600;
     font-size: 1.25rem; */
 }
+.gameOver{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35rem;
+    height: 35rem;
+    z-index: 99;
+    position: fixed;
+    color: red;
+    font-size: 60px;
+    font-weight: bolder;
+    margin: 0.5rem;
+}

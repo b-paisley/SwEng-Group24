@@ -1,3 +1,6 @@
 export interface  Response{
-    data: {fen: string}
+    data: {
+      fen: string,
+      gameOver: boolean
+    }
   }

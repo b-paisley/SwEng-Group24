@@ -93,18 +93,26 @@ def movePiece(move):
         return {
             "data": {
                 "fen": "error",
+                "gameOver": False
             }
         }
     fenVal = ChessBoard.GiveFEN(game.GetBoard())
-    if move == "Game Over":
+    if game.black:
+        playerColour='black'
+    else:
+        playerColour='white'
+    if CheckmateChecker(game.board, playerColour):
+        game.gameOver = True
         return {
             "data": {
-                "fen": "fuck",
+                "fen": fenVal,
+                "gameOver": True
             }
         }
     return {
         "data": {
             "fen": fenVal,
+            "gameOver": False
         }
     }
 

@@ -15,16 +15,10 @@ class Game:
         board.OriginalDraw(pieceToDraw, squareToFill)
     board.Draw()
     black=False
+    gameOver = False
 
     def PlayMove(self, move:str):
-        if self.black:
-          playerColour='black'
-        if not self.black:
-          playerColour='white'
-        if CheckmateChecker(self.board, playerColour):
-          print("Game Over")
-          return "Game Over"
-        else:
+        if not self.gameOver:
           move = move.upper()
           validMove=False #both bools have to be set false to check error handling
           properColour = False
@@ -70,6 +64,7 @@ class Game:
             return self.board
     
     def Restart(self):
+        self.gameOver = False
         for i in range(8):
             for j in range(8):
                 self.board.board[i][j].ResetSquare()
