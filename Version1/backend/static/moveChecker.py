@@ -30,7 +30,7 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
     
   if isinstance(movingSquarePiece, King):
     kingIs= 1
-  if taking:
+  elif taking:
     pieceCopy = copy.copy(chessBoard.board[newRow][newFile].placedInSquare)
     pieceCopyOurPiece = copy.copy(chessBoard.board[prevRow][prevFile].placedInSquare)
     chessBoard.UpdateBoard(prevSquare, newSquare)
