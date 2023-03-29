@@ -17,46 +17,54 @@ class Game:
     black=False
 
     def PlayMove(self, move:str):
-        move = move.upper()
-        validMove=False #both bools have to be set false to check error handling
-        properColour = False
-
         if self.black:
-          white_colour = 0
+          playerColour='black'
+        if not self.black:
+          playerColour='white'
+        if CheckmateChecker(self.board, playerColour):
+          print("Game Over")
+          return "Game Over"
         else:
-          white_colour = 1
+          move = move.upper()
+          validMove=False #both bools have to be set false to check error handling
+          properColour = False
 
-        if (move == "0-0") or (move == "O-O"):
-          validMove = MoveChecker(self.board, "k", white_colour,0)  # kingside castling - set move checker to k
-          properColour = True
-        elif move == "0-0-0" or move == "O-O-O":
-          validMove = MoveChecker(self.board, "q", white_colour, 0)  # queenside castling - set move checker to k
-          properColour = True
-        else:
-          validMove=MoveChecker(self.board,move[0:2],move[3:5],1) #if valid
-          if(self.board.AccessSquare(move[0:2]).isBlack==self.black): #check that not moving other player piece
-            properColour=True
-
-        if (not validMove or not properColour):
-             return "error"
-        if move == "0-0" or move == "O-O":
           if self.black:
-            self.board.UpdateBoard("E8", "G8")
-            self.board.UpdateBoard("H8", "F8")
-          if not self.black:
-            self.board.UpdateBoard("E1", "G1")
-            self.board.UpdateBoard("H1", "F1")
-        elif move == "0-0-0" or move == "O-O-O":
-          if self.black:
-            self.board.UpdateBoard("E8", "C8")
-            self.board.UpdateBoard("A8", "D8")
-          if not self.black:
-            self.board.UpdateBoard("E1", "C1")
-            self.board.UpdateBoard("A1", "D1")
+            white_colour = 0
+          else:
+            white_colour = 1
 
-        else:
-            self.board.UpdateBoard(move[0:2],move[3:5]) #updates board
-        self.black = not self.black #changes to other turn
+          if (move == "0-0") or (move == "O-O"):
+            validMove = MoveChecker(self.board, "k", white_colour,0)  # kingside castling - set move checker to k
+            properColour = True
+          elif move == "0-0-0" or move == "O-O-O":
+            validMove = MoveChecker(self.board, "q", white_colour, 0)  # queenside castling - set move checker to k
+            properColour = True
+          else:
+            validMove=MoveChecker(self.board,move[0:2],move[3:5],1) #if valid
+            if(self.board.AccessSquare(move[0:2]).isBlack==self.black): #check that not moving other player piece
+              properColour=True
+
+          if (not validMove or not properColour):
+              return "error"
+          if move == "0-0" or move == "O-O":
+            if self.black:
+              self.board.UpdateBoard("E8", "G8")
+              self.board.UpdateBoard("H8", "F8")
+            if not self.black:
+              self.board.UpdateBoard("E1", "G1")
+              self.board.UpdateBoard("H1", "F1")
+          elif move == "0-0-0" or move == "O-O-O":
+            if self.black:
+              self.board.UpdateBoard("E8", "C8")
+              self.board.UpdateBoard("A8", "D8")
+            if not self.black:
+              self.board.UpdateBoard("E1", "C1")
+              self.board.UpdateBoard("A1", "D1")
+
+          else:
+              self.board.UpdateBoard(move[0:2],move[3:5]) #updates board
+          self.black = not self.black #changes to other turn
 
     def GetBoard(self):
             return self.board

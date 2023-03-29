@@ -34,11 +34,11 @@
 }
 .reset{
     /* position: absolute; */
-    /* border-radius: 50%;
+    /* border-radius: 50%; */
     background-color: #ac1807;
     border: none;
     color: white;
-    padding: 20px;
+    /* padding: 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -52,8 +52,8 @@
     top: 340px; */
     color: black;
     /* background-color: #f1c40f; */
-    padding: 10px;
+    /* padding: 10px;
     border-radius: 5px;
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: 1.25rem; */
 }

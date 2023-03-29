@@ -133,6 +133,7 @@ export class BoardComponent {
     makeMove(moveStr: string) {
         console.log(moveStr)
         this.piecesService.makeMove(moveStr).subscribe(data => {
+            console.log(data)
             this.movePiece.reset();
             this.updateBoard(data.data.fen.toString());
         });

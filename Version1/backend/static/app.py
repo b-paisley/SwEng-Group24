@@ -88,13 +88,20 @@ def runGame():
 
 @app.route('/api/move/<move>')
 def movePiece(move):
-    if game.PlayMove(move) == "error":
+    move = game.PlayMove(move)
+    if move == "error":
         return {
             "data": {
                 "fen": "error",
             }
         }
     fenVal = ChessBoard.GiveFEN(game.GetBoard())
+    if move == "Game Over":
+        return {
+            "data": {
+                "fen": "fuck",
+            }
+        }
     return {
         "data": {
             "fen": fenVal,
