@@ -8,6 +8,7 @@ from Game import *
 from square import square
 from moveChecker import *
 from app import app # Flask instance of the API
+from StalemateChecker import *
 
 def MakeBoard():
   board = ChessBoard()
@@ -712,12 +713,27 @@ def test_CheckmateChecker():
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
-def test_KingMoveInCheck():
-    board= MakeBoard()
-    board.UpdateBoard("D1", "A4")
-    board.UpdateBoard("F7", "F6")
-    board.UpdateBoard("A4", "D7")
-    assert(MoveChecker(board,"E8","F7",0))
+def MakeBoard1():
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(10):
+    pieceToDraw = list(piecesPosDict1.keys())[i]
+    squareToFill = piecesPosDict1[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
+
+def MakeBoard2():
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(3):
+    pieceToDraw = list(piecesPosDict2.keys())[i]
+    squareToFill = piecesPosDict2[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
 
 def MakeBoard3():
   board = ChessBoard()
@@ -747,16 +763,7 @@ def test_StalemateChecker():
     stalemate = StalemateChecker(board, 'black')
     assert(stalemate)
 
-def MakeBoard():
-  board = ChessBoard()
-  for i in range(8):
-    for j in range(8):
-        board.board[i][j].ResetSquare()
-  for i in range(32):
-    pieceToDraw = list(piecesPosDict.keys())[i]
-    squareToFill = piecesPosDict[pieceToDraw]
-    board.OriginalDraw(pieceToDraw, squareToFill)
-  return board
+ 
 
 
 
