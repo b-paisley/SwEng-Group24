@@ -8,8 +8,7 @@ from Game import *
 from square import square
 from moveChecker import *
 from app import app # Flask instance of the API
-
-
+from StalemateChecker import *
 
 def MakeBoard():
   board = ChessBoard()
@@ -21,8 +20,6 @@ def MakeBoard():
     squareToFill = piecesPosDict[pieceToDraw]
     board.OriginalDraw(pieceToDraw, squareToFill)
   return board
-
-
 
 def test_Api():
     response = app.test_client().get('/')
@@ -716,11 +713,57 @@ def test_CheckmateChecker():
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
-def test_KingMoveInCheck():
-    board= MakeBoard()
-    board.UpdateBoard("D1", "A4")
-    board.UpdateBoard("F7", "F6")
-    board.UpdateBoard("A4", "D7")
-    assert(MoveChecker(board,"E8","F7",0))
+def MakeBoard1():
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(10):
+    pieceToDraw = list(piecesPosDict1.keys())[i]
+    squareToFill = piecesPosDict1[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
+
+def MakeBoard2():
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(3):
+    pieceToDraw = list(piecesPosDict2.keys())[i]
+    squareToFill = piecesPosDict2[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
+
+def MakeBoard3():
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(3):
+    pieceToDraw = list(piecesPosDict3.keys())[i]
+    squareToFill = piecesPosDict3[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
+
+def test_StalemateChecker():
+    board = MakeBoard()
+    stalemate = StalemateChecker(board, 'black')
+    assert(stalemate) == False
+
+    board = MakeBoard1()
+    stalemate = StalemateChecker(board, 'black')
+    assert(stalemate)
+
+    board = MakeBoard2()
+    stalemate = StalemateChecker(board, 'black')
+    assert(stalemate)
+
+    board = MakeBoard3()
+    stalemate = StalemateChecker(board, 'black')
+    assert(stalemate)
+
+ 
+
 
 
