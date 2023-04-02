@@ -4,6 +4,7 @@ EXPOSE 5000
 WORKDIR /base
 COPY package*.json ./ 
 COPY . .
+COPY shellscript.sh ./
 
 RUN apt-get update && apt-get install -y python3 curl
 RUN apt remove -y nodejs nodejs-doc
@@ -20,11 +21,15 @@ RUN pip install Flask flask-restful flask-cors
 RUN npm -f install -g npm@9.5.1
 RUN npm -f install -g @angular/cli
 
+# RUN flask --app ./backend/static/app run &
+
+
+# RUN /bin/bash -c './frontend/shellscript.sh'
 
 #RUN ng serve
 #RUN n
+# CMD ["/bin/bash", "-c", "cd ./frontend; ng serve"]
 CMD ["/bin/bash", "-c", "./shellscript.sh"]
-
 #CMD ["ng", "serve", "&"]
 #CMD ["cd", "backend/static"]
 #CMD ["flask", "run"]
