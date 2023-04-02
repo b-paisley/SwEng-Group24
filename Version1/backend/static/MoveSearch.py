@@ -22,7 +22,7 @@ scoring = {'p':-1,
 
 
 def playPrune(BOARD):
-    return basePrune(BOARD, 4, True).uci()
+    return MoveFromUCI(basePrune(BOARD, 4, True).uci())
 
 def basePrune(BOARD, N, playerMax):
     maxN, currentN = N
@@ -81,3 +81,7 @@ def MinMaxAlphaBeta(board, playerMax, maxN, currentN, alpha, beta):
 def NewEval(BOARD):
     s = State(BOARD)
     return Evaluator(s)
+
+def MoveFromUCI(moveIn):
+    moveOut = moveIn[:2] + "_" + moveIn[2:]
+    return moveOut
