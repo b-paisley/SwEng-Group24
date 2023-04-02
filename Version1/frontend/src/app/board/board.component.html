@@ -20,10 +20,13 @@
             </div>
         </td>
         <td>
+            <button (click)="makeBoard1()">Stalemate Scenario</button>
             <button class="reset" (click)="doRestart()">Reset Game</button>
             <p>Source = {{sourceSquare}}</p>
             <p>Destination = {{destSquare}}</p>
-            <div class="errorMessage" *ngIf="errorMessage">Incorrect Input</div>
+            <div style="height: 20px;">
+                <div class="errorMessage" *ngIf="errorMessage">Incorrect Input</div>
+            </div>
         </td>
     </tr>
 </table>

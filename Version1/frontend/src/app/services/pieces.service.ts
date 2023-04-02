@@ -22,4 +22,7 @@ export class PiecesService {
   doRestart(){
     return this.http.get<Response>(this.url +'api/reset')
   }
+  makeBoard1(){
+    return this.http.get<Response>(this.url +'api/setBoard1')
+  }
 }

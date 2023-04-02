@@ -146,7 +146,12 @@ export class BoardComponent {
     doRestart(){
         this.gameOver = false
         this.piecesService.doRestart().subscribe(data =>{
-            console.log("enterFun");
+            console.log(data.data.fen.toString());
+            this.updateBoard(data.data.fen.toString());
+        });
+    }
+    makeBoard1(){
+        this.piecesService.makeBoard1().subscribe(data =>{
             console.log(data.data.fen.toString());
             this.updateBoard(data.data.fen.toString());
         });
