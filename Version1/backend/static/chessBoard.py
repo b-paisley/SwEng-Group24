@@ -4,6 +4,7 @@ from square import *
 
 class ChessBoard:
     board = []
+    enpassantSquare = '-'
     # board bottom left starting point
     def __init__(self):
         letters = "ABCDEFGH"
@@ -54,6 +55,14 @@ class ChessBoard:
         self.board[numberRow][letterFile].PlacePiece(piece)
 
         piece.hasMoved = True
+        if repr(self.AccessSquare(newSquare)).lower() == "p":
+            if piece.hasMovedTwoSpacesLast and (numberRow == 3 or numberRow == 4 ):
+                if piece.isBlack:
+                    self.enpassantSquare=newSquare[0].lower()+str(numberRow+2)
+                else:
+                    self.enpassantSquare=newSquare[0].lower()+str(numberRow)
+        else:
+            self.enpassantSquare = '-'
         piece.hasMovedTwoSpacesLast = True
 
         self.Draw()
@@ -77,3 +86,53 @@ class ChessBoard:
                 strFen+="/"
         return strFen
 
+    def ProperFen(self, isBlack):
+        count=0
+        strFen=""
+        for i in range(8):
+            for j in range(8):
+                piece = self.board[abs(i-7)][j].placedInSquare
+                if(piece==None):
+                    count+=1
+                else:
+                    pieceStr = ""
+                    if repr(piece).islower():
+                        pieceStr=repr(piece).upper()
+                    else:
+                        pieceStr = repr(piece).lower()
+                    strFen+=(str(count) if count!=0 else "")+pieceStr
+                    count=0
+            if(count!=0):
+                strFen+=str(count)
+                count=0
+            if(i!=7):
+                strFen+="/"
+        if isBlack:
+            strFen+= " b "
+        else:
+            strFen+=" w "
+        entered = False
+        if repr(self.AccessSquare("E1")) == "k":
+            if self.AccessSquare("E1").hasMoved == False:
+                if repr(self.AccessSquare("H1")) == "r":
+                    if self.AccessSquare("H1").hasMoved == False:
+                        strFen+="K"
+                        entered=True
+                if repr(self.AccessSquare("A1")) =="r":
+                    if self.AccessSquare("A1").hasMoved == False:
+                        strFen+="Q"
+                        entered=True
+        if (repr(self.AccessSquare("E8"))) == "K":
+            if self.AccessSquare("E8").hasMoved == False:
+                if repr(self.AccessSquare("H8")) == "R":
+                    if self.AccessSquare("H8").hasMoved == False:
+                        strFen+="k"
+                        entered=True
+                if repr(self.AccessSquare("A8")) =="R":
+                    if self.AccessSquare("A8").hasMoved == False:
+                        strFen+="q"
+                        entered=True
+        if entered:
+            strFen+=" "
+        strFen += self.enpassantSquare + " 0 1"
+        return strFen

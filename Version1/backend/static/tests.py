@@ -763,7 +763,29 @@ def test_StalemateChecker():
     stalemate = StalemateChecker(board, 'black')
     assert(stalemate)
 
- 
+def test_ProperFen():
+    board = ChessBoard()
+    for i in range(8):
+            for j in range(8):
+                board.board[i][j].ResetSquare()
+    for i in range(32):
+        pieceToDraw = list(piecesPosDict.keys())[i]
+        pieceToDraw.hasMoved = False
+        squareToFill = piecesPosDict[pieceToDraw]
+        board.OriginalDraw(pieceToDraw, squareToFill)
+    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+    board.UpdateBoard('E2', 'E4')
+    assert(ChessBoard.ProperFen(board, True) == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
+    board.UpdateBoard('A1', 'A3')
+    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/4P3/R7/PPPP1PPP/1NBQKBNR w Kkq - 0 1')
+    board.UpdateBoard('A3', 'A1')
+    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w Kkq - 0 1')
+    board.UpdateBoard('C7', 'C5')
+    board.UpdateBoard('G1', 'F3')
+    assert(ChessBoard.ProperFen(board, True) == 'rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b Kkq - 0 1')
+
+
+
 
 
 
