@@ -61,7 +61,7 @@ class ChessBoard:
 
         piece.hasMoved = True
         if repr(self.AccessSquare(newSquare)).lower() == "p":
-            if (not piece.hasMovedTwoSpacesLast) and (numberRow == 3 or numberRow == 4 ):
+            if (piece.hasMovedTwoSpacesLast) and (numberRow == 3 or numberRow == 4 ):
                 if piece.isBlack:
                     self.enpassantSquare=newSquare[0].lower()+str(numberRow+2)
                 else:
