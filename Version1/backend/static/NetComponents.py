@@ -68,7 +68,7 @@ class Net(nn.Module):
 
 class NetVal(object):
     def __init__(self):
-        vals = torch.load('./nets/value.pth', map_location=lambda storage, loc: storage)
+        vals = torch.load(".\nets\value.pth", map_location=lambda storage, loc: storage)
         self.model = Net()
         self.model.load_state_dict(vals)
     def __call__(self, state):
