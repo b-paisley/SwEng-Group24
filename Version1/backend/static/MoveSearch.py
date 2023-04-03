@@ -7,7 +7,7 @@ from GetTrainingData import State
 from chessBoard import ChessBoard
 
 Evaluator = NetVal()
-reader = chess.polyglot.open_reader('openings/baron30.bin')
+reader = chess.polyglot.open_reader('Version1/backend/static/openings/baron30.bin')
 scoring = {'p':-1,
            'r':-3,
            'b':-4,
