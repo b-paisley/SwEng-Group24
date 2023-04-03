@@ -150,6 +150,9 @@ export class BoardComponent {
         this.piecesService.playPrune().subscribe(data => {
             console.log(data)
             this.updateBoard(data.data.fen.toString());
+            if (data.data.gameOver) {
+                this.gameOver = true
+            }
         })
     }
     doRestart(){

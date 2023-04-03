@@ -98,6 +98,18 @@ def callMitch():
     move = playPrune(game)
     game.PlayMove(move)
     fenVal = ChessBoard.GiveFEN(game.GetBoard())
+    if game.black:
+        playerColour='black'
+    else:
+        playerColour='white'
+    if CheckmateChecker(game.board, playerColour):
+        game.gameOver = True
+        return {
+            "data": {
+                "fen": fenVal,
+                "gameOver": True
+            }
+        }
     return {
         "data": {
             "fen":fenVal,
