@@ -23,6 +23,7 @@ export class BoardComponent {
     numbers:number[] = []
     errorMessage:boolean = false;
     gameOver:boolean = false;
+    turn:string = "White's Turn"
     
     
     xy(i: number) {
@@ -144,21 +145,30 @@ export class BoardComponent {
                 }
                 if (data.data.gameOver) {
                     this.gameOver = true
+                    this.turn = "You Win!"
                 }
             });
         }
     }
     callMitch() {
+        this.turn = "Black's Turn"
         this.piecesService.playPrune().subscribe(data => {
             console.log(data)
             this.updateBoard(data.data.fen.toString());
             if (data.data.gameOver) {
                 this.gameOver = true
+                this.turn = "MiTCh Wins!"
+            } else {
+                this.turn = "White's Turn"
             }
         })
     }
     doRestart(){
+        this.turn = "White's Turn"
         this.gameOver = false
+        this.errorMessage = false;
+        this.sourceSquare = ''
+        this.destSquare = ''
         this.piecesService.doRestart().subscribe(data =>{
             console.log(data.data.fen.toString());
             this.updateBoard(data.data.fen.toString());
