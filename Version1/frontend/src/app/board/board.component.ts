@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, HostListener } from "@angular/core";
 import { Coord } from "../class/coord";
 import { PiecesService } from "../services/pieces.service";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
