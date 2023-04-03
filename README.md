@@ -1,7 +1,7 @@
 # SwEng-Group24
 ## Overview - Project 17
 Development of a Chess Engine for the HoloLens.  
-Developed Usng Python and React.  
+Developed Usng Python and Angular.  
 
 ELO Rating - **TBD**
 
