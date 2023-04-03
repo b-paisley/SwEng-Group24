@@ -5,6 +5,8 @@ from square import *
 class ChessBoard:
     board = []
     enpassantSquare = '-'
+    fullMoveCount = 2
+    halfMoveCount = 0
     # board bottom left starting point
     def __init__(self):
         letters = "ABCDEFGH"
@@ -52,11 +54,14 @@ class ChessBoard:
 
         pieceInDest = self.board[numberRow][letterFile].GetPiece()
 
+        taken =False
+        if self.AccessSquare(newSquare) != None:
+            taken = True
         self.board[numberRow][letterFile].PlacePiece(piece)
 
         piece.hasMoved = True
         if repr(self.AccessSquare(newSquare)).lower() == "p":
-            if piece.hasMovedTwoSpacesLast and (numberRow == 3 or numberRow == 4 ):
+            if (not piece.hasMovedTwoSpacesLast) and (numberRow == 3 or numberRow == 4 ):
                 if piece.isBlack:
                     self.enpassantSquare=newSquare[0].lower()+str(numberRow+2)
                 else:
@@ -64,7 +69,11 @@ class ChessBoard:
         else:
             self.enpassantSquare = '-'
         piece.hasMovedTwoSpacesLast = True
-
+        self.fullMoveCount+=1
+        if repr(piece).lower() == 'p' or taken:
+            self.halfMoveCount=0
+        else:
+            self.halfMoveCount+=1     
         self.Draw()
 
     #will return FEN(Forsyth–Edwards Notation) this is return string
@@ -134,5 +143,7 @@ class ChessBoard:
                         entered=True
         if entered:
             strFen+=" "
-        strFen += self.enpassantSquare + " 0 1"
+        strFen += self.enpassantSquare
+        strFen+=" "+str(self.halfMoveCount)
+        strFen+=" "+str(int(self.fullMoveCount/2))
         return strFen
