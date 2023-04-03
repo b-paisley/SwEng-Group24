@@ -73,7 +73,7 @@ class NetVal(object):
         if os.path.isfile(os.path.join(p, '/nets/value.pth')):
           p = p + '/nets/value.pth'
         elif os.path.isfile(p + '\\Version1\\backend\\static\\nets\\value.pth'): 
-          p = p +'\\Version1\\backend\\static\\nets\\value.pth'
+          p = '\\Version1\\backend\\static\\nets\\value.pth'
         vals = torch.load(p, map_location=lambda storage, loc: storage)
         self.model = Net()
         self.model.load_state_dict(vals)

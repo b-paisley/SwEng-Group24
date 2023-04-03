@@ -12,7 +12,7 @@ p = os.getcwd()
 if os.path.isfile(os.path.join(p, '/openings/baron30.bin')):
     p = p + '/openings/baron30.bin'
 elif os.path.isfile(p + '\\openings\\baron30.bin'): 
-    p = p +'\\openings\\baron30.bin'
+    p = '\\openings\\baron30.bin'
 reader = chess.polyglot.open_reader(p)
 del p
 scoring = {'p':-1,
