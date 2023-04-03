@@ -4,6 +4,7 @@ import chess.polyglot
 from copy import deepcopy
 from NetComponents import NetVal
 from GetTrainingData import State
+from chessBoard import ChessBoard
 
 Evaluator = NetVal()
 reader = chess.polyglot.open_reader('openings/baron30.bin')
@@ -21,7 +22,9 @@ scoring = {'p':-1,
            'K':0}
 
 
-def playPrune(BOARD):
+def playPrune(GAME):
+    b = GAME.ProperFen(True)
+    BOARD = chess.Board(b)
     return MoveFromUCI(basePrune(BOARD, 4, True).uci())
 
 def basePrune(BOARD, N, playerMax):
