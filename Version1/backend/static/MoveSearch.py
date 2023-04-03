@@ -23,12 +23,13 @@ scoring = {'p':-1,
 
 
 def playPrune(GAME):
-    b = GAME.ProperFen(True)
+    b = GAME.GetBoard().ProperFen(True)
     BOARD = chess.Board(b)
     return MoveFromUCI(basePrune(BOARD, 4, True).uci())
 
 def basePrune(BOARD, N, playerMax):
-    maxN, currentN = N
+    maxN = N
+    currentN = N
     opening = reader.get(BOARD)
     if opening == None:
         pass
@@ -64,7 +65,7 @@ def MinMaxAlphaBeta(board, playerMax, maxN, currentN, alpha, beta):
         bestVal = -9999
         for move in moves:
             board.push(move)
-            bestVal = max(bestVal, MinMaxAlphaBeta(board, not playerMax, maxN, currentN, alpha, beta))
+            bestVal = max(bestVal, MinMaxAlphaBeta(board, not playerMax, maxN, currentN-1, alpha, beta))
             board.pop()
             alpha = max(alpha, bestVal)
             if beta <= alpha:
@@ -73,9 +74,9 @@ def MinMaxAlphaBeta(board, playerMax, maxN, currentN, alpha, beta):
     else:
         bestVal = 9999
         for move in moves:
-            board.push()
-            bestVal = min(bestVal, MinMaxAlphaBeta(board, not playerMax, maxN, currentN, alpha, beta))
-            board.pop
+            board.push(move)
+            bestVal = min(bestVal, MinMaxAlphaBeta(board, not playerMax, maxN, currentN-1, alpha, beta))
+            board.pop()
             beta = min(bestVal, beta)
             if beta <= alpha:
                 return bestVal

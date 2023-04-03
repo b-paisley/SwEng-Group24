@@ -137,11 +137,20 @@ export class BoardComponent {
                 console.log(data)
                 this.movePiece.reset();
                 this.updateBoard(data.data.fen.toString());
+                if (data.data.fen != 'error') {
+                    this.callMitch();
+                }
                 if (data.data.gameOver) {
                     this.gameOver = true
                 }
             });
         }
+    }
+    callMitch() {
+        this.piecesService.playPrune().subscribe(data => {
+            console.log(data)
+            this.updateBoard(data.data.fen.toString());
+        })
     }
     doRestart(){
         this.gameOver = false

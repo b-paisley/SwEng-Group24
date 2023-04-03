@@ -4,6 +4,8 @@ from PiecesPosDict import *
 from Game import *
 from flask_restful import Resource, Api
 from flask_cors import CORS
+from MoveSearch import playPrune
+# from main import game
 
 app = Flask(__name__)
 api = Api(app)
@@ -90,10 +92,14 @@ def MakeBoard1():
         pieceToDraw = list(piecesPosDict1.keys())[i]
         squareToFill = piecesPosDict1[pieceToDraw]
         board.OriginalDraw(pieceToDraw, squareToFill)
+
+@app.route('/api/mitch')
+def callMitch():
+    move = playPrune(game)
+    game.PlayMove(move)
     fenVal = ChessBoard.GiveFEN(game.GetBoard())
     return {
         "data": {
             "fen":fenVal,
         }
     }
-

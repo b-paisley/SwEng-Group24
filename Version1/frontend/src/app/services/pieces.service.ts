@@ -25,4 +25,7 @@ export class PiecesService {
   makeBoard1(){
     return this.http.get<Response>(this.url +'api/setBoard1')
   }
+  playPrune(){
+    return this.http.get<Response>(this.url +'api/mitch')
+  }
 }
