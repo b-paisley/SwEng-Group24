@@ -133,6 +133,8 @@ export class BoardComponent {
 
     makeMove(moveStr: string) {
         if (!this.gameOver) {
+            if (moveStr == "E1_G1") moveStr = "O-O"
+            if (moveStr == "E1_C1") moveStr = "O-O-O"
             this.piecesService.makeMove(moveStr).subscribe(data => {
                 console.log(data)
                 this.movePiece.reset();

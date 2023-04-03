@@ -17,6 +17,7 @@
     grid-template-rows: repeat(1, 100%);
     font-weight: 400;
     font-size: 1.5rem;
+    margin-left: -93px;
     /* line-height: 4.5rem; */
 }
 
