@@ -1,4 +1,5 @@
 import numpy as np
+import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -68,7 +69,12 @@ class Net(nn.Module):
 
 class NetVal(object):
     def __init__(self):
-        vals = torch.load("nets/value.pth", map_location=lambda storage, loc: storage)
+        p = os.getcwd()
+        if os.path.isfile(os.path.join(p, '/nets/value.pth')):
+          p = p + '/nets/value.pth'
+        elif os.path.isfile(p + '\\Version1\\backend\\static\\nets\\value.pth'): 
+          p = p +'\\Version1\\backend\\static\\nets\\value.pth'
+        vals = torch.load(p, map_location=lambda storage, loc: storage)
         self.model = Net()
         self.model.load_state_dict(vals)
     def __call__(self, state):

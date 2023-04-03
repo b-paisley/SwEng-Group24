@@ -1,13 +1,20 @@
 import random
 import chess
 import chess.polyglot
+import os
 from copy import deepcopy
 from NetComponents import NetVal
 from GetTrainingData import State
 from chessBoard import ChessBoard
 
 Evaluator = NetVal()
-reader = chess.polyglot.open_reader('openings/baron30.bin')
+p = os.getcwd()
+if os.path.isfile(os.path.join(p, '/openings/baron30.bin')):
+    p = p + '/openings/baron30.bin'
+elif os.path.isfile(p + '\\openings\\baron30.bin'): 
+    p = p +'\\openings\\baron30.bin'
+reader = chess.polyglot.open_reader(p)
+del p
 scoring = {'p':-1,
            'r':-3,
            'b':-4,
