@@ -77,8 +77,12 @@ class NetVal(object):
         #os.path.isfile(p + '\\Version1\\backend\\static\\nets\\value.pth'): 
           p = 'nets/value.pth'
         '''
-        p = os.path.abspath(__file__).removesuffix(os.path.basename(__file__)) + 'nets/values.pth'
-        vals = torch.load(p, map_location=lambda storage, loc: storage)
+        q = 'nets/value.pth'
+        p = os.path.abspath(__file__).removesuffix(os.path.basename(__file__)) 
+        r = p + q
+        if not os.path.isfile(r):
+          r = r.removeprefix(p)
+        vals = torch.load(r, map_location=lambda storage, loc: storage)
         self.model = Net()
         self.model.load_state_dict(vals)
     def __call__(self, state):
