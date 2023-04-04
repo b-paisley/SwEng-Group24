@@ -777,15 +777,10 @@ def test_ProperFen():
     board.UpdateBoard('E2', 'E4')
     assert(ChessBoard.ProperFen(board, True) == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
     board.UpdateBoard('A1', 'A3')
-    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/4P3/R7/PPPP1PPP/1NBQKBNR w Kkq - 0 1')
+    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/4P3/R7/PPPP1PPP/1NBQKBNR w Kkq - 1 2')
     board.UpdateBoard('A3', 'A1')
-    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w Kkq - 0 1')
+    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w Kkq - 2 2')
     board.UpdateBoard('C7', 'C5')
-    board.UpdateBoard('G1', 'F3')
-    assert(ChessBoard.ProperFen(board, True) == 'rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b Kkq - 0 1')
-
-
-
-
+    assert(ChessBoard.ProperFen(board, True) == 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR b Kkq c6 0 3')
 
 

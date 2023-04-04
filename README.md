@@ -20,7 +20,14 @@ ELO Rating - **TBD**
 * Harry Roche - rocheha@tcd.ie
 
 ## Instructions to Play
-**TBD**
+1. Docker
+* Download our Docker Image with ```docker push brandonpaisley/project17_chessengine```
+* Run the image with `docker run brandonpaisley/project17_chessengine`
+* Open your browser on Localhost:4200
+2. Local
+* Run our backend first in the background with `flask --app backend/static/app.py &`
+* Run our frontend with `ng serve`
+* Open your broswer on localhost:4200
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
