@@ -59,6 +59,7 @@ class Game:
           else:
               self.board.UpdateBoard(move[0:2],move[3:5]) #updates board
           self.black = not self.black #changes to other turn
+          print(self.board.ProperFen(self.black))
 
     def GetBoard(self):
             return self.board
