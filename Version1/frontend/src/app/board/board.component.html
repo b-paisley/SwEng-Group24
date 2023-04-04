@@ -1,43 +1,50 @@
-<table>
-    <tr>
-        <td>
-            <div class="legendSide">
-                <div  *ngFor="let i of numbers" style="align-self: center;">
-                            {{i}}
+<div class="boardside">
+    <table>
+        <tr>
+            <td>
+                <div class="legendSide">
+                    <div  *ngFor="let i of numbers" style="align-self: center;">
+                                {{i}}
+                    </div>
                 </div>
-            </div>
-        </td>
-        <td>
-            <div *ngIf="gameOver">
-                <p class="gameOver">GAME OVER</p>
-            </div>
-            <div class="board">
-                <div *ngFor="let i of sixtyFour">
-                    <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" (click)="storePos(i)">
-                        <app-piece [char] = getSymbol(pieceArr[pos.y][pos.x])></app-piece>
-                    </app-square>
+            </td>
+            <td>
+                <div *ngIf="gameOver">
+                    <p class="gameOver">GAME OVER</p>
                 </div>
-            </div>
-        </td>
-        <td>
-            <button (click)="makeBoard1()">Stalemate Scenario</button>
-            <button class="reset" (click)="doRestart()">Reset Game</button>
-            <p>Source = {{sourceSquare}}</p>
-            <p>Destination = {{destSquare}}</p>
-            <div style="height: 20px;">
-                <div class="errorMessage" *ngIf="errorMessage">Incorrect Input</div>
-            </div>
-        </td>
-    </tr>
-</table>
-<div class="legendTop" style="padding-left: 1.75rem;">
-    <div *ngFor="let i of legend">
-        {{i}}
+                <div class="board">
+                    <div *ngFor="let i of sixtyFour">
+                        <app-square *ngIf="xy(i) as pos" [black]="isBlack(pos)" (click)="storePos(i)">
+                            <app-piece [char] = getSymbol(pieceArr[pos.y][pos.x])></app-piece>
+                        </app-square>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="legendTop">
+        <div *ngFor="let i of legend">
+            {{i}}
+        </div>
     </div>
+    <!-- <form [formGroup]="movePiece" (ngSubmit)="onSubmit()" style="padding: 1rem">
+        <div class="form-group col-md-6">
+            <input type="text" class="form-control" formControlName="positionMove" id="positionMove" placeholder="Move">
+        </div>
+        <button type="submit" name="button">Submit</button>
+    </form> -->
 </div>
-<form [formGroup]="movePiece" (ngSubmit)="onSubmit()" style="padding: 1rem">
-    <div class="form-group col-md-6">
-        <input type="text" class="form-control" formControlName="positionMove" id="positionMove" placeholder="Move">
+<div class="sidenav">
+    <p style="font-weight: 600; font-size: 2rem; text-align: center;">{{turn}}</p>
+    <div class="sidevals">
+        <!-- <button (click)="makeBoard1()">Stalemate Scenario</button> -->
+        <p>Source = {{sourceSquare}}</p>
+        <p>Destination = {{destSquare}}</p>
+        <div style="height: 20px;">
+            <div class="errorMessage" *ngIf="errorMessage">Invalid Move</div>
+        </div>
     </div>
-    <button type="submit" name="button">Submit</button>
-</form>
+    <div style="text-align: center; bottom: 10%; position: fixed; margin-left: 3.5%;">
+        <button class="reset" style="text-align: center;" (click)="doRestart()">Reset Game</button>
+    </div>
+  </div>

@@ -69,14 +69,6 @@ class Net(nn.Module):
 
 class NetVal(object):
     def __init__(self):
-        '''
-        p = os.getcwd()
-        if os.path.isfile(os.path.join(p, 'nets/value.pth')):
-          p = p + '/nets/value.pth'
-        else:
-        #os.path.isfile(p + '\\Version1\\backend\\static\\nets\\value.pth'): 
-          p = 'nets/value.pth'
-        '''
         q = 'nets/value.pth'
         p = os.path.abspath(__file__).removesuffix(os.path.basename(__file__)) 
         r = p + q

@@ -8,13 +8,6 @@ from GetTrainingData import State
 from chessBoard import ChessBoard
 
 Evaluator = NetVal()
-'''
-p = os.getcwd()
-if os.path.isfile(os.path.join(p, '/openings/baron30.bin')):
-    p = p + '/openings/baron30.bin'
-elif os.path.isfile(p + '\\openings\\baron30.bin'): 
-    p = '\\openings\\baron30.bin'
-'''
 q = 'openings/baron30.bin'
 p = os.path.abspath(__file__).removesuffix(os.path.basename(__file__)) 
 r = p + q
@@ -39,7 +32,7 @@ scoring = {'p':-1,
 def playPrune(GAME):
     b = GAME.GetBoard().ProperFen(True)
     BOARD = chess.Board(b)
-    return MoveFromUCI(basePrune(BOARD, 4, True).uci())
+    return MoveFromUCI(basePrune(BOARD, 3, True).uci())
 
 def basePrune(BOARD, N, playerMax):
     maxN = N

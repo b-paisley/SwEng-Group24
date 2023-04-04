@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 EXPOSE 4200
 EXPOSE 5000
-WORKDIR /base
+WORKDIR /Version1
 COPY package*.json ./ 
 COPY . .
 COPY shellscript.sh ./
