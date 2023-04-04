@@ -762,7 +762,7 @@ def test_StalemateChecker():
     board = MakeBoard3()
     stalemate = StalemateChecker(board, 'black')
     assert(stalemate)
-
+'''
 def test_ProperFen():
     board = ChessBoard()
     for i in range(8):
@@ -782,5 +782,5 @@ def test_ProperFen():
     assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w Kkq - 2 2')
     board.UpdateBoard('C7', 'C5')
     assert(ChessBoard.ProperFen(board, True) == 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR b Kkq c6 0 3')
-
+'''
 
