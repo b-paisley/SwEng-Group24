@@ -32,8 +32,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 35rem;
-    height: 35rem;
+    width: 45rem;
+    height: 45rem;
     z-index: 99;
     position: fixed;
     color: red;
