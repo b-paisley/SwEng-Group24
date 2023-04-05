@@ -3,8 +3,8 @@ from Points import *
 from Pieces import *
 from moveChecker import *
 from aiMoveGenerator import *
+from StalemateChecker import *
 from PiecesPosDict import *
-
 
 # board.draw()
 class Game:
@@ -17,6 +17,12 @@ class Game:
     black=False
     gameOver = False
 
+    board.UpdateBoard('D1', 'A4')
+    board.UpdateBoard('D7', 'D4')
+
+    cgeck = CheckmateChecker(board, 'black')
+    
+    stalemate = CheckmateChecker(board, 'black')
     def PlayMove(self, move:str):
         if not self.gameOver:
           move = move.upper()

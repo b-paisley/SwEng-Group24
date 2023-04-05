@@ -1,4 +1,4 @@
-class ReadPGNMoves():
+class ReadPGNMoves(): 
 
     def __init__(self, whitePieces, blackPieces):
         self.whitePieces = whitePieces

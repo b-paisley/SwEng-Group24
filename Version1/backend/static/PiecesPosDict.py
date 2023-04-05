@@ -76,7 +76,18 @@ piecesPosDict3 = {
     King(False): "E6",
     
     # Black pieces
+    King(True): "E8"
+    
+}
+
+# King Queen, black stalemate as king cant move
+piecesPosDict4 = {
+    # White pieces
+    Queen(False): "E4",
+    
+    # Black pieces
     King(True): "E8",
+    Knight(True): "G8"
     
 }
 

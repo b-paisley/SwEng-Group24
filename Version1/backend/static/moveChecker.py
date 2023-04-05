@@ -1,5 +1,6 @@
 from chessBoard import *
 from Pieces import *
+from PiecesPosDict import *
 import copy
 
 
@@ -14,7 +15,7 @@ def MoveChecker(chessBoard, prevSquare, newSquare, inDrawFunctionForPossibleEnPa
   newRow = int(newSquare[1]) - 1
   if (newFile < 0 or newRow < 0 or newFile > 7 or newRow > 7): return False
   taking = False
-
+ 
   # Checking if moving square is occupied at all, and if target square is occupied by other piece
   movingSquarePiece = chessBoard.board[prevRow][prevFile].placedInSquare
   if (movingSquarePiece == None): return False
@@ -654,6 +655,8 @@ def getKingPosition(chessBoard, prevRow, prevFile):
     j = 0
   return GetChessNotation((row, col))
 
+
+
 # Check if king is in Checkmate
 def CheckmateChecker(currentBoard, playerColour):
   # Find King
@@ -690,7 +693,7 @@ def CheckmateChecker(currentBoard, playerColour):
   # If King not in check
   isCheck = MovingIntoCheck(currentBoard, i, j, row, col, isBlack)
   if isCheck == True:
-    return False
+    return False  
   # Possible King moves from current square in chess notation
   notation1 = GetChessNotation((row - 1, col))
   notation2 = GetChessNotation((row + 1, col))
@@ -713,41 +716,38 @@ def CheckmateChecker(currentBoard, playerColour):
       if MoveChecker1(currentBoard, kingNotation, kingNotationArray[k], 0):
         return False
       k += 1
-    else:
-      piecesArray = GetPieceArray(currentBoard, playerColour)
-      if CheckPieceBlock(currentBoard, piecesArray, checkPieceNotation, isBlack) == False:
-        return False
-      if CheckPieceTake(currentBoard, piecesArray, checkPieceNotation, isBlack) == False:
-        return False
+    piecesArray = GetPieceArray(currentBoard, playerColour)
+    if CheckPieceTake(currentBoard, piecesArray, checkPieceNotation, isBlack) == False:
+      return False
 
-        # Check if pieces can block
-        # Pawns and Knights can't be blocked -> if get this far, checkmate
-      if isinstance(piece, Pawn) or isinstance(piece, Knight):
+      # Check if pieces can block
+      # Pawns and Knights can't be blocked -> if get this far, checkmate
+    if isinstance(piece, Pawn) or isinstance(piece, Knight):
+      return True
+    else:
+      # Check if there is a square between king and pieceChecking
+      if (coordsCheckPiece[0] == kingRow + 1 and coordsCheckPiece[1] == kingCol) or (
+        coordsCheckPiece[0] == kingRow - 1 and coordsCheckPiece[1] == kingCol):
         return True
-      else:
-        # Check if there is a square between king and pieceChecking
-        if (coordsCheckPiece[0] == kingRow + 1 and coordsCheckPiece[1] == kingCol) or (
-          coordsCheckPiece[0] == kingRow - 1 and coordsCheckPiece[1] == kingCol):
-          return True
-        elif (coordsCheckPiece[0] == kingRow - 1 and coordsCheckPiece[1] == kingCol + 1) or (
-          coordsCheckPiece[0] == kingRow - 1 and coordsCheckPiece[1] == kingCol - 1):
-          return True
-        elif (coordsCheckPiece[0] == kingRow + 1 and coordsCheckPiece[1] == kingCol + 1) or (
-          coordsCheckPiece[0] == kingRow + 1 and coordsCheckPiece[1] == kingCol - 1):
-          return True
-        elif (coordsCheckPiece[0] == kingRow and coordsCheckPiece[1] == kingCol - 1) or (
-          coordsCheckPiece[0] == kingRow and coordsCheckPiece[1] == kingCol + 1):
-          return True
-        # Blocking when piece checking is a Rook/Queen straight
-        if CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
-          return False
-        if CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
-          return False
-        # Blocking when piece checking is Bishop/Queen diag
-        if CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
-          return False
-        if CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
-          return False
+      elif (coordsCheckPiece[0] == kingRow - 1 and coordsCheckPiece[1] == kingCol + 1) or (
+        coordsCheckPiece[0] == kingRow - 1 and coordsCheckPiece[1] == kingCol - 1):
+        return True
+      elif (coordsCheckPiece[0] == kingRow + 1 and coordsCheckPiece[1] == kingCol + 1) or (
+        coordsCheckPiece[0] == kingRow + 1 and coordsCheckPiece[1] == kingCol - 1):
+        return True
+      elif (coordsCheckPiece[0] == kingRow and coordsCheckPiece[1] == kingCol - 1) or (
+        coordsCheckPiece[0] == kingRow and coordsCheckPiece[1] == kingCol + 1):
+        return True
+      # Blocking when piece checking is a Rook/Queen straight
+      if CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
+        return False
+      if CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
+        return False
+      # Blocking when piece checking is Bishop/Queen diag
+      if CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
+        return False
+      if CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack) == False:
+        return False
   else:
     # More than one piece putting king in check
     # Check if King can move out of check/take piece putting it in check
@@ -757,25 +757,6 @@ def CheckmateChecker(currentBoard, playerColour):
         return False
       k += 1
   return True  # if get this far its checkmate
-
-
-def CheckPieceBlock(currentBoard, piecesArray, checkPieceNotation, isBlack):
-  # Check if other pieces can take the piece putting the King in check
-  i = 0
-  while i < len(piecesArray):
-    pieceTaking = piecesArray[i]
-    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placedInSquare
-    pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1]))
-    if not isinstance(pieceName, King):
-      if pieceName.isBlack and isBlack == 1:
-        if MoveChecker1(currentBoard, pieceNotation, checkPieceNotation, 0):
-          return False
-      elif not pieceName.isBlack and isBlack == 0:
-        if MoveChecker1(currentBoard, pieceNotation, checkPieceNotation, 0):
-          return False
-    i += 1
-  return True
-
 
 def CheckPieceTake(currentBoard, piecesArray, checkPieceNotation, isBlack):
   i = 0
@@ -893,7 +874,7 @@ def CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesAr
   # Diag Left Below
   if coordsCheckPiece[0] < kingRow and coordsCheckPiece[1] < kingCol:
     checkCol = coordsCheckPiece[1] + 1
-    checkRow = coordsCheckPiece[1] + 1
+    checkRow = coordsCheckPiece[0] + 1
     while checkCol < kingCol and checkRow < kingRow:
       blockNotation = GetChessNotation((checkRow, checkCol))
       j = 0
@@ -915,7 +896,7 @@ def CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesAr
   # Diag Left Above
   elif coordsCheckPiece[0] > kingRow and coordsCheckPiece[1] < kingCol:
     checkCol = coordsCheckPiece[1] + 1
-    checkRow = coordsCheckPiece[1] - 1
+    checkRow = coordsCheckPiece[0] - 1
     while checkCol < kingCol and checkRow > kingRow:
       blockNotation = GetChessNotation((checkRow, checkCol))
       j = 0
@@ -942,7 +923,7 @@ def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesA
   # Diag Right Below
   if coordsCheckPiece[0] < kingRow and coordsCheckPiece[1] > kingCol:
     checkCol = coordsCheckPiece[1] - 1
-    checkRow = coordsCheckPiece[1] + 1
+    checkRow = coordsCheckPiece[0] + 1
     while checkCol > kingCol and checkRow < kingRow:
       blockNotation = GetChessNotation((checkRow, checkCol))
       j = 0
@@ -964,7 +945,7 @@ def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesA
   # Diag Right Above
   elif coordsCheckPiece[0] > kingRow and coordsCheckPiece[1] < kingCol:
     checkCol = coordsCheckPiece[1] - 1
-    checkRow = coordsCheckPiece[1] - 1
+    checkRow = coordsCheckPiece[0] - 1
     while checkCol > kingCol and checkRow > kingRow:
       blockNotation = GetChessNotation((checkRow, checkCol))
       j = 0
@@ -984,7 +965,6 @@ def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesA
       checkRow -= 1
       i += 1
   return True
-
 
 def PiecesCausingCheck(chess_board, new_row, new_file, black):  # check what peice is putting check on King
   piecesCheckingArray = []

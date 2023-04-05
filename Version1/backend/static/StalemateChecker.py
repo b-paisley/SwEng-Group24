@@ -1,5 +1,5 @@
 from moveChecker import *
-
+ 
 def StalemateChecker(currentBoard, playerColour):
     if playerColour.lower() == 'black':
         isBlack = 1
