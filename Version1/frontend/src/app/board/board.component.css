@@ -28,19 +28,6 @@
     font-size: 1.5rem;
     padding-top: 10px;
 }
-.gameOver{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45rem;
-    height: 45rem;
-    z-index: 99;
-    position: fixed;
-    color: red;
-    font-size: 60px;
-    font-weight: bolder;
-    margin: 0.5rem;
-}
 
 @media screen  and (max-height: 800px){
     .boardside {
@@ -53,16 +40,30 @@
         padding-top: 90px; */
     }
     .board {
-        width: 40rem;
-        height: 40rem;
+        width: 35rem;
+        height: 35rem;
         border: 0.5rem solid #312e2c;
         display: grid;
         grid-template-columns: repeat(8, 12.5%);
         grid-template-rows: repeat(8, 12.5%);
     }
+
+    .gameOver{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35rem;
+        height: 35rem;
+        z-index: 99;
+        position: fixed;
+        color: red;
+        font-size: 60px;
+        font-weight: bolder;
+        margin: 0.5rem;
+    }
     
     .legendTop {
-        width: 40rem;
+        width: 35rem;
         height: 1rem;
         text-align: center;
         border: 0.5rem;
@@ -78,7 +79,7 @@
     
     .legendSide {
         width: 1.25rem;
-        height: 40rem;
+        height: 35rem;
         text-align: center;
         border: 0.5rem;
         display: grid;
@@ -106,6 +107,20 @@
         display: grid;
         grid-template-columns: repeat(8, 12.5%);
         grid-template-rows: repeat(8, 12.5%);
+    }
+
+    .gameOver{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45rem;
+        height: 45rem;
+        z-index: 99;
+        position: fixed;
+        color: red;
+        font-size: 60px;
+        font-weight: bolder;
+        margin: 0.5rem;
     }
     
     .legendTop {
