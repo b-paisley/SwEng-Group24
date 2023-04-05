@@ -40,8 +40,8 @@
         padding-top: 90px; */
     }
     .board {
-        width: 35rem;
-        height: 35rem;
+        width: 37rem;
+        height: 37rem;
         border: 0.5rem solid #312e2c;
         display: grid;
         grid-template-columns: repeat(8, 12.5%);
@@ -52,8 +52,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 35rem;
-        height: 35rem;
+        width: 37rem;
+        height: 37rem;
         z-index: 99;
         position: fixed;
         color: red;
@@ -63,7 +63,7 @@
     }
     
     .legendTop {
-        width: 35rem;
+        width: 37rem;
         height: 1rem;
         text-align: center;
         border: 0.5rem;
@@ -79,7 +79,7 @@
     
     .legendSide {
         width: 1.25rem;
-        height: 35rem;
+        height: 37rem;
         text-align: center;
         border: 0.5rem;
         display: grid;
