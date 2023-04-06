@@ -715,8 +715,6 @@ def CheckmateChecker(currentBoard, playerColour):
       k += 1
     else:
       piecesArray = GetPieceArray(currentBoard, playerColour)
-      if CheckPieceBlock(currentBoard, piecesArray, checkPieceNotation, isBlack) == False:
-        return False
       if CheckPieceTake(currentBoard, piecesArray, checkPieceNotation, isBlack) == False:
         return False
 
@@ -758,25 +756,6 @@ def CheckmateChecker(currentBoard, playerColour):
       k += 1
   return True  # if get this far its checkmate
 
-
-def CheckPieceBlock(currentBoard, piecesArray, checkPieceNotation, isBlack):
-  # Check if other pieces can take the piece putting the King in check
-  i = 0
-  while i < len(piecesArray):
-    pieceTaking = piecesArray[i]
-    pieceName = currentBoard.board[pieceTaking[0]][pieceTaking[1]].placedInSquare
-    pieceNotation = GetChessNotation((pieceTaking[0], pieceTaking[1]))
-    if not isinstance(pieceName, King):
-      if pieceName.isBlack and isBlack == 1:
-        if MoveChecker1(currentBoard, pieceNotation, checkPieceNotation, 0):
-          return False
-      elif not pieceName.isBlack and isBlack == 0:
-        if MoveChecker1(currentBoard, pieceNotation, checkPieceNotation, 0):
-          return False
-    i += 1
-  return True
-
-
 def CheckPieceTake(currentBoard, piecesArray, checkPieceNotation, isBlack):
   i = 0
   # Check if other pieces can take the piece putting the King in check
@@ -795,7 +774,6 @@ def CheckPieceTake(currentBoard, piecesArray, checkPieceNotation, isBlack):
 
 
 def CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
-  i=0
   # Horizontal -
   if coordsCheckPiece[0] == kingRow:
     checkCol = coordsCheckPiece[1] + 1
@@ -817,7 +795,6 @@ def CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray
                 return False
           j += 1
         checkCol += 1
-        i += 1
     # Horizontal Right Check -
     elif coordsCheckPiece[1] > kingCol:
       checkCol = coordsCheckPiece[1] - 1
@@ -837,13 +814,11 @@ def CheckHorizonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray
                 return False
           j += 1
         checkCol -= 1
-        i += 1
   return True
 
 
 def CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
   # Vertical -
-  i=0
   if coordsCheckPiece[1] == kingCol:
     checkRow = coordsCheckPiece[0] + 1
     # Vertical Above Check -
@@ -864,7 +839,6 @@ def CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray,
                 return False
           j += 1
         checkRow += 1
-        i += 1
         # Vertical Below Check -
     elif coordsCheckPiece[0] > kingRow:
       checkRow = coordsCheckPiece[0] - 1
@@ -884,16 +858,14 @@ def CheckVertical(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray,
                 return False
           j += 1
         checkRow -= 1
-        i += 1
   return True
 
 
 def CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
-  i=0
   # Diag Left Below
   if coordsCheckPiece[0] < kingRow and coordsCheckPiece[1] < kingCol:
     checkCol = coordsCheckPiece[1] + 1
-    checkRow = coordsCheckPiece[1] + 1
+    checkRow = coordsCheckPiece[0] + 1
     while checkCol < kingCol and checkRow < kingRow:
       blockNotation = GetChessNotation((checkRow, checkCol))
       j = 0
@@ -911,11 +883,10 @@ def CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesAr
         j += 1
       checkCol += 1
       checkRow += 1
-      i += 1
   # Diag Left Above
   elif coordsCheckPiece[0] > kingRow and coordsCheckPiece[1] < kingCol:
     checkCol = coordsCheckPiece[1] + 1
-    checkRow = coordsCheckPiece[1] - 1
+    checkRow = coordsCheckPiece[0] - 1
     while checkCol < kingCol and checkRow > kingRow:
       blockNotation = GetChessNotation((checkRow, checkCol))
       j = 0
@@ -933,16 +904,14 @@ def CheckLeftDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesAr
         j += 1
       checkCol += 1
       checkRow -= 1
-      i += 1
   return True
 
 
 def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesArray, isBlack):
-  i=0
   # Diag Right Below
   if coordsCheckPiece[0] < kingRow and coordsCheckPiece[1] > kingCol:
     checkCol = coordsCheckPiece[1] - 1
-    checkRow = coordsCheckPiece[1] + 1
+    checkRow = coordsCheckPiece[0] + 1
     while checkCol > kingCol and checkRow < kingRow:
       blockNotation = GetChessNotation((checkRow, checkCol))
       j = 0
@@ -960,11 +929,10 @@ def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesA
         j += 1
       checkCol -= 1
       checkRow += 1
-      i += 1
   # Diag Right Above
   elif coordsCheckPiece[0] > kingRow and coordsCheckPiece[1] < kingCol:
     checkCol = coordsCheckPiece[1] - 1
-    checkRow = coordsCheckPiece[1] - 1
+    checkRow = coordsCheckPiece[0] - 1
     while checkCol > kingCol and checkRow > kingRow:
       blockNotation = GetChessNotation((checkRow, checkCol))
       j = 0
@@ -982,7 +950,6 @@ def CheckRightDiagonal(currentBoard, coordsCheckPiece, kingRow, kingCol, piecesA
         j += 1
       checkCol -= 1
       checkRow -= 1
-      i += 1
   return True
 
 
