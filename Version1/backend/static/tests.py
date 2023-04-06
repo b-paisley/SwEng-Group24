@@ -617,7 +617,24 @@ def test_CheckmateChecker():
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
+    # Horse Block
+    board.UpdateBoard('D1', 'E4')
+    board.UpdateBoard('E7', 'H6')
+    board.UpdateBoard('A8', 'A4')
+    board.UpdateBoard('D8', 'A8')
+    board.UpdateBoard('A4', 'D8')
+    board.UpdateBoard('G7', 'F8')
+    checkmate = CheckmateChecker(board, 'black')
+    assert(checkmate) == False
+
     # King takes pawn putting it in check
+    board.UpdateBoard('F8', 'G7')
+    board.UpdateBoard('D8', 'A4')
+    board.UpdateBoard('A8', 'D8')
+    board.UpdateBoard('A4', 'A8')
+    board.UpdateBoard('H6', 'E7')
+    board.UpdateBoard('E4', 'D1')
+
     board.UpdateBoard('E8', 'E6')
     board.UpdateBoard('B2', 'D5')
     checkmate = CheckmateChecker(board, 'black')
