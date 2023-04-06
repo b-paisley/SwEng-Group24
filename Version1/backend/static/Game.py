@@ -17,8 +17,12 @@ class Game:
     black=False
     gameOver = False
 
-    board.UpdateBoard('D1', 'A4')
-    board.UpdateBoard('D7', 'D4')
+    # Horse Block
+    board.UpdateBoard('D8', 'H5')
+    board.UpdateBoard('D1', 'E4')
+    board.UpdateBoard('E7', 'H6')
+    board.UpdateBoard('A8', 'D8')
+    board.UpdateBoard('G7', 'F8')
 
     cgeck = CheckmateChecker(board, 'black')
     
