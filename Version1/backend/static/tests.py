@@ -573,17 +573,17 @@ def test_Pawn():
         'B': Bishop,
         'Q': Queen
     }
-    pawns[0].Promote('R')
+    pawns[0]=Promote(pawns[0],'R')
     print(pawns[0].__class__)
     assert isinstance(pawns[0],Rook)
 
-    pawns[1].Promote('N')
+    pawns[1]=Promote(pawns[1],'N')
     assert isinstance(pawns[1],Knight)
 
-    pawns[2].Promote('B')
+    pawns[2]=Promote(pawns[2],'B')
     assert isinstance(pawns[2],Bishop)
 
-    pawns[3].Promote('Q')
+    pawns[3]=Promote(pawns[3],'Q')
     assert isinstance(pawns[3],Queen)
 
 def test_Rook():
