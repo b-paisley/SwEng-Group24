@@ -23,8 +23,9 @@ export class BoardComponent {
     numbers:number[] = []
     errorMessage:boolean = false;
     gameOver:boolean = false;
+    canPromote:boolean = false;
     turn:string = "White's Turn"
-    
+    promotionPieces:string[] = ['q','r','b','n']
     
     xy(i: number) {
         return {
@@ -111,7 +112,6 @@ export class BoardComponent {
     isSelected(i: number): boolean {
         let x: string = String.fromCharCode(i % 8+65)
         let y = 8-Math.floor(i / 8)
-        console.log(x+y)
         if (this.sourceSquare == x+y) {
             return true
         } else {
@@ -137,23 +137,25 @@ export class BoardComponent {
             if (moveStr == "E1_G1") moveStr = "O-O"
             if (moveStr == "E1_C1") moveStr = "O-O-O"
             this.piecesService.makeMove(moveStr).subscribe(data => {
-                console.log(data)
                 this.movePiece.reset();
                 this.updateBoard(data.data.fen.toString());
-                if (data.data.fen != 'error') {
-                    this.callMitch();
+                if (moveStr[4] == '8' && this.pieceArr[0][this.destSquare[0].charCodeAt(0)-65] == 'p') {
+                    this.canPromote = true;
                 }
+                // if (data.data.fen != 'error' && this.canPromote == false) {
+                //     this.callMitch();
+                // }
                 if (data.data.gameOver) {
                     this.gameOver = true
                     this.turn = "You Win!"
                 }
             });
         }
+        
     }
     callMitch() {
         this.turn = "Black's Turn"
         this.piecesService.playPrune().subscribe(data => {
-            console.log(data)
             this.updateBoard(data.data.fen.toString());
             if (data.data.gameOver) {
                 this.gameOver = true
@@ -170,14 +172,19 @@ export class BoardComponent {
         this.sourceSquare = ''
         this.destSquare = ''
         this.piecesService.doRestart().subscribe(data =>{
-            console.log(data.data.fen.toString());
             this.updateBoard(data.data.fen.toString());
         });
     }
     makeBoard1(){
         this.piecesService.makeBoard1().subscribe(data =>{
-            console.log(data.data.fen.toString());
             this.updateBoard(data.data.fen.toString());
         });
+    }
+    promote(p:string) {
+        this.piecesService.promote(this.sourceSquare+'_'+this.destSquare, p.toLowerCase()).subscribe(data =>{
+            this.updateBoard(data.data.fen.toString());
+        });
+        this.canPromote = false;
+        // this.callMitch()
     }
 }

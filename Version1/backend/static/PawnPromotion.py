@@ -14,13 +14,12 @@ def PawnPromotion(currentBoard, move, newPieceNotation):
        if piece.isBlack == True and coords[0][0] == 0:
            piece = Promote(piece, newPieceNotation)
            currentBoard.board[coords[0][0]][coords[0][1]].placedInSquare = piece
-           return piece
        elif piece.isBlack == False and coords[0][0] == 7:
-           promote = input("Choose a piece to promote to [Q, R, B, N] ")
            piece = Promote(piece, newPieceNotation)
+           print(piece)
            currentBoard.board[coords[0][0]][coords[0][1]].placedInSquare = piece
-           return piece
-    return piece
+           print(currentBoard.board[coords[0][0]][coords[0][1]].GetPiece())
+    return currentBoard
 
 # Takes in chess notation and retruns coords  
 def GetCoords(notation):

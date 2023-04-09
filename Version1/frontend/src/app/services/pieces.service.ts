@@ -28,4 +28,7 @@ export class PiecesService {
   playPrune(){
     return this.http.get<Response>(this.url +'api/mitch')
   }
+  promote(move:string, p:string){
+    return this.http.get<Response>(this.url +'api/promote/'+move+'/'+p)
+  }
 }

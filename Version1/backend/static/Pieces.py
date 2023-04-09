@@ -14,6 +14,10 @@ def Promote(pawn, newPieceNotation):
         'N': Knight,
         'B': Bishop,
         'Q': Queen,
+        'r': Rook,
+        'n': Knight,
+        'b': Bishop,
+        'q': Queen,
         }
         
         if newPieceNotation not in notationPiecesDict.keys():

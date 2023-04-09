@@ -28,6 +28,27 @@
     font-size: 1.5rem;
     padding-top: 10px;
 }
+.promotionHeader {
+    width: 100px;
+    font-weight: 600;
+    font-size: 2rem;
+    color: #efd8b6;;
+}
+.promotionButtons {
+    width: 4.5rem;
+    height: 4.5rem;
+    font-weight: 500;
+    font-size: 3.5rem;
+    line-height: 5rem;
+    font-family: auto;
+    display: block;
+    background-color: #efd8b6;
+    border-color: #b48866;
+    /* height: 100%;
+    width: 100%; */
+    text-align: center;
+    cursor: pointer;
+}
 
 @media screen  and (max-height: 800px){
     .boardside {

@@ -5,6 +5,7 @@ from Game import *
 from flask_restful import Resource, Api
 from flask_cors import CORS
 from MoveSearch import playPrune
+from PawnPromotion import *
 # from main import game
 
 app = Flask(__name__)
@@ -113,5 +114,34 @@ def callMitch():
     return {
         "data": {
             "fen":fenVal,
+            "gameOver": False
+        }
+    }
+
+@app.route('/api/promote/<move>/<chosenPiece>')
+def promotePiece(move, chosenPiece):
+
+    newBoard = PawnPromotion(game.board, move, chosenPiece)
+    # if repr(pieceCheck).lower() ==  'p':
+    #     print(Promote(pieceCheck, chosenPiece))
+    #     Promote(pieceCheck, chosenPiece)
+    game.board = newBoard
+    fenVal = ChessBoard.GiveFEN(game.GetBoard())
+    if game.black:
+        playerColour='black'
+    else:
+        playerColour='white'
+    if CheckmateChecker(game.board, playerColour):
+        game.gameOver = True
+        return {
+            "data": {
+                "fen": fenVal,
+                "gameOver": True
+            }
+        }
+    return {
+        "data": {
+            "fen":fenVal,
+            "gameOver": False
         }
     }
