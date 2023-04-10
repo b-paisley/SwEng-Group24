@@ -615,6 +615,8 @@ def EnPassant(chessBoard, prev_row, prev_file, newRow, newFile):
   ourPiece = chessBoard.board[prev_row][prev_file].placedInSquare
   theirPiece = chessBoard.board[prev_row][newFile].placedInSquare
   destinationSquare = chessBoard.board[newRow][newFile].placedInSquare
+  if ((abs((prev_file-newFile))!=1)):
+    return False
   if (not isinstance(ourPiece, Pawn)) or (not isinstance(theirPiece, Pawn)):  # if not two pawns there false
     return False
   if (ourPiece.isBlack and prev_row != 3 and newRow != 2) or (
