@@ -1,4 +1,3 @@
-from chessBoard import *
 from Points import *
 
 
