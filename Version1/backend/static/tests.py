@@ -4,10 +4,134 @@ from PiecesPosDict import *
 import unittest
 from chessBoard import *
 from Pieces import *
+from Game import *
 from square import square
 from moveChecker import *
-from CheckmateChecker import *
+from app import app # Flask instance of the API
+from StalemateChecker import *
 
+def MakeBoard():
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(32):
+    pieceToDraw = list(piecesPosDict.keys())[i]
+    squareToFill = piecesPosDict[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
+
+def test_Api():
+    response = app.test_client().get('/')
+    assert response.status_code == 200
+    assert response.data.decode('utf-8') == '{"data":{"fen":"RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr"}}\n'
+
+def test_CastlingAllowed():
+  # assert we are allowed castle queenside white
+  board = MakeBoard()
+  board.UpdateBoard("D2", "D4")
+  board.UpdateBoard("D1", "D3")
+  board.UpdateBoard("C1", "D2")
+  board.UpdateBoard("B1", "A3")
+  assert (MoveChecker(board, "q", 1, 0))
+  board.UpdateBoard("D4", "D2")
+  board.UpdateBoard("D3", "D1")
+  board.UpdateBoard("D2", "C1")
+  board.UpdateBoard("A3", "B1")
+  # assert we are allowed castle queenside black
+  board = MakeBoard()
+  board.UpdateBoard("D7", "D5")
+  board.UpdateBoard("D8", "D6")
+  board.UpdateBoard("C8", "D7")
+  board.UpdateBoard("B8", "A6")
+  assert (MoveChecker(board, "q", 0, 0))
+  board.UpdateBoard("D5", "D7")
+  board.UpdateBoard("D6", "D8")
+  board.UpdateBoard("D7", "C8")
+  board.UpdateBoard("A6", "B8")
+  # assert we are allowed castle kingside white
+  board = MakeBoard()
+  board.UpdateBoard("E2", "E4")
+  board.UpdateBoard("F1", "E2")
+  board.UpdateBoard("G1", "H3")
+  assert (MoveChecker(board, "k", 1, 0))
+  board.UpdateBoard("E4", "E2")
+  board.UpdateBoard("E2", "F1")
+  board.UpdateBoard("H3", "G1")
+  # assert we are allowed castle kingside black
+  board = MakeBoard()
+  board.UpdateBoard("E7", "E5")
+  board.UpdateBoard("F8", "F7")
+  board.UpdateBoard("G8", "H6")
+  assert (MoveChecker(board, "k", 0, 0))
+  board.UpdateBoard("E5", "E7")
+  board.UpdateBoard("F7", "F8")
+  board.UpdateBoard("H6", "G8")
+  # castling with piece there
+  board = MakeBoard()
+  board.UpdateBoard("E2", "E3")
+  board.UpdateBoard("F1", "E2")
+  assert (not MoveChecker(board, "k", 1, 0))
+  board.UpdateBoard("E3", "E2")
+  board.UpdateBoard("E2", "F1")
+  # Castling without rook
+  board = MakeBoard()
+  board.UpdateBoard("E2", "E3")
+  board.UpdateBoard("F1", "E2")
+  board.UpdateBoard("G1", "F3")
+  board.UpdateBoard("H2", "H3")
+  board.UpdateBoard("H1", "H2")
+  assert (not MoveChecker(board, "k", 1, 0))
+  # castling with rook having moved
+  board.UpdateBoard("H2", "H1")
+  assert (not MoveChecker(board, "k", 1, 0))
+  board.UpdateBoard("E3", "E2")
+  board.UpdateBoard("E2", "F1")
+  board.UpdateBoard("F3", "G1")
+  board.UpdateBoard("H3", "H2")
+  # castling with king not there
+  board = MakeBoard()
+  board.UpdateBoard("E2", "E4")
+  board.UpdateBoard("F1", "D3")
+  board.UpdateBoard("G1", "F3")
+  board.UpdateBoard("E1", "E2")
+  assert (not MoveChecker(board, "k", 1, 0))
+  # castling with king having moved
+  board = MakeBoard()
+  board.UpdateBoard("E2", "E1")
+  assert (not MoveChecker(board, "k", 1, 0))
+  # castling while in check
+  board = MakeBoard()
+  board.UpdateBoard("E2", "A4")
+  board.UpdateBoard("F1", "D3")
+  board.UpdateBoard("G1", "H3")
+  board.UpdateBoard("D8", "E4")
+  assert (not MoveChecker(board, "k", 1, 0))
+  board.UpdateBoard("A4", "E2")
+  board.UpdateBoard("D3", "F1")
+  board.UpdateBoard("H3", "G1")
+  board.UpdateBoard("E4", "D8")
+  # castling while where king castles through is in check
+  board = MakeBoard()
+  board.UpdateBoard("E2", "A4")
+  board.UpdateBoard("F1", "E2")
+  board.UpdateBoard("G1", "H3")
+  board.UpdateBoard("D8", "F4")
+  board.UpdateBoard("F2", "A6")
+  assert (not MoveChecker(board, "k", 1, 0))
+  board.UpdateBoard("A4", "E2")
+  board.UpdateBoard("E2", "F1")
+  board.UpdateBoard("H3", "G1")
+  board.UpdateBoard("F4", "D8")
+  board.UpdateBoard("A6", "F2")
+  # castling while where king castles inTO check
+  board = MakeBoard()
+  board.UpdateBoard("E2", "A4")
+  board.UpdateBoard("F1", "E2")
+  board.UpdateBoard("G1", "H3")
+  board.UpdateBoard("D8", "G4")
+  board.UpdateBoard("G2", "A6")
+  assert (not MoveChecker(board, "k", 1, 0))
 
 def test_AiMoveGenerator():
     # Test all possible random moves from start of game position for black
@@ -43,7 +167,7 @@ def test_GetChessNotation():
     # The coords (4, 3) should return the chess notation 'D5'
     coords = (4, 3)
     assert (GetChessNotation(coords)) == 'D5'
-'''
+
 def test_GetPieceArray():
     # Returns all pieces that are of the colour black on the currentBoard
     # Black pieces
@@ -55,88 +179,59 @@ def test_GetPieceArray():
 
 def test_GetCoords():
     # The chess notation 'C3' should return the coords (2, 2)
+    board=MakeBoard()
     notation = 'C3'
-    assert(GetCoords(notation)) == [(2, 2)]
+    assert(GetCoords(board,notation)) == [[2, 2]]
     # The chess notation 'A7' should return the coords (6, 0)
     notation = 'A7'
-    assert(GetCoords(notation)) == [(6, 0)]
+    assert(GetCoords(board,notation)) == [[6, 0]]
     # The chess notation 'D5' should return the coords (4, 3)
     notation = 'D5'
-    assert(GetCoords(notation)) == [(4, 3)]
-
-def test_ValidPawnMove():
-    # Check valid pawn moves from 'F7' with black pawn @ start of game
-    board = MakeBoard()
-    piecesArray = GetPieceArray(board, 'black')
-    piece = piecesArray[5]
-    pieceName = board.board[piece[0]][piece[1]].placedInSquare
-    move = ValidPawnMove(pieceName, board, 'F7')
-    if move == 'F6':
-        assert(MoveChecker(board, "F7", move), 0)
-    elif move == 'F5':
-        assert(MoveChecker(board, "F7", move), 0)
-
-    # Check valid pawn moves from 'F2' with white pawn @ start of game
-    board = MakeBoard()
-    piecesArray = GetPieceArray(board, 'black')
-    piece = piecesArray[5]
-    pieceName = board.board[piece[0]][piece[1]].placedInSquare
-    move = ValidPawnMove(pieceName, board, 'F7')
-    if move == 'F3':
-        assert(MoveChecker(board, "F2", move), 0)
-    elif move == 'F4':
-        assert(MoveChecker(board, "F2", move), 0)
-
-
+    assert(GetCoords(board,notation)) == [[4, 3]]
 
 def test_BasicMovement():
     board = MakeBoard()
     board.UpdateBoard("E8", "E5")  # update the board
-    assert (MoveChecker(board, "E5", "D5"), 0)   # check if it can move left
-    assert (MoveChecker(board, "E5", "F5"), 0)   # check if it can move right
-    assert (MoveChecker(board, "E5", "E6"), 0)   # check if it can move up
-    assert (MoveChecker(board, "E5", "E4"), 0)   # check if it can move down
-    assert (MoveChecker(board, "E5", "F6"), 0)   # check if it can move right up
-    assert (MoveChecker(board, "E5", "D6"), 0)   # check if it can move left up
-    assert (MoveChecker(board, "E5", "F4"), 0)   # check if it can move right down
-    assert (MoveChecker(board, "E5", "D4"), 0)   # check if it can move left down
-    assert (not MoveChecker(board, "E5", "C5"), 0)   # check if it can move two
-
+    assert (MoveChecker(board, "E5", "D5", 0))   # check if it can move left
+    assert (MoveChecker(board, "E5", "F5", 0))  # check if it can move right
+    assert (MoveChecker(board, "E5", "E6", 0))   # check if it can move up
+    assert (MoveChecker(board, "E5", "E4", 0))   # check if it can move down
+    assert (MoveChecker(board, "E5", "F6", 0))  # check if it can move right up
+    assert (MoveChecker(board, "E5", "D6", 0))  # check if it can move left up
+    assert (MoveChecker(board, "E5", "F4", 0))   # check if it can move right down
+    assert (MoveChecker(board, "E5", "D4", 0))   # check if it can move left down
+    assert (not MoveChecker(board, "E5", "C5", 0))   # check if it can move two
 
 def test_KnightChecks():
     board = MakeBoard()
     board.UpdateBoard("E7", "E6")  # update the board
     board.UpdateBoard("E8", "E7")  # update the board
-    assert (MoveChecker(board, "E7", "D6"), 0)  # try to move king into open square
+    assert (MoveChecker(board, "E7", "D6", 0))  # try to move king into open square
     board.UpdateBoard("B1", "C4")  # move knight near king
-    assert (not MoveChecker(board, "E7", "D6"), 0)  # try to move king into knight check
-
+    assert (not MoveChecker(board, "E7", "D6", 0))  # try to move king into knight check
 
 def test_StraightChecks():
     board = MakeBoard()
     board.UpdateBoard("E8", "E5")  # move king into the middle
     board.UpdateBoard("A1", "D3")  # move rook near middle
-    assert (MoveChecker(board, "E5", "D5"), 0) == False  # move king into rook check
+    assert (MoveChecker(board, "E5", "D5", 0)) == False  # move king into rook check
     board.UpdateBoard("D8", "D4")  # block future rook check with our queen
-    assert (MoveChecker(board, "E5", "D5"), 0) # move king into now blocked off no check
-
+    assert (MoveChecker(board, "E5", "D5", 0)) # move king into now blocked off no check
 
 def test_DiagonalChecks():
     board = MakeBoard()
     board.UpdateBoard("E8", "E5")  # move king into the middle
     board.UpdateBoard("F1", "B3")  # move bishop near king
-    assert (not MoveChecker(board, "E5", "D5"), 0)  # move king into bishop check
+    assert (not MoveChecker(board, "E5", "D5", 0))  # move king into bishop check
     board.UpdateBoard("D8", "C4")  # block future bishop check with our queen
-    assert (MoveChecker(board, "E5", "D5"), 0)  # move king into now blocked off no check
-
+    assert (MoveChecker(board, "E5", "D5", 0))  # move king into now blocked off no check
 
 def test_PawnChecks():
     board = MakeBoard()
     board.UpdateBoard("E8", "D6")  # move king into the middle
     board.UpdateBoard("F2", "C4")  # move pawn near king
-    assert (not MoveChecker(board, "D6", "D5"), 0)  # move king into pawn check
-    assert (MoveChecker(board, "D6", "C5"), 0)  # move king opposite pawn
-'''
+    assert (not MoveChecker(board, "D6", "D5", 0))  # move king into pawn check
+    assert (MoveChecker(board, "D6", "C5", 0))  # move king opposite pawn
 
 def test_KingFakeChecks():
     board = MakeBoard()
@@ -145,139 +240,71 @@ def test_KingFakeChecks():
     assert (not MoveChecker(board, "D6", "D5", 0))  # move king into "king" check
     assert (not MoveChecker(board, "D6", "C5", 0))
 
-'''
-def test_CastlingAllowed():
-    # assert we are allowed castle queenside white
-    board = MakeBoard()
-    board.UpdateBoard("D2", "D4")
-    board.UpdateBoard("D1", "D3")
-    board.UpdateBoard("C1", "D2")
-    board.UpdateBoard("B1", "A3")
-    assert (MoveChecker(board, "q", 1, 1))
-    # assert we are allowed castle queenside black
-    board = MakeBoard()
-    board.UpdateBoard("D7", "D5")
-    board.UpdateBoard("D8", "D6")
-    board.UpdateBoard("C8", "D7")
-    board.UpdateBoard("B8", "A6")
-    assert (MoveChecker(board, "q", 0, 1))
-    # assert we are allowed castle kingside white
-    board = MakeBoard()
-    board.UpdateBoard("E2", "E4")
-    board.UpdateBoard("F1", "E2")
-    board.UpdateBoard("G1", "H3")
-    assert (MoveChecker(board, "k", 1, 1))
-    # assert we are allowed castle kingside black
-    board = MakeBoard()
-    board.UpdateBoard("E7", "E5")
-    board.UpdateBoard("F8", "F7")
-    board.UpdateBoard("G8", "H6")
-    assert (MoveChecker(board, "k", 0, 1))
-    # castling with piece there
-    board = MakeBoard()
-    board.UpdateBoard("E2", "E3")
-    board.UpdateBoard("F1", "E2")
-    assert (not MoveChecker(board, "k", 1, 1))
-    # Castling without rook
-    board = MakeBoard()
-    board.UpdateBoard("E2", "E3")
-    board.UpdateBoard("F1", "E2")
-    board.UpdateBoard("G1", "F3")
-    board.UpdateBoard("H2", "H3")
-    board.UpdateBoard("H1", "H2")
-    assert (not MoveChecker(board, "k", 1, 1))
-    # castling with rook having moved
-    board = MakeBoard()
-    board.UpdateBoard("E2", "E3")
-    board.UpdateBoard("F1", "E2")
-    board.UpdateBoard("G1", "F3")
-    board.UpdateBoard("H2", "H3")
-    board.UpdateBoard("H1", "H2")
-    board.UpdateBoard("H2", "H1")
-    assert (not MoveChecker(board, "k", 1, 1))
-    # castling with king not there
-    board = MakeBoard()
-    board.UpdateBoard("E2", "E4")
-    board.UpdateBoard("F1", "D3")
-    board.UpdateBoard("G1", "F3")
-    board.UpdateBoard("E1", "E2")
-    assert (not MoveChecker(board, "k", 1, 1))
-    # castling with king having moved
-    board = MakeBoard()
-    board.UpdateBoard("E2", "E4")
-    board.UpdateBoard("F1", "D3")
-    board.UpdateBoard("G1", "F3")
-    board.UpdateBoard("E1", "E2")
-    board.UpdateBoard("E2", "E1")
-    assert (not MoveChecker(board, "k", 1, 1))
-    # castling while in check
-    board = MakeBoard()
-    board.UpdateBoard("E2", "A4")
-    board.UpdateBoard("F1", "D3")
-    board.UpdateBoard("G1", "H3")
-    board.UpdateBoard("D8", "E4")
-    assert (not MoveChecker(board, "k", 1, 1))
-    # castling while where king castles through is in check
-    board = MakeBoard()
-    board.UpdateBoard("E2", "A4")
-    board.UpdateBoard("F1", "E2")
-    board.UpdateBoard("G1", "H3")
-    board.UpdateBoard("D8", "F4")
-    board.UpdateBoard("F2", "A6")
-    assert (not MoveChecker(board, "k", 1, 1))
-    # castling while where king castles inTO check
-    board = MakeBoard()
-    board.UpdateBoard("E2", "A4")
-    board.UpdateBoard("F1", "E2")
-    board.UpdateBoard("G1", "H3")
-    board.UpdateBoard("D8", "G4")
-    board.UpdateBoard("G2", "A6")
-    assert (not MoveChecker(board, "k", 1, 1))
-
 
 def test_EnPassant():
     # Successful left
     board = MakeBoard()
     board.UpdateBoard("E2", "E5")
     board.UpdateBoard("D7", "D5")
-    assert (MoveChecker(board, "E5", "D6", 0))
+    assert (MoveChecker(board, "E5", "D6", 1))
     # Successful right
     board = MakeBoard()
     board.UpdateBoard("E2", "E5")
     board.UpdateBoard("F7", "F5")
-    assert (MoveChecker(board, "E5", "F6", 0))
+    assert (MoveChecker(board, "E5", "F6", 1))
     # Unsuccessful-wrong rank
     board = MakeBoard()
     board.UpdateBoard("E2", "E4")
     board.UpdateBoard("F7", "F5")
-    assert (not MoveChecker(board, "E5", "F6", 0))
+    assert (not MoveChecker(board, "E5", "F6", 1))
     # Unsuccessful-wrong rank
     board = MakeBoard()
     board.UpdateBoard("E2", "E6")
     board.UpdateBoard("F7", "F6")
-    assert (not MoveChecker(board, "E6", "E5", 0))
+    assert (not MoveChecker(board, "E6", "E5", 1))
     # opposite pawn didnt move last turn (Relies on has_moved_two_spaces_last function and therefore is not being tested rn)
     # board = MakeBoard()
     # board.UpdateBoard("E2", "E4")
     # board.UpdateBoard("D7", "D5")
     # board.UpdateBoard("E4", "E5")
     # board.UpdateBoard("D6", "D5")
-    # assert (not move_checker(board, "E5", "D6", 0))
+    # assert (not move_checker(board, "E5", "D6", 1))
     # they didnt just move two (Relies on has_moved_two_spaces_last function and therefore is not being tested rn)
     # board = MakeBoard()
     # board.UpdateBoard("E2", "E5")
     # board.UpdateBoard("D7", "D6")
     # board.UpdateBoard("D6", "D5")
-    # assert (not move_checker(board, "E5", "D6", 0))
-'''
+    # assert (not move_checker(board, "E5", "D6", 1))
+
+def test_MovingThroughCheck():
+  board = MakeBoard()
+  board.UpdateBoard("E2", "A3")
+  board.UpdateBoard("D8","E6")
+  assert (not MoveChecker(board, "B2", "B3", 0)) #check not allowed to ignore check
+  assert (MoveChecker(board,"F1","E2",0))  #check allowed block check
+  board = MakeBoard()
+  board.UpdateBoard("E2", "E4")
+  board.UpdateBoard("D8", "E6")
+  board.UpdateBoard("D7", "D5")
+  assert (not MoveChecker(board, "E4", "D5", 0))  # check not allowed to ignore check
+  board = MakeBoard()
+  board.UpdateBoard("E2", "E5")
+  board.UpdateBoard("D7", "D5")
+  assert (MoveChecker(board, "E5", "D6", 0)) # assert we can en passant normally
+  board.UpdateBoard("D8", "E6")
+  assert (not MoveChecker(board, "E5", "D6", 0))  # assert we cant en passant into a check
+
 def MakeBoard():
-    board = ChessBoard()
-    for i in range(32):
-        pieceToDraw = list(piecesPosDict.keys())[i]
-        squareToFill = piecesPosDict[pieceToDraw]
-        board.OriginalDraw(pieceToDraw, squareToFill)
-    return board
-'''
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(32):
+    pieceToDraw = list(piecesPosDict.keys())[i]
+    squareToFill = piecesPosDict[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
+
 # check for correct creation of board
 def test_ChessboardInit():
     cb = ChessBoard()
@@ -285,7 +312,6 @@ def test_ChessboardInit():
     assert len(cb.board[0]) == 8  # check if the board has 8 colums
     assert cb.board[0][0].square == "A1"  # check if the bottom left square is "A1"
     assert cb.board[7][7].square == "H8"  # Check the top right square is "H8"
-'''
 
 def test_AccessSquareReturnsPiece():
     cb = ChessBoard()
@@ -294,12 +320,10 @@ def test_AccessSquareReturnsPiece():
     # assert that access_square returns the piece in B2
     assert isinstance(cb.AccessSquare("B2"), Rook)
 
-'''
 def test_AccessSquareReturnsNone():
     cb = ChessBoard()
     # check that access_square returns None for an empty square
     assert cb.AccessSquare("C3") is None
-'''
 
 def test_OrginalDraw():
     cb = ChessBoard()
@@ -322,7 +346,6 @@ def test_OrginalDraw():
     cb.OriginalDraw(piece, "B1")
     assert isinstance(cb.AccessSquare("B1"), Knight)  # check the knight's square
 
-
 # UpdateBoard test case 1: Move a pawn from square A2 to A3
 def test_UpdateBoardPawn_move():
     cb = ChessBoard()
@@ -332,7 +355,6 @@ def test_UpdateBoardPawn_move():
     # check if the pawn is now on square A3 and that A2 is empty
     assert cb.AccessSquare("A3") == pawn
     assert cb.AccessSquare("A2") is None
-
 
 # UpdateBoard test case 2: Move a rook from square H8 to E8
 def test_UpdateBoardRookMove():
@@ -344,7 +366,6 @@ def test_UpdateBoardRookMove():
     assert cb.AccessSquare("E8") == rook  # check rooks position
     assert cb.AccessSquare("H8") is None  # check if previous position is empty
 
-
 # UpdateBoard test case 3: Move a pawn from square H2 to H4 (2 spaces)
 def test_UpdateBoardPawnMoveTwoSpaces():
     cb = ChessBoard()
@@ -354,7 +375,6 @@ def test_UpdateBoardPawnMoveTwoSpaces():
     # confirm the pawns movement of 2 squares
     assert cb.AccessSquare("H4") == pawn
     assert cb.AccessSquare("H2") is None
-
 
 # UpdateBoard test case 3: move white pawn onto black pawn square, checking for correct capture
 def test_UpdateBoardCaptureOpponent():
@@ -375,13 +395,11 @@ def test_UpdateBoardCaptureOpponent():
     assert capturedPiece.isBlack is False  # Checks to see if the is_black attribute of the captured_piece
     # object is false, which confrims that the captured piece was the black pawn
 
-
 # test creation of a square
 def test_SquareInit():
     s = square("A1")
     assert s.square == "A1"
     assert s.placedInSquare is None
-
 
 def test_PlacePiece():
     # Create a square object and put a piece on it
@@ -396,7 +414,6 @@ def test_PlacePiece():
     # check to see if the second piece takes the place of the first piece
     assert s.placedInSquare == piece2
 
-
 def test_MoveOffSquare():
     # Test case 1: No piece on square
     s = square("A1")
@@ -410,7 +427,6 @@ def test_MoveOffSquare():
     s.MoveOffSquare()  # move the piece off the square
     assert s.placedInSquare is None  # check that the piece was removed from the square
 
-
 def test_GetPiece():
     # Test case 1: No piece on square
     s = square("A1")
@@ -421,20 +437,17 @@ def test_GetPiece():
     piece = Pawn(True)
     s.PlacePiece(piece)  # place the pawn on the square
     assert s.GetPiece() == piece  # check that the pawn is on the square
-'''
+
 def test_GetFEN():
-    board=ChessBoard()
-    for i in range(32):
-        pieceToDraw = list(piecesPosDict.keys())[i]
-        squareToFill = piecesPosDict[pieceToDraw]
-        board.OriginalDraw(pieceToDraw, squareToFill)
-    assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr")
-    board.UpdateBoard("E2","E4")
-    assert(board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/4p3/8/pppp1ppp/rnbqkbnr")
-'''
+    game = Game()
+    game.Restart()
+    assert(game.board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr")
+    game.board.UpdateBoard("E2","E4")
+    assert(game.board.GiveFEN() == "RNBQKBNR/PPPPPPPP/8/8/4p3/8/pppp1ppp/rnbqkbnr")
+
 def test_SuperClass():
 
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "G1", "E0", 0) == False)   # Illegal out of bounds, vertical
     assert(MoveChecker(testBoard, "E3", "E4", 0) == False)   # Empty square detectioin
     testBoard.UpdateBoard("G1", "H3")
@@ -442,10 +455,10 @@ def test_SuperClass():
     testBoard.UpdateBoard("H3", "G5")
     assert(MoveChecker(testBoard, "G5", "H7", 0) == True)    # Taking legal
     assert(MoveChecker(testBoard, "G5", "I6", 0) == False)   # Illegal out of bounds, horizontal
-'''
+
 # Pawn must have seperate tests for white / black, as movement direction changes with colour
 def test_Pawn():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "A2", "A3", 0) == True)     # W. Legal move
     testBoard.UpdateBoard("A2", "A3")
     assert(MoveChecker(testBoard, "B2", "B4", 0) == True)     # W. Legal first double move
@@ -467,9 +480,9 @@ def test_Pawn():
     assert(MoveChecker(testBoard, "G5", "H4", 0) == False)    # B. Illegal diagonal move
     testBoard.UpdateBoard("H2", "H4")
     assert(MoveChecker(testBoard, "G5", "H4", 0) == True)     # B. Legal diagonal take
-'''
+
 def test_Knight():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     testBoard.UpdateBoard("B1", "C3")
     assert(MoveChecker(testBoard, "C3", "A5", 0) == False)    # Illegal moves, vertical...
     assert(MoveChecker(testBoard, "C3", "C5", 0) == False)
@@ -486,9 +499,8 @@ def test_Knight():
     assert(MoveChecker(testBoard, "E4", "C3", 0) == True)     # Legal moves...
     assert(MoveChecker(testBoard, "E4", "C5", 0) == True)
 
-
 def test_Rook():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "A1", "A3", 0) == False)    # Illegal move, jumping
     testBoard.UpdateBoard("A2", "A4")
     assert(MoveChecker(testBoard, "A1", "A3", 0) == True)     # Legal move, vertical
@@ -502,9 +514,8 @@ def test_Rook():
     testBoard.UpdateBoard("C6", "B8")
     assert(MoveChecker(testBoard, "C3", "C7", 0) == True)     # Legal take
 
-
 def test_Bishop():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "C1", "F4", 0) == False)    # Illegal move, jumping
     testBoard.UpdateBoard("D2", "D3")
     assert(MoveChecker(testBoard, "C1", "F4", 0) == True)     # Legal move
@@ -517,7 +528,7 @@ def test_Bishop():
     assert(MoveChecker(testBoard, "F4", "B8", 0) == True)     # Legal take
 
 def test_Queen():
-    testBoard = CreateTestBoard()
+    testBoard = MakeBoard()
     assert(MoveChecker(testBoard, "D1", "F3", 0) == False)    # Illegal move, diagonal jumping
     assert(MoveChecker(testBoard, "D1", "D3", 0) == False)    # Illegal move, vertical jumping
     testBoard.UpdateBoard("D2", "D4")
@@ -542,23 +553,13 @@ def test_Queen():
     testBoard.UpdateBoard("B4", "A6")
     assert(MoveChecker(testBoard, "C4", "A4", 0) == True)     # Legal take, horizontal
 
-def CreateTestBoard():
-    testBoard = ChessBoard()
-    testBoard.Draw()
-
-    for i in range(32):
-        pieceToDraw = list(piecesPosDict.keys())[i]
-        squareToFill = piecesPosDict[pieceToDraw]
-        testBoard.OriginalDraw(pieceToDraw, squareToFill)
-
-    return testBoard
 def test_PieceCaptures():
     pieceOne = Pawn(False)
     pieceTwo = Pawn(True)
     pieceOne.Capture(pieceTwo)
 
     assert pieceTwo.isCaptured
-'''
+
 def test_Pawn():
     pawns = [Pawn(False) for i in range(4)]
 
@@ -572,19 +573,19 @@ def test_Pawn():
         'B': Bishop,
         'Q': Queen
     }
-    pawns[0].Promote('R')
+    pawns[0]=Promote(pawns[0],'R')
     print(pawns[0].__class__)
     assert isinstance(pawns[0],Rook)
 
-    pawns[1].promote('N')
+    pawns[1]=Promote(pawns[1],'N')
     assert isinstance(pawns[1],Knight)
 
-    pawns[2].promote('B')
+    pawns[2]=Promote(pawns[2],'B')
     assert isinstance(pawns[2],Bishop)
 
-    pawns[3].promote('Q')
+    pawns[3]=Promote(pawns[3],'Q')
     assert isinstance(pawns[3],Queen)
-'''
+
 def test_Rook():
     rook = Rook(False)
     # Test string representation
@@ -609,118 +610,194 @@ def test_King():
     king = King(False)
     # Test string representation
     assert repr(king) == 'k'
-'''
+
 def test_CheckmateChecker():
     # King not in check
     board = MakeBoard()
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
-    # King takes pawn putting it in check
-    board.update_board('E8', 'E6')
-    board.update_board('B2', 'D5')
+    # Horse Block
+    board.UpdateBoard('D1', 'E4')
+    board.UpdateBoard('E7', 'H6')
+    board.UpdateBoard('A8', 'A4')
+    board.UpdateBoard('D8', 'A8')
+    board.UpdateBoard('A4', 'D8')
+    board.UpdateBoard('G7', 'F8')
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
-    # Horse and Rook Checkmate
-    board.update_board('E6', 'E8')
-    board.update_board('D5', 'B2')
+    # King takes pawn putting it in check
+    board.UpdateBoard('F8', 'G7')
+    board.UpdateBoard('D8', 'A4')
+    board.UpdateBoard('A8', 'D8')
+    board.UpdateBoard('A4', 'A8')
+    board.UpdateBoard('H6', 'E7')
+    board.UpdateBoard('E4', 'D1')
 
-    board.update_board('B2', 'B5')
-    board.update_board('A1', 'B2')
-    board.update_board('E8', 'A1')
-    board.update_board('B1', 'B3')
+    board.UpdateBoard('E8', 'E6')
+    board.UpdateBoard('B2', 'D5')
     checkmate = CheckmateChecker(board, 'black')
-    assert(checkmate)
+    assert(checkmate) == False
 
-    # Pawn checkmate
-    board.update_board('B3', 'B1')
-    board.update_board('A1', 'E8')
-    board.update_board('B2', 'A1')
-    board.update_board('B5', 'B2')
 
-    board.update_board('E8', 'A6')
-    board.update_board('A2', 'A5')
-    board.update_board('B2', 'B5')
-    board.update_board('C2', 'B4')
-    board.update_board('D2', 'C4')
+    # Pawn Checkmate
+    board.UpdateBoard('D5', 'B2')
+    board.UpdateBoard('E6', 'E8')
+
+    board.UpdateBoard('E8', 'A6')
+    board.UpdateBoard('A2', 'A5')
+    board.UpdateBoard('B2', 'B5')
+    board.UpdateBoard('C2', 'B4')
+    board.UpdateBoard('D2', 'C4')
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate)
 
     # Bishop - Queen checkmate
-    board.update_board('C4', 'D2')
-    board.update_board('B4', 'C2')
-    board.update_board('B5', 'B2')
-    board.update_board('A5', 'A2')
-    board.update_board('A6', 'E8')
+    board.UpdateBoard('C4', 'D2')
+    board.UpdateBoard('B4', 'C2')
+    board.UpdateBoard('B5', 'B2')
+    board.UpdateBoard('A5', 'A2')
+    board.UpdateBoard('A6', 'E8')
 
-    board.update_board('E8', 'A5')
-    board.update_board('A1', 'A3')
-    board.update_board('H1', 'E5')
-    board.update_board('D1', 'C3')
-    board.update_board('F1', 'D3')
-    board.update_board('C1', 'E3')
+    board.UpdateBoard('E8', 'A5')
+    board.UpdateBoard('A1', 'A3')
+    board.UpdateBoard('H1', 'E5')
+    board.UpdateBoard('D1', 'C3')
+    board.UpdateBoard('F1', 'D3')
+    board.UpdateBoard('C1', 'E3')
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate)
 
-    # Queen Blocks
-    board.update_board('E3', 'C1')
-    board.update_board('D3', 'F1')
-    board.update_board('C3', 'D1')
-    board.update_board('E5', 'H1')
-    board.update_board('A3', 'A1')
-    board.update_board('A5', 'E8')
+        # Queen Blocks
+    board.UpdateBoard('E3', 'C1')
+    board.UpdateBoard('D3', 'F1')
+    board.UpdateBoard('C3', 'D1')
+    board.UpdateBoard('E5', 'H1')
+    board.UpdateBoard('A3', 'A1')
+    board.UpdateBoard('A5', 'E8')
 
-    board.update_board('E8', 'E4')
-    board.update_board('D8', 'F6')
-    board.update_board('A1', 'G4')
-    board.update_board('H1', 'A5')
+    board.UpdateBoard('E8', 'E4')
+    board.UpdateBoard('D8', 'F6')
+    board.UpdateBoard('A1', 'G4')
+    board.UpdateBoard('H1', 'A5')
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
     # diag bishop check with bishop and queen either side
-    board.update_board('A5', 'H1')
-    board.update_board('G4', 'A1')
-    board.update_board('F6', 'D8')
-    board.update_board('E4', 'E8')
+    board.UpdateBoard('A5', 'H1')
+    board.UpdateBoard('G4', 'A1')
+    board.UpdateBoard('F6', 'D8')
+    board.UpdateBoard('E4', 'E8')
 
-    board.update_board('E8', 'A6')
-    board.update_board('D8', 'C6')
-    board.update_board('C1', 'D3')
-    board.update_board('F1', 'C3')
-    board.update_board('D1', 'E3')
+    board.UpdateBoard('E8', 'A6')
+    board.UpdateBoard('D8', 'C6')
+    board.UpdateBoard('C1', 'D3')
+    board.UpdateBoard('F1', 'C3')
+    board.UpdateBoard('D1', 'E3')
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
     #vertical rook test (block)
-    board.update_board('E3', 'D1')
-    board.update_board('C3', 'F1')
-    board.update_board('D3', 'C1')
-    board.update_board('C6', 'D8')
-    board.update_board('A6', 'E8')
+    board.UpdateBoard('E3', 'D1')
+    board.UpdateBoard('C3', 'F1')
+    board.UpdateBoard('D3', 'C1')
+    board.UpdateBoard('C6', 'D8')
+    board.UpdateBoard('A6', 'E8')
 
-    board.update_board('E8', 'A4')
-    board.update_board('D8', 'F5')
-    board.update_board('A1', 'A6')
-    board.update_board('H1', 'B6')
-    board.update_board('B7', 'C6')
-    board.update_board('B8', 'A8')
-    board.update_board('C8', 'B8')
+    board.UpdateBoard('E8', 'A4')
+    board.UpdateBoard('D8', 'F5')
+    board.UpdateBoard('A1', 'A6')
+    board.UpdateBoard('H1', 'B6')
+    board.UpdateBoard('B7', 'C6')
+    board.UpdateBoard('B8', 'A8')
+    board.UpdateBoard('C8', 'B8')
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
 
     # Pawn takes bishop putting King in check
-    board.update_board('B8', 'C8')
-    board.update_board('A8', 'B8')
-    board.update_board('C6', 'B7')
-    board.update_board('B6', 'H1')
-    board.update_board('A6', 'A1')
-    board.update_board('F5', 'D8')
-    board.update_board('A4', 'E8')
+    board.UpdateBoard('B8', 'C8')
+    board.UpdateBoard('A8', 'B8')
+    board.UpdateBoard('C6', 'B7')
+    board.UpdateBoard('B6', 'H1')
+    board.UpdateBoard('A6', 'A1')
+    board.UpdateBoard('F5', 'D8')
+    board.UpdateBoard('A4', 'E8')
 
-    board.update_board('E8', 'B3')
-    board.update_board('C1', 'F4')
-    board.update_board('G7', 'G5')
+    board.UpdateBoard('E8', 'B3')
+    board.UpdateBoard('C1', 'F4')
+    board.UpdateBoard('G7', 'G5')
     checkmate = CheckmateChecker(board, 'black')
     assert(checkmate) == False
+
+def MakeBoard1():
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(10):
+    pieceToDraw = list(piecesPosDict1.keys())[i]
+    squareToFill = piecesPosDict1[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
+
+def MakeBoard2():
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(3):
+    pieceToDraw = list(piecesPosDict2.keys())[i]
+    squareToFill = piecesPosDict2[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
+
+def MakeBoard3():
+  board = ChessBoard()
+  for i in range(8):
+    for j in range(8):
+        board.board[i][j].ResetSquare()
+  for i in range(3):
+    pieceToDraw = list(piecesPosDict3.keys())[i]
+    squareToFill = piecesPosDict3[pieceToDraw]
+    board.OriginalDraw(pieceToDraw, squareToFill)
+  return board
+
+def test_StalemateChecker():
+    board = MakeBoard()
+    stalemate = StalemateChecker(board, 'black')
+    assert(stalemate) == False
+
+    board = MakeBoard1()
+    stalemate = StalemateChecker(board, 'black')
+    assert(stalemate)
+
+    board = MakeBoard2()
+    stalemate = StalemateChecker(board, 'black')
+    assert(stalemate)
+
+    board = MakeBoard3()
+    stalemate = StalemateChecker(board, 'black')
+    assert(stalemate)
 '''
+def test_ProperFen():
+    board = ChessBoard()
+    for i in range(8):
+            for j in range(8):
+                board.board[i][j].ResetSquare()
+    for i in range(32):
+        pieceToDraw = list(piecesPosDict.keys())[i]
+        pieceToDraw.hasMoved = False
+        squareToFill = piecesPosDict[pieceToDraw]
+        board.OriginalDraw(pieceToDraw, squareToFill)
+    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+    board.UpdateBoard('E2', 'E4')
+    assert(ChessBoard.ProperFen(board, True) == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
+    board.UpdateBoard('A1', 'A3')
+    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/4P3/R7/PPPP1PPP/1NBQKBNR w Kkq - 1 2')
+    board.UpdateBoard('A3', 'A1')
+    assert(ChessBoard.ProperFen(board, False) == 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w Kkq - 2 2')
+    board.UpdateBoard('C7', 'C5')
+    assert(ChessBoard.ProperFen(board, True) == 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR b Kkq c6 0 3')
+'''
+

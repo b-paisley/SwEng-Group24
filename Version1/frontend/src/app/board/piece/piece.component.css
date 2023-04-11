@@ -1,0 +1,16 @@
+@media screen  and (max-height: 800px){
+    span {
+        font-weight: 500;
+        font-size: 3.25rem;
+        line-height: 5.2rem;
+        font-family: auto;
+    }
+}
+@media screen and (min-height: 801px){
+    span {
+        font-weight: 550;
+        font-size: 4rem;
+        line-height: 6rem;
+        font-family: auto;
+    }
+}

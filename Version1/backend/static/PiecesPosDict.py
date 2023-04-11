@@ -37,3 +37,46 @@ piecesPosDict = {
     Knight(True): "G8",
     Rook(True): "H8"
 }
+
+
+# For Stalemate Checker Tests
+piecesPosDict1 = {
+    # White pieces
+    Queen(False): "B1",
+    King(False): "H1",
+    Rook(False): "A1",
+    Rook(False): "H7",
+    Knight(False): "F3",
+    Pawn(False): "H4",
+
+    
+    # Black pieces
+    King(True): "A8",
+    Pawn(True): "H5",
+    Pawn(True): "F4",
+    Bishop(True): "A3"
+
+    
+}
+
+# King Queen, black stalemate as king cant move
+piecesPosDict2 = {
+    # White pieces
+    Queen(False): "F2",
+    King(False): "A8",
+    
+    # Black pieces
+    King(True): "H1"
+    
+}
+
+piecesPosDict3 = {
+    # White pieces
+    Pawn(False): "E7",
+    King(False): "E6",
+    
+    # Black pieces
+    King(True): "E8",
+    
+}
+

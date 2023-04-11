@@ -1,5 +1,29 @@
-from chessBoard import *
 from Points import *
+
+
+def Promote(pawn, newPieceNotation):
+        '''
+        Promote the pawn to another piece. Returns a
+        boolean variable determining if the promotion
+        is successful.
+        '''
+
+        notationPiecesDict = {
+        'R': Rook,
+        'N': Knight,
+        'B': Bishop,
+        'Q': Queen,
+        'r': Rook,
+        'n': Knight,
+        'b': Bishop,
+        'q': Queen,
+        }
+        
+        if newPieceNotation not in notationPiecesDict.keys():
+            return None
+        
+        return notationPiecesDict[newPieceNotation](pawn.isBlack)
+
 
 class Piece:
     '''
@@ -36,27 +60,6 @@ class Pawn(Piece):
     def __init__(self, isBlack):
         super().__init__(1, isBlack)
         self.hasMovedTwoSpacesLast = False
-
-    def Promote(self, newPieceNotation):
-        '''
-        Promote the pawn to another piece. Returns a
-        boolean variable determining if the promotion
-        is successful.
-        '''
-
-        notationPiecesDict = {
-        'R': Rook,
-        'N': Knight,
-        'B': Bishop,
-        'Q': Queen,
-        'K': King
-        }
-        
-        if newPieceNotation not in notationPiecesDict.keys() or newPieceNotation == 'K':
-            return False
-        
-        self.__class__ = (notationPiecesDict[newPieceNotation])
-        return True
 
     def __repr__(self):
         return super().__repr__('P')
