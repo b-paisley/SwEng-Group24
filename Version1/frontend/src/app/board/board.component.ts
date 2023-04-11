@@ -142,9 +142,9 @@ export class BoardComponent {
                 if (moveStr[4] == '8' && this.pieceArr[0][this.destSquare[0].charCodeAt(0)-65] == 'p') {
                     this.canPromote = true;
                 }
-                if (data.data.fen != 'error' && this.canPromote == false) {
-                    this.callMitch();
-                }
+                // if (data.data.fen != 'error' && this.canPromote == false) {
+                //     // this.callMitch();
+                // }
                 if (data.data.gameOver) {
                     this.gameOver = true
                     this.turn = "You Win!"
@@ -185,6 +185,6 @@ export class BoardComponent {
             this.updateBoard(data.data.fen.toString());
         });
         this.canPromote = false;
-        this.callMitch()
+        // this.callMitch()
     }
 }

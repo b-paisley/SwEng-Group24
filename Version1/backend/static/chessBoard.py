@@ -11,7 +11,6 @@ class ChessBoard:
     def __init__(self):
         letters = "ABCDEFGH"
         self.board = [[], [], [], [], [], [], [], []]
-        print(len(self.board[0]))
         for i in range(8):  # num
           for j in range(8):  # char
             self.board[i].append(square(letters[j] + str(i + 1)))
@@ -53,8 +52,6 @@ class ChessBoard:
         newLetterFile = ord(newSquare[0])-65
         newNumberRow = int(newSquare[1]) - 1
 
-        pieceInDest = self.board[newNumberRow][newLetterFile].GetPiece()
-
         taken =False
         if self.AccessSquare(newSquare) != None:
             taken = True
@@ -69,14 +66,13 @@ class ChessBoard:
         # If a position that allows en passant is reached, allow en passant.
         if isinstance(piece, Pawn):
             if piece.isBlack:
-                if oldNumberRow == 2 and newNumberRow == 4:
+                if oldNumberRow == 6 and newNumberRow == 4:
                     piece.hasMovedTwoSpacesLast = True
                     self.possibleEnPassantPawn = piece
             else:
-                if oldNumberRow == 7 and newNumberRow == 5:
+                if oldNumberRow == 1 and newNumberRow == 3:
                     piece.hasMovedTwoSpacesLast = True
                     self.possibleEnPassantPawn = piece
-
         piece.hasMoved = True
         if repr(self.AccessSquare(newSquare)).lower() == "p":
             if (not piece.hasMovedTwoSpacesLast) and (newNumberRow == 3 or newNumberRow == 4 ):
@@ -93,6 +89,7 @@ class ChessBoard:
         else:
             self.halfMoveCount+=1     
         self.Draw()
+
 
     #will return FEN(Forsyth–Edwards Notation) this is return string
     def GiveFEN(self):
