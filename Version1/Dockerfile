@@ -4,7 +4,6 @@ EXPOSE 5000
 WORKDIR /Version1
 COPY package*.json ./ 
 COPY . .
-COPY shellscript.sh ./
 
 RUN apt-get update && apt-get install -y python3 curl
 RUN apt remove -y nodejs nodejs-doc
