@@ -15,6 +15,7 @@ class ChessBoard:
         for i in range(8):  # num
           for j in range(8):  # char
             self.board[i].append(square(letters[j] + str(i + 1)))
+        self.possibleEnPassantPawn = None
 
     def AccessSquare(self, square):
         letterFile = ord(square[0])-65
@@ -45,27 +46,44 @@ class ChessBoard:
         print("     A   B   C   D   E   F   G   H\n")
 
     def UpdateBoard(self, prevSquare, newSquare):  # C1_C2
-        letterFile = ord(prevSquare[0])-65
-        numberRow = int(prevSquare[1]) - 1
-        piece = self.board[numberRow][letterFile].MoveOffSquare()
+        oldLetterFile = ord(prevSquare[0])-65
+        oldNumberRow = int(prevSquare[1]) - 1
+        piece = self.board[oldNumberRow][oldLetterFile].MoveOffSquare()
 
-        letterFile = ord(newSquare[0])-65
-        numberRow = int(newSquare[1]) - 1
+        newLetterFile = ord(newSquare[0])-65
+        newNumberRow = int(newSquare[1]) - 1
 
-        pieceInDest = self.board[numberRow][letterFile].GetPiece()
+        pieceInDest = self.board[newNumberRow][newLetterFile].GetPiece()
 
         taken =False
         if self.AccessSquare(newSquare) != None:
             taken = True
-        self.board[numberRow][letterFile].PlacePiece(piece)
+        self.board[newNumberRow][newLetterFile].PlacePiece(piece)
+
+        # If a position that allows en passant was two moves ago, en passant is no
+        # longer possible.
+        if self.possibleEnPassantPawn != None:
+            self.possibleEnPassantPawn.hasMovedTwoSpacesLast = False
+            self.possibleEnPassantPawn = None
+
+        # If a position that allows en passant is reached, allow en passant.
+        if isinstance(piece, Pawn):
+            if piece.isBlack:
+                if oldNumberRow == 2 and newNumberRow == 4:
+                    piece.hasMovedTwoSpacesLast = True
+                    self.possibleEnPassantPawn = piece
+            else:
+                if oldNumberRow == 7 and newNumberRow == 5:
+                    piece.hasMovedTwoSpacesLast = True
+                    self.possibleEnPassantPawn = piece
 
         piece.hasMoved = True
         if repr(self.AccessSquare(newSquare)).lower() == "p":
-            if (not piece.hasMovedTwoSpacesLast) and (numberRow == 3 or numberRow == 4 ):
+            if (not piece.hasMovedTwoSpacesLast) and (newNumberRow == 3 or newNumberRow == 4 ):
                 if piece.isBlack:
-                    self.enpassantSquare=newSquare[0].lower()+str(numberRow+2)
+                    self.enpassantSquare=newSquare[0].lower()+str(newNumberRow+2)
                 else:
-                    self.enpassantSquare=newSquare[0].lower()+str(numberRow)
+                    self.enpassantSquare=newSquare[0].lower()+str(newNumberRow)
         else:
             self.enpassantSquare = '-'
         piece.hasMovedTwoSpacesLast = True
@@ -143,8 +161,6 @@ class ChessBoard:
                         entered=True
         if entered:
             strFen+=" "
-        else:
-            strFen+="- "
         strFen += self.enpassantSquare
         strFen+=" "+str(self.halfMoveCount)
         strFen+=" "+str(int(self.fullMoveCount/2))
