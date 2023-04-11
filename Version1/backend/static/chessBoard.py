@@ -143,6 +143,8 @@ class ChessBoard:
                         entered=True
         if entered:
             strFen+=" "
+        else:
+            strFen+="- "
         strFen += self.enpassantSquare
         strFen+=" "+str(self.halfMoveCount)
         strFen+=" "+str(int(self.fullMoveCount/2))

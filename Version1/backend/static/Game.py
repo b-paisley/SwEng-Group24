@@ -36,8 +36,10 @@ class Game:
             properColour = True
           else:
             validMove=MoveChecker(self.board,move[0:2],move[3:5],1) #if valid
-            if(self.board.AccessSquare(move[0:2]).isBlack==self.black): #check that not moving other player piece
-              properColour=True
+            sq = self.board.AccessSquare(move[0:2])
+            if self.board.AccessSquare(move[0:2]) is not None: #check that not moving other player piece
+              if self.board.AccessSquare(move[0:2]).isBlack==self.black:
+                properColour=True
 
           if (not validMove or not properColour):
               return "error"
