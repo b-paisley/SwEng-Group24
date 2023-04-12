@@ -4,7 +4,6 @@ EXPOSE 5000
 WORKDIR /Version1
 COPY package*.json ./ 
 COPY . .
-COPY ./shellscript.sh ./
 
 RUN apt-get update && apt-get install -y python3 curl
 RUN apt remove -y nodejs nodejs-doc
@@ -29,7 +28,7 @@ RUN npm -f install -g @angular/cli
 #RUN ng serve
 #RUN n
 # CMD ["/bin/bash", "-c", "cd ./frontend; ng serve"]
-CMD ["/bin/bash", "-c", "./shellscript.sh"]
+CMD ["/bin/bash", "-c", "shellscript.sh"]
 #CMD ["ng", "serve", "&"]
 #CMD ["cd", "backend/static"]
 #CMD ["flask", "run"]
