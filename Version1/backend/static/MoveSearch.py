@@ -65,7 +65,7 @@ def basePrune(BOARD, N, playerMax):
 
 def MinMaxAlphaBeta(board, playerMax, maxN, currentN, alpha, beta):
     if currentN == 0:
-        return -NewEval(board)
+        return NewEval(board)
     moves = list(board.legal_moves)
     random.shuffle(moves)
     if (playerMax):
