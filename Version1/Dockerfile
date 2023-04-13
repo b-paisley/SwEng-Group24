@@ -20,7 +20,7 @@ RUN pip install Flask flask-restful flask-cors chess torch numpy
 RUN npm -f install -g npm@9.5.1
 RUN npm -f install -g @angular/cli
 
-CMD ["bin/bash"]
+CMD ["/bin/bash"]
 #CMD ./shellscript.sh
 # RUN flask --app ./backend/static/app run &
 
