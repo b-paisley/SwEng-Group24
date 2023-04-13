@@ -6,7 +6,7 @@
 ## 	:computer: Getting MiTCh on your Machine
 **Option 1: Docker**
 * Download our Docker Image with ```docker pull brandonpaisley/project17_chessengine:v```
-* Run the image with `docker run brandonpaisley/project17_chessengine:v`
+* Run the image with `docker run -p 4200:4200 -p 5000:5000 brandonpaisley/project17_chessengine:v`
 * Open your browser on Localhost:4200
 
 **Option 2: Local**
