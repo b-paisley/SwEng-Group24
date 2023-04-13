@@ -21,8 +21,7 @@ RUN npm -f install -g npm@9.5.1
 RUN npm -f install -g @angular/cli
 
 # CMD ["/bin/bash"]
-RUN ["chmod", "+x", "Version1/shellscript.sh"]
-CMD Version1/shellscript.sh
+CMD ["chmod", "+x", "Version1/shellscript.sh"]
 # RUN flask --app ./backend/static/app run &
 
 
